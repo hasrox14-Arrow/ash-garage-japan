@@ -9,6 +9,7 @@ import {
   onSnapshot,
   getDocs
 } from "firebase/firestore";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { vehiclesData as initialVehicles } from "../data/vehicles";
 
 // Firebase configuration for Ash Garage Japan
@@ -21,9 +22,10 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:523682673340:web:4a4514a9c96982ad6116b9"
 };
 
-// Initialize Firebase App
+// Initialize Firebase App, Firestore, and Storage
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const storage = getStorage(app);
 
 // 1. Save Customer Quote Inquiry to Firestore
 export const saveInquiry = async (inquiryData) => {
@@ -40,7 +42,7 @@ export const saveInquiry = async (inquiryData) => {
   }
 };
 
-// 2. Save/Update Vehicle in Firestore (Syncs across all live visitors)
+// 2. Save/Update Vehicle in Firestore
 export const saveVehicleToFirestore = async (vehicleData) => {
   try {
     const docId = vehicleData.id || vehicleData.stockNo || `AG-${Date.now()}`;
@@ -49,7 +51,7 @@ export const saveVehicleToFirestore = async (vehicleData) => {
     console.log("Vehicle saved to Firestore cloud:", docId);
     return docId;
   } catch (err) {
-    console.warn("Firestore vehicle save error - fallback local:", err);
+    console.warn("Firestore vehicle save error:", err);
   }
 };
 
@@ -64,12 +66,30 @@ export const deleteVehicleFromFirestore = async (vehicleId) => {
   }
 };
 
-// 4. Real-time Subscription to Vehicles Collection (with Auto-Seeding)
+// 4. Upload Vehicle Image File to Firebase Storage (with base64 fallback)
+export const uploadVehicleImageToFirebase = async (file) => {
+  try {
+    const fileRef = ref(storage, `vehicle_images/${Date.now()}_${file.name}`);
+    const snapshot = await uploadBytes(fileRef, file);
+    const downloadURL = await getDownloadURL(snapshot.ref);
+    console.log("Image uploaded to Firebase Storage:", downloadURL);
+    return downloadURL;
+  } catch (err) {
+    console.warn("Firebase storage error / unconfigured -> converting file to base64 Data URL fallback:", err);
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (e) => reject(e);
+      reader.readAsDataURL(file);
+    });
+  }
+};
+
+// 5. Real-time Subscription to Vehicles Collection
 export const subscribeToVehicles = (callback) => {
   try {
     const vehiclesCol = collection(db, "vehicles");
     
-    // Seed initial dataset if cloud Firestore collection is completely empty
     getDocs(vehiclesCol).then((snapshot) => {
       if (snapshot.empty) {
         console.log("Firestore vehicles collection empty -> seeding initial inventory...");
@@ -79,7 +99,6 @@ export const subscribeToVehicles = (callback) => {
       }
     });
 
-    // Real-time listener
     return onSnapshot(vehiclesCol, (snapshot) => {
       if (!snapshot.empty) {
         const firestoreList = [];
@@ -100,4 +119,4 @@ export const subscribeToVehicles = (callback) => {
   }
 };
 
-export { app, db };
+export { app, db, storage };

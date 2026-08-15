@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { X, Save, Car, Plus, Trash2 } from 'lucide-react';
+import { X, Save, Car, Plus, Trash2, UploadCloud, Image as ImageIcon, CheckCircle, Loader2 } from 'lucide-react';
+import { uploadVehicleImageToFirebase } from '../firebase/config';
 
 export const VehicleFormModal = ({ vehicleToEdit, onClose, onSave }) => {
   const { t } = useLanguage();
@@ -27,15 +28,21 @@ export const VehicleFormModal = ({ vehicleToEdit, onClose, onSave }) => {
     status: 'Available',
     isFeatured: false,
     image: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=1000&q=80',
+    gallery: [],
     features: ['Service Logbook', 'Certified Mileage', 'Non-Smoker']
   });
 
   const [featureInput, setFeatureInput] = useState('');
+  const [isDragging, setIsDragging] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
+
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     if (vehicleToEdit) {
       setFormData({
         ...vehicleToEdit,
+        gallery: vehicleToEdit.gallery || [vehicleToEdit.image],
         features: vehicleToEdit.features || ['Service Logbook', 'Certified Mileage']
       });
     } else {
@@ -50,6 +57,48 @@ export const VehicleFormModal = ({ vehicleToEdit, onClose, onSave }) => {
 
   const handleChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  // Image Upload Handler (Browse or Drag & Drop)
+  const processImageFile = async (file) => {
+    if (!file || !file.type.startsWith('image/')) return;
+    setUploadingImage(true);
+    try {
+      const uploadedUrl = await uploadVehicleImageToFirebase(file);
+      setFormData((prev) => ({
+        ...prev,
+        image: uploadedUrl,
+        gallery: [uploadedUrl, ...prev.gallery.filter(g => g !== uploadedUrl)]
+      }));
+    } catch (err) {
+      console.error("Failed to process image file:", err);
+    }
+    setUploadingImage(false);
+  };
+
+  const handleFileSelect = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      processImageFile(file);
+    }
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const files = e.dataTransfer.files;
+    if (files && files.length > 0) {
+      processImageFile(files[0]);
+    }
   };
 
   const handleAddFeature = () => {
@@ -77,7 +126,7 @@ export const VehicleFormModal = ({ vehicleToEdit, onClose, onSave }) => {
 
   return (
     <div className="modal-overlay">
-      <div className="modal-content glass-panel" style={{ maxWidth: '780px', padding: 0 }}>
+      <div className="modal-content glass-panel" style={{ maxWidth: '820px', padding: 0 }}>
         
         {/* Header */}
         <div style={{
@@ -105,6 +154,76 @@ export const VehicleFormModal = ({ vehicleToEdit, onClose, onSave }) => {
         {/* Scrollable Form Body */}
         <form onSubmit={handleSubmit} style={{ padding: '28px', display: 'grid', gap: '20px', maxHeight: '80vh', overflowY: 'auto' }}>
           
+          {/* DRAG & DROP / FILE BROWSE IMAGE UPLOAD ZONE */}
+          <div>
+            <label style={{ display: 'block', fontSize: '0.85rem', color: '#FFF', marginBottom: '8px', fontWeight: 700 }}>
+              Vehicle Main Photo (Drag & Drop or Browse File) *
+            </label>
+
+            <input
+              type="file"
+              ref={fileInputRef}
+              accept="image/*"
+              onChange={handleFileSelect}
+              style={{ display: 'none' }}
+            />
+
+            <div
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+              onClick={() => fileInputRef.current && fileInputRef.current.click()}
+              style={{
+                border: isDragging ? '2px dashed var(--primary-red)' : '2px dashed var(--border-red)',
+                background: isDragging ? 'rgba(229, 9, 20, 0.15)' : 'var(--bg-surface)',
+                borderRadius: '12px',
+                padding: '24px',
+                textAlign: 'center',
+                cursor: 'pointer',
+                transition: 'var(--transition-fast)',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '12px'
+              }}
+            >
+              {uploadingImage ? (
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', color: 'var(--primary-red)' }}>
+                  <Loader2 size={36} className="animate-spin" />
+                  <span style={{ fontWeight: 700, fontSize: '0.9rem' }}>Uploading photo to Firebase Storage...</span>
+                </div>
+              ) : formData.image ? (
+                <div style={{ display: 'flex', alignItems: 'center', gap: '20px', width: '100%', justifyContent: 'center' }}>
+                  <img
+                    src={formData.image}
+                    alt="Preview"
+                    style={{ width: '120px', height: '80px', objectFit: 'cover', borderRadius: '8px', border: '1px solid var(--primary-red)' }}
+                  />
+                  <div style={{ textAlign: 'left' }}>
+                    <div style={{ color: '#10B981', fontWeight: 800, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <CheckCircle size={16} /> Photo Loaded & Ready
+                    </div>
+                    <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Click or drag a new image file here to replace.</span>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <div style={{ padding: '12px', borderRadius: '50%', background: 'var(--red-dim)', color: 'var(--primary-red)' }}>
+                    <UploadCloud size={32} />
+                  </div>
+                  <div>
+                    <span style={{ fontWeight: 800, color: '#FFF', fontSize: '0.95rem' }}>
+                      Drag & Drop your car photo file here
+                    </span>
+                    <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '2px' }}>
+                      or <span style={{ color: 'var(--primary-red)', textDecoration: 'underline', fontWeight: 700 }}>browse files</span> from your computer (PNG, JPG, WEBP)
+                    </p>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+
           {/* Row 1: Stock #, Make, Model */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 2fr', gap: '16px' }}>
             <div>
@@ -267,19 +386,6 @@ export const VehicleFormModal = ({ vehicleToEdit, onClose, onSave }) => {
             </div>
           </div>
 
-          {/* Row 5: Main Image URL */}
-          <div>
-            <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '6px' }}>Vehicle Photo URL</label>
-            <input
-              type="url"
-              required
-              value={formData.image}
-              onChange={(e) => handleChange('image', e.target.value)}
-              placeholder="https://images.unsplash.com/..."
-              style={{ width: '100%', padding: '10px', background: 'var(--bg-surface)', border: '1px solid var(--border-dark)', borderRadius: '6px', color: '#FFF' }}
-            />
-          </div>
-
           {/* Features Tag Checklist */}
           <div>
             <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '6px' }}>Key Vehicle Features</label>
@@ -307,7 +413,7 @@ export const VehicleFormModal = ({ vehicleToEdit, onClose, onSave }) => {
           </div>
 
           {/* Submit Action */}
-          <button type="submit" className="btn-red" style={{ justifyContent: 'center', padding: '14px', marginTop: '12px' }}>
+          <button type="submit" disabled={uploadingImage} className="btn-red" style={{ justifyContent: 'center', padding: '14px', marginTop: '12px' }}>
             <Save size={18} />
             <span>{t('saveVehicle')}</span>
           </button>
