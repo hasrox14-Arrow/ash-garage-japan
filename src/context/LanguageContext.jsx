@@ -11,8 +11,8 @@ const LanguageContext = createContext();
 
 export const LanguageProvider = ({ children }) => {
   const [lang, setLang] = useState('en');
-  const [currency, setCurrency] = useState('JPY'); // Default currency set to JPY (¥)
-  const [showLangModal, setShowLangModal] = useState(false);
+  const [currency, setCurrency] = useState('JPY');
+  const [showLangModal, setShowLangModal] = useState(false); // Initial popup disabled
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
 
   // Dynamic Inventory State (Listens to Firestore Real-Time Cloud Updates)
@@ -33,14 +33,8 @@ export const LanguageProvider = ({ children }) => {
 
   useEffect(() => {
     const savedLang = localStorage.getItem('ash_garage_lang');
-    const modalDismissed = localStorage.getItem('ash_garage_lang_modal_dismissed');
-
     if (savedLang && translations[savedLang]) {
       setLang(savedLang);
-    }
-
-    if (!modalDismissed) {
-      setShowLangModal(true);
     }
 
     // Subscribe to Real-Time Cloud Vehicle Updates from Firebase Firestore
@@ -55,7 +49,7 @@ export const LanguageProvider = ({ children }) => {
     };
   }, []);
 
-  // Add or Edit Vehicle Handler (Writes to Cloud Firestore & Local State)
+  // Add or Edit Vehicle Handler
   const handleSaveVehicle = async (vehicleData) => {
     const docId = vehicleData.id || vehicleData.stockNo || `AG-${Math.floor(1000 + Math.random() * 9000)}`;
     const fullVehicle = {
@@ -78,7 +72,7 @@ export const LanguageProvider = ({ children }) => {
     await saveVehicleToFirestore(fullVehicle);
   };
 
-  // Delete Vehicle Handler (Deletes from Cloud Firestore & Local State)
+  // Delete Vehicle Handler
   const handleDeleteVehicle = async (vehicleId) => {
     const updated = vehicles.filter(v => v.id !== vehicleId && v.stockNo !== vehicleId);
     setVehicles(updated);
@@ -87,7 +81,7 @@ export const LanguageProvider = ({ children }) => {
     await deleteVehicleFromFirestore(vehicleId);
   };
 
-  // Toggle Vehicle Status (Available / Reserved / Sold)
+  // Toggle Vehicle Status
   const handleToggleStatus = async (vehicleId, newStatus) => {
     const target = vehicles.find(v => v.id === vehicleId || v.stockNo === vehicleId);
     if (target) {
@@ -107,7 +101,6 @@ export const LanguageProvider = ({ children }) => {
     if (translations[selectedLang]) {
       setLang(selectedLang);
       localStorage.setItem('ash_garage_lang', selectedLang);
-      localStorage.setItem('ash_garage_lang_modal_dismissed', 'true');
       setShowLangModal(false);
     }
   };

@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from 'react';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
-import { LanguageModal } from './components/LanguageModal';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { VehicleFilter } from './components/VehicleFilter';
@@ -60,15 +59,13 @@ function MainApp() {
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       
-      {/* Initial Language Popup Selection Modal */}
-      <LanguageModal />
-
       {/* Admin Passcode Login Modal */}
-      <AdminLoginModal
-        isOpen={showAdminLogin}
-        onClose={() => setShowAdminLogin(false)}
-        onSuccess={() => setActiveTab('admin')}
-      />
+      {showAdminLogin && (
+        <AdminLoginModal
+          onClose={() => setShowAdminLogin(false)}
+          onLoginSuccess={() => setActiveTab('admin')}
+        />
+      )}
 
       {/* Header Navbar */}
       <Navbar
@@ -77,9 +74,9 @@ function MainApp() {
         onAdminClick={() => setShowAdminLogin(true)}
       />
 
-      {/* VIEW 1: ADMIN DASHBOARD (A to Z Control Panel) */}
+      {/* VIEW 1: ADMIN DASHBOARD */}
       {activeTab === 'admin' && isAdminLoggedIn ? (
-        <AdminDashboard onExitAdmin={() => setActiveTab('home')} />
+        <AdminDashboard onLogout={() => setActiveTab('home')} />
       ) : (
         /* VIEW 2: PUBLIC BUYER PORTAL */
         <>
