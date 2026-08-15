@@ -75,8 +75,8 @@ html, body {
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: var(--bg-obsidian);
@@ -242,16 +242,16 @@ html, body {
   width: var(--carousel-card-width);
 }
 
-/* Dark Modals */
+/* Responsive Modal Overlays */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.88);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   z-index: 9999;
   display: flex;
   align-items: center;
@@ -307,11 +307,10 @@ html, body {
 }
 
 /* ----------------------------------------------------
-   100% PERFECT MOBILE RESPONSIVE MEDIA QUERIES
+   100% PERFECT MOBILE RESPONSIVE MEDIA QUERIES (320px - 768px)
 ---------------------------------------------------- */
 @media (max-width: 768px) {
   :root {
-    /* 1 Full-Width Card Per Slide on Mobile */
     --carousel-card-width: 100%;
   }
 
@@ -336,13 +335,14 @@ html, body {
   }
 
   .modal-overlay {
-    padding: 10px !important;
+    padding: 8px !important;
     align-items: flex-end;
   }
 
   .modal-content {
-    border-radius: 18px 18px 0 0 !important;
-    max-height: 94vh !important;
+    border-radius: 16px 16px 0 0 !important;
+    max-height: 95vh !important;
+    width: 100% !important;
   }
 
   .hero-search-box {
@@ -360,6 +360,12 @@ html, body {
   .filter-controls-grid {
     grid-template-columns: 1fr 1fr !important;
   }
+
+  /* Form 2-column collapsing for mobile */
+  .mobile-stack-form-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
 }
 
 @media (max-width: 520px) {
@@ -368,17 +374,18 @@ html, body {
   }
 
   .navbar-brand-logo {
-    height: 34px !important;
+    height: 32px !important;
   }
 
   .hero-logo-emblem {
-    height: 90px !important;
+    height: 85px !important;
   }
 
   .filter-controls-grid {
     grid-template-columns: 1fr !important;
   }
 
+  /* Prevent Safari input zooming */
   input, select, textarea {
     font-size: 16px !important;
   }

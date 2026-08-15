@@ -34,6 +34,7 @@ export const InquiryModal = ({ vehicle, onClose }) => {
       model: vehicle.model,
       priceUsd: vehicle.priceUsd,
       priceJpy: vehicle.priceJpy,
+      customerName: formData.name,
       status: 'NEW_LEAD',
       submittedAt: new Date().toISOString()
     };
@@ -57,7 +58,7 @@ export const InquiryModal = ({ vehicle, onClose }) => {
         
         {/* Header */}
         <div style={{
-          padding: '20px 24px',
+          padding: '16px 20px',
           background: 'var(--bg-surface)',
           borderBottom: '1px solid var(--border-dark)',
           display: 'flex',
@@ -65,84 +66,84 @@ export const InquiryModal = ({ vehicle, onClose }) => {
           alignItems: 'center'
         }}>
           <div>
-            <span className="badge-orange" style={{ marginBottom: '4px', display: 'inline-block' }}>{t('proformaInvoice')}</span>
-            <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.25rem', fontWeight: 900, color: '#FFFFFF' }}>
+            <span className="badge-orange" style={{ marginBottom: '2px', display: 'inline-block' }}>{t('proformaInvoice')}</span>
+            <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.15rem', fontWeight: 900, color: '#FFFFFF' }}>
               {t('inquireHeading', { stockNo: vehicle.stockNo })}
             </h2>
           </div>
 
-          <button onClick={onClose} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}>
-            <X size={24} />
+          <button onClick={onClose} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: '6px' }}>
+            <X size={22} />
           </button>
         </div>
 
         {/* Success View */}
         {isSuccess ? (
-          <div style={{ padding: '40px 28px', textAlign: 'center' }}>
+          <div style={{ padding: '32px 20px', textAlign: 'center' }}>
             <div style={{
-              width: '64px',
-              height: '64px',
+              width: '56px',
+              height: '56px',
               borderRadius: '50%',
               background: 'var(--orange-dim)',
               color: 'var(--primary-orange)',
               display: 'flex',
               alignItems: 'center',
               justify: 'center',
-              margin: '0 auto 20px'
+              margin: '0 auto 16px'
             }}>
-              <CheckCircle2 size={36} />
+              <CheckCircle2 size={32} />
             </div>
 
-            <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.4rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '8px' }}>
+            <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.25rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '6px' }}>
               {t('quoteSubmittedSuccess')}
             </h3>
 
-            <p style={{ fontSize: '0.9rem', color: 'var(--text-sub)', maxWidth: '440px', margin: '0 auto 24px', lineHeight: 1.6 }}>
+            <p style={{ fontSize: '0.85rem', color: 'var(--text-sub)', maxWidth: '440px', margin: '0 auto 20px', lineHeight: 1.5 }}>
               {t('quoteSubmittedDesc')}
             </p>
 
-            <div style={{ padding: '16px', background: 'var(--bg-surface)', borderRadius: '10px', fontSize: '0.85rem', color: '#FFFFFF', fontWeight: 700, marginBottom: '24px', border: '1px solid var(--border-dark)' }}>
+            <div style={{ padding: '12px', background: 'var(--bg-surface)', borderRadius: '8px', fontSize: '0.82rem', color: '#FFFFFF', fontWeight: 700, marginBottom: '20px', border: '1px solid var(--border-dark)' }}>
               Vehicle: {vehicle.make} {vehicle.model} ({vehicle.stockNo}) — {formattedPrice}
             </div>
 
-            <button onClick={onClose} className="btn-gradient" style={{ padding: '12px 32px' }}>
+            <button onClick={onClose} className="btn-gradient" style={{ padding: '10px 28px' }}>
               {t('closeBtn')}
             </button>
           </div>
         ) : (
           /* Inquiry Form */
-          <form onSubmit={handleSubmit} style={{ padding: '24px', display: 'grid', gap: '16px' }}>
+          <form onSubmit={handleSubmit} style={{ padding: '18px 20px', display: 'grid', gap: '14px' }}>
             
             <div style={{
               display: 'flex',
-              gap: '16px',
+              gap: '12px',
               alignItems: 'center',
-              padding: '12px 16px',
+              padding: '10px 12px',
               background: 'var(--bg-surface)',
-              borderRadius: '10px',
+              borderRadius: '8px',
               border: '1px solid var(--border-dark)'
             }}>
               <img
                 src={vehicle.image}
                 alt={vehicle.model}
-                style={{ width: '80px', height: '54px', objectFit: 'cover', borderRadius: '6px' }}
+                style={{ width: '70px', height: '46px', objectFit: 'cover', borderRadius: '6px' }}
               />
-              <div style={{ flex: 1 }}>
-                <div style={{ fontSize: '0.95rem', fontWeight: 800, color: '#FFFFFF' }}>{vehicle.model}</div>
-                <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 600 }}>Stock #{vehicle.stockNo} • {vehicle.year}</div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontSize: '0.88rem', fontWeight: 800, color: '#FFFFFF', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{vehicle.model}</div>
+                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600 }}>Stock #{vehicle.stockNo} • {vehicle.year}</div>
               </div>
-              <div style={{ fontFamily: 'var(--font-heading)', fontSize: '1.1rem', fontWeight: 900, color: 'var(--primary-orange)' }}>
+              <div style={{ fontFamily: 'var(--font-heading)', fontSize: '1rem', fontWeight: 900, color: 'var(--primary-orange)', flexShrink: 0 }}>
                 {formattedPrice}
               </div>
             </div>
 
             {/* Name */}
             <div>
-              <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-sub)', marginBottom: '6px', fontWeight: 700 }}>
+              <label style={{ display: 'block', fontSize: '0.78rem', color: 'var(--text-sub)', marginBottom: '4px', fontWeight: 700 }}>
                 {t('fullNameLabel')} *
               </label>
               <div style={{ position: 'relative' }}>
-                <User size={18} color="var(--text-muted)" style={{ position: 'absolute', left: '12px', top: '12px' }} />
+                <User size={16} color="var(--text-muted)" style={{ position: 'absolute', left: '12px', top: '11px' }} />
                 <input
                   type="text"
                   required
@@ -151,26 +152,26 @@ export const InquiryModal = ({ vehicle, onClose }) => {
                   placeholder="e.g. Alexander Wright"
                   style={{
                     width: '100%',
-                    padding: '10px 12px 10px 40px',
+                    padding: '9px 12px 9px 36px',
                     background: 'var(--bg-surface)',
                     border: '1px solid var(--border-dark)',
                     borderRadius: '8px',
                     color: '#FFFFFF',
-                    fontSize: '0.9rem',
+                    fontSize: '0.88rem',
                     fontWeight: 600
                   }}
                 />
               </div>
             </div>
 
-            {/* Email & Phone */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+            {/* Email & Phone Responsive Grid */}
+            <div className="mobile-stack-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-sub)', marginBottom: '6px', fontWeight: 700 }}>
+                <label style={{ display: 'block', fontSize: '0.78rem', color: 'var(--text-sub)', marginBottom: '4px', fontWeight: 700 }}>
                   {t('emailLabel')} *
                 </label>
                 <div style={{ position: 'relative' }}>
-                  <Mail size={18} color="var(--text-muted)" style={{ position: 'absolute', left: '12px', top: '12px' }} />
+                  <Mail size={16} color="var(--text-muted)" style={{ position: 'absolute', left: '12px', top: '11px' }} />
                   <input
                     type="email"
                     required
@@ -179,12 +180,12 @@ export const InquiryModal = ({ vehicle, onClose }) => {
                     placeholder="name@domain.com"
                     style={{
                       width: '100%',
-                      padding: '10px 12px 10px 40px',
+                      padding: '9px 12px 9px 36px',
                       background: 'var(--bg-surface)',
                       border: '1px solid var(--border-dark)',
                       borderRadius: '8px',
                       color: '#FFFFFF',
-                      fontSize: '0.9rem',
+                      fontSize: '0.88rem',
                       fontWeight: 600
                     }}
                   />
@@ -192,11 +193,11 @@ export const InquiryModal = ({ vehicle, onClose }) => {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-sub)', marginBottom: '6px', fontWeight: 700 }}>
+                <label style={{ display: 'block', fontSize: '0.78rem', color: 'var(--text-sub)', marginBottom: '4px', fontWeight: 700 }}>
                   {t('phoneLabel')} *
                 </label>
                 <div style={{ position: 'relative' }}>
-                  <Phone size={18} color="var(--text-muted)" style={{ position: 'absolute', left: '12px', top: '12px' }} />
+                  <Phone size={16} color="var(--text-muted)" style={{ position: 'absolute', left: '12px', top: '11px' }} />
                   <input
                     type="tel"
                     required
@@ -205,12 +206,12 @@ export const InquiryModal = ({ vehicle, onClose }) => {
                     placeholder="+1 (555) 000-0000"
                     style={{
                       width: '100%',
-                      padding: '10px 12px 10px 40px',
+                      padding: '9px 12px 9px 36px',
                       background: 'var(--bg-surface)',
                       border: '1px solid var(--border-dark)',
                       borderRadius: '8px',
                       color: '#FFFFFF',
-                      fontSize: '0.9rem',
+                      fontSize: '0.88rem',
                       fontWeight: 600
                     }}
                   />
@@ -220,11 +221,11 @@ export const InquiryModal = ({ vehicle, onClose }) => {
 
             {/* Country */}
             <div>
-              <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-sub)', marginBottom: '6px', fontWeight: 700 }}>
+              <label style={{ display: 'block', fontSize: '0.78rem', color: 'var(--text-sub)', marginBottom: '4px', fontWeight: 700 }}>
                 {t('destinationCountry')} *
               </label>
               <div style={{ position: 'relative' }}>
-                <Globe size={18} color="var(--text-muted)" style={{ position: 'absolute', left: '12px', top: '12px' }} />
+                <Globe size={16} color="var(--text-muted)" style={{ position: 'absolute', left: '12px', top: '11px' }} />
                 <input
                   type="text"
                   required
@@ -233,12 +234,12 @@ export const InquiryModal = ({ vehicle, onClose }) => {
                   placeholder="e.g. United Kingdom (Southampton Port)"
                   style={{
                     width: '100%',
-                    padding: '10px 12px 10px 40px',
+                    padding: '9px 12px 9px 36px',
                     background: 'var(--bg-surface)',
                     border: '1px solid var(--border-dark)',
                     borderRadius: '8px',
                     color: '#FFFFFF',
-                    fontSize: '0.9rem',
+                    fontSize: '0.88rem',
                     fontWeight: 600
                   }}
                 />
@@ -247,7 +248,7 @@ export const InquiryModal = ({ vehicle, onClose }) => {
 
             {/* Message */}
             <div>
-              <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-sub)', marginBottom: '6px', fontWeight: 700 }}>
+              <label style={{ display: 'block', fontSize: '0.78rem', color: 'var(--text-sub)', marginBottom: '4px', fontWeight: 700 }}>
                 {t('commentsLabel')}
               </label>
               <textarea
@@ -257,12 +258,12 @@ export const InquiryModal = ({ vehicle, onClose }) => {
                 placeholder="Requesting CIF shipping cost, inspection report, or export documents..."
                 style={{
                   width: '100%',
-                  padding: '10px 12px',
+                  padding: '9px 12px',
                   background: 'var(--bg-surface)',
                   border: '1px solid var(--border-dark)',
                   borderRadius: '8px',
                   color: '#FFFFFF',
-                  fontSize: '0.9rem',
+                  fontSize: '0.88rem',
                   fontWeight: 600
                 }}
               />
@@ -272,16 +273,16 @@ export const InquiryModal = ({ vehicle, onClose }) => {
               type="submit"
               disabled={isSubmitting}
               className="btn-gradient"
-              style={{ padding: '14px', justifyContent: 'center', marginTop: '6px', fontSize: '0.95rem' }}
+              style={{ padding: '12px', justifyContent: 'center', marginTop: '4px', fontSize: '0.9rem' }}
             >
               {isSubmitting ? (
                 <>
-                  <Loader2 size={18} className="animate-spin" />
+                  <Loader2 size={16} className="animate-spin" />
                   <span>Connecting to Firebase Cloud...</span>
                 </>
               ) : (
                 <>
-                  <Send size={18} />
+                  <Send size={16} />
                   <span>{t('submitQuoteBtn')}</span>
                 </>
               )}
