@@ -5,8 +5,8 @@ import { loginAdminWithFirebase } from '../firebase/config';
 
 export const AdminLoginModal = ({ onClose, onLoginSuccess }) => {
   const { setIsAdminLoggedIn, t } = useLanguage();
-  const [email, setEmail] = useState('admin@ashgarage-jp.com');
-  const [password, setPassword] = useState('admin123pass');
+  const [email, setEmail] = useState('hasrox14@gmail.com');
+  const [password, setPassword] = useState('hassan14');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -23,15 +23,15 @@ export const AdminLoginModal = ({ onClose, onLoginSuccess }) => {
       onClose();
     } catch (err) {
       console.warn("Firebase Auth Login Warning:", err);
-      // Fallback check for local convenience
-      if (password === 'admin123pass' || password === 'admin123' || password === 'admin') {
+      // Fallback check for convenience
+      if (password === 'hassan14' || password === 'admin123' || password === 'admin') {
         setIsAdminLoggedIn(true);
         setIsSubmitting(false);
         onLoginSuccess();
         onClose();
       } else {
         setIsSubmitting(false);
-        setErrorMsg(err.message || 'Invalid Firebase email or password credentials.');
+        setErrorMsg(err.message || 'Invalid Firebase credentials.');
       }
     }
   };
@@ -72,7 +72,7 @@ export const AdminLoginModal = ({ onClose, onLoginSuccess }) => {
         <form onSubmit={handleSubmit} style={{ padding: '24px', display: 'grid', gap: '16px' }}>
           
           <p style={{ fontSize: '0.85rem', color: 'var(--text-sub)', lineHeight: 1.5, fontWeight: 500 }}>
-            Enter your authorized Firebase administrator email and password credentials.
+            Enter your authorized administrator email and password to open the Admin Portal.
           </p>
 
           {errorMsg && (
@@ -108,7 +108,7 @@ export const AdminLoginModal = ({ onClose, onLoginSuccess }) => {
                   setEmail(e.target.value);
                   setErrorMsg('');
                 }}
-                placeholder="admin@ashgarage-jp.com"
+                placeholder="hasrox14@gmail.com"
                 style={{
                   width: '100%',
                   padding: '10px 12px 10px 40px',
@@ -126,7 +126,7 @@ export const AdminLoginModal = ({ onClose, onLoginSuccess }) => {
           {/* Admin Password */}
           <div>
             <label style={{ display: 'block', fontSize: '0.78rem', color: 'var(--text-sub)', marginBottom: '6px', fontWeight: 700 }}>
-              Firebase Admin Password *
+              Admin Password *
             </label>
             <div style={{ position: 'relative' }}>
               <KeyRound size={18} color="var(--text-muted)" style={{ position: 'absolute', left: '12px', top: '12px' }} />
@@ -155,7 +155,7 @@ export const AdminLoginModal = ({ onClose, onLoginSuccess }) => {
 
           {/* Credentials Hint */}
           <div style={{ fontSize: '0.75rem', color: 'var(--primary-orange)', background: 'var(--orange-dim)', padding: '8px 12px', borderRadius: '6px', fontWeight: 600 }}>
-            Default Admin: <strong>admin@ashgarage-jp.com</strong> / <strong>admin123pass</strong>
+            Admin Account: <strong>hasrox14@gmail.com</strong> / <strong>hassan14</strong>
           </div>
 
           <button type="submit" disabled={isSubmitting} className="btn-gradient" style={{ padding: '12px', justifyContent: 'center', marginTop: '4px' }}>
@@ -165,7 +165,7 @@ export const AdminLoginModal = ({ onClose, onLoginSuccess }) => {
                 <span>Authenticating with Firebase...</span>
               </>
             ) : (
-              <span>Login via Firebase Auth</span>
+              <span>Login to Admin Portal</span>
             )}
           </button>
 
