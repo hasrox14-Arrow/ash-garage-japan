@@ -37,7 +37,7 @@ export const NewArrivalsCarousel = ({ vehicles, onViewDetails, onInquire }) => {
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       style={{
-        padding: '40px 16px',
+        padding: '36px 16px',
         background: 'linear-gradient(180deg, var(--bg-obsidian) 0%, rgba(255,87,34,0.04) 50%, var(--bg-obsidian) 100%)',
         borderTop: '1px solid var(--border-dark)',
         borderBottom: '1px solid var(--border-dark)',
@@ -52,12 +52,12 @@ export const NewArrivalsCarousel = ({ vehicles, onViewDetails, onInquire }) => {
           display: 'flex',
           justify: 'space-between',
           alignItems: 'center',
-          marginBottom: '24px',
+          marginBottom: '20px',
           flexWrap: 'wrap',
           gap: '12px'
         }}>
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
               <span className="badge-orange" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '0.68rem', padding: '3px 8px' }}>
                 <Flame size={12} />
                 NEW ARRIVALS — JAPAN EXPORT YARD
@@ -68,7 +68,7 @@ export const NewArrivalsCarousel = ({ vehicles, onViewDetails, onInquire }) => {
             </div>
             <h2 style={{
               fontFamily: 'var(--font-heading)',
-              fontSize: 'clamp(1.4rem, 3.5vw, 2.1rem)',
+              fontSize: 'clamp(1.3rem, 3.5vw, 2.1rem)',
               fontWeight: 900,
               color: '#FFFFFF',
               letterSpacing: '0.5px'
@@ -77,7 +77,7 @@ export const NewArrivalsCarousel = ({ vehicles, onViewDetails, onInquire }) => {
             </h2>
           </div>
 
-          {/* Navigation Controls (Arrows + Dot Indicators) */}
+          {/* Navigation Controls (Arrows) */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <div style={{ display: 'flex', gap: '6px' }}>
               <button
@@ -101,26 +101,37 @@ export const NewArrivalsCarousel = ({ vehicles, onViewDetails, onInquire }) => {
           </div>
         </div>
 
-        {/* Carousel Single-Row Viewport */}
+        {/* Carousel Viewport: 1 Car on Mobile, 3 Cars on Desktop */}
         <div style={{ position: 'relative', overflow: 'hidden', borderRadius: '14px' }}>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-            gap: '18px'
-          }}>
-            {[
-              newArrivals[currentIndex],
-              newArrivals[(currentIndex + 1) % newArrivals.length],
-              newArrivals[(currentIndex + 2) % newArrivals.length]
-            ].map((v, idx) => (
-              <div key={v.id + idx} style={{ transition: 'all 0.5s ease' }}>
-                <VehicleCard
-                  vehicle={v}
-                  onViewDetails={onViewDetails}
-                  onInquire={onInquire}
-                />
-              </div>
-            ))}
+          <div className="carousel-responsive-grid">
+            
+            {/* Card 1: Always Visible */}
+            <div style={{ transition: 'all 0.4s ease' }}>
+              <VehicleCard
+                vehicle={newArrivals[currentIndex]}
+                onViewDetails={onViewDetails}
+                onInquire={onInquire}
+              />
+            </div>
+
+            {/* Card 2: Visible on Desktop, Hidden on Mobile */}
+            <div className="desktop-carousel-card" style={{ transition: 'all 0.4s ease' }}>
+              <VehicleCard
+                vehicle={newArrivals[(currentIndex + 1) % newArrivals.length]}
+                onViewDetails={onViewDetails}
+                onInquire={onInquire}
+              />
+            </div>
+
+            {/* Card 3: Visible on Desktop, Hidden on Mobile */}
+            <div className="desktop-carousel-card" style={{ transition: 'all 0.4s ease' }}>
+              <VehicleCard
+                vehicle={newArrivals[(currentIndex + 2) % newArrivals.length]}
+                onViewDetails={onViewDetails}
+                onInquire={onInquire}
+              />
+            </div>
+
           </div>
         </div>
 
