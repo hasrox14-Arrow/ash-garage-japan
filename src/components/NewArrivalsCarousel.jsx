@@ -59,7 +59,7 @@ export const NewArrivalsCarousel = ({ vehicles, onViewDetails, onInquire }) => {
                 NEW ARRIVALS — JAPAN EXPORT YARD
               </span>
               <span style={{ fontSize: '0.7rem', color: 'var(--primary-orange)', fontWeight: 800 }}>
-                ● 3-Cars Mobile Auto-Slide
+                ● 2-Cars Mobile Auto-Slide (2s)
               </span>
             </div>
             <h2 style={{
@@ -97,7 +97,7 @@ export const NewArrivalsCarousel = ({ vehicles, onViewDetails, onInquire }) => {
           </div>
         </div>
 
-        {/* Seamless Track Slider (3 cards per row on both Desktop & Mobile) */}
+        {/* Seamless Track Slider (3 cards on Desktop, 2 cards on Mobile) */}
         <div 
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
@@ -105,9 +105,9 @@ export const NewArrivalsCarousel = ({ vehicles, onViewDetails, onInquire }) => {
         >
           <div className="carousel-track-wrapper" style={{
             display: 'flex',
-            gap: '8px',
+            gap: '10px',
             transition: 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)',
-            transform: `translateX(calc(-${currentIndex} * (var(--carousel-card-width) + 8px)))`
+            transform: `translateX(calc(-${currentIndex} * (var(--carousel-card-width) + 10px)))`
           }}>
             {newArrivals.map((vehicle, idx) => (
               <div 
