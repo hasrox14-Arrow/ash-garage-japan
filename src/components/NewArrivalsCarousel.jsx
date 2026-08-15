@@ -34,7 +34,7 @@ export const NewArrivalsCarousel = ({ vehicles, onViewDetails, onInquire }) => {
 
   return (
     <section style={{
-      padding: '36px 12px',
+      padding: '36px 16px',
       background: 'linear-gradient(180deg, var(--bg-obsidian) 0%, rgba(255,87,34,0.04) 50%, var(--bg-obsidian) 100%)',
       borderTop: '1px solid var(--border-dark)',
       borderBottom: '1px solid var(--border-dark)',
@@ -59,7 +59,7 @@ export const NewArrivalsCarousel = ({ vehicles, onViewDetails, onInquire }) => {
                 NEW ARRIVALS — JAPAN EXPORT YARD
               </span>
               <span style={{ fontSize: '0.7rem', color: 'var(--primary-orange)', fontWeight: 800 }}>
-                ● 2-Cars Mobile Auto-Slide (2s)
+                ● Auto-Sliding (2s)
               </span>
             </div>
             <h2 style={{
@@ -97,7 +97,7 @@ export const NewArrivalsCarousel = ({ vehicles, onViewDetails, onInquire }) => {
           </div>
         </div>
 
-        {/* Seamless Track Slider (3 cards on Desktop, 2 cards on Mobile) */}
+        {/* Seamless Track Slider (3 cards on Desktop, 1 full-width card on Mobile) */}
         <div 
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
@@ -105,9 +105,9 @@ export const NewArrivalsCarousel = ({ vehicles, onViewDetails, onInquire }) => {
         >
           <div className="carousel-track-wrapper" style={{
             display: 'flex',
-            gap: '10px',
+            gap: '18px',
             transition: 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)',
-            transform: `translateX(calc(-${currentIndex} * (var(--carousel-card-width) + 10px)))`
+            transform: `translateX(calc(-${currentIndex} * (var(--carousel-card-width) + 18px)))`
           }}>
             {newArrivals.map((vehicle, idx) => (
               <div 
