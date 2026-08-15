@@ -34,6 +34,9 @@
   --text-sub: #E2E8F0;
   --text-muted: #94A3B8;
 
+  /* Carousel Desktop 3-Card Width */
+  --carousel-card-width: calc((100% - 36px) / 3);
+
   /* Ambient Glow Multi-Layer Shadows */
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.5);
   --shadow-md: 0 10px 30px -5px rgba(255, 87, 34, 0.15), 0 4px 12px -2px rgba(0, 0, 0, 0.5);
@@ -234,11 +237,9 @@ html, body {
   border-radius: 5px;
 }
 
-/* Carousel Responsive Grid */
-.carousel-responsive-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
+/* Track Slide Card Sizing */
+.carousel-card-slide {
+  width: var(--carousel-card-width);
 }
 
 /* Dark Modals */
@@ -309,21 +310,16 @@ html, body {
    100% PERFECT MOBILE RESPONSIVE MEDIA QUERIES
 ---------------------------------------------------- */
 @media (max-width: 768px) {
+  :root {
+    --carousel-card-width: 100%;
+  }
+
   .desktop-nav {
     display: none !important;
   }
 
   .desktop-only-badge {
     display: none !important;
-  }
-
-  .desktop-carousel-card {
-    display: none !important;
-  }
-
-  .carousel-responsive-grid {
-    grid-template-columns: 1fr !important;
-    gap: 0 !important;
   }
 
   .mobile-menu-btn {

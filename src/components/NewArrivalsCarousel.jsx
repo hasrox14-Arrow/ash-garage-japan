@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { VehicleCard } from './VehicleCard';
 import { ChevronLeft, ChevronRight, Flame } from 'lucide-react';
@@ -8,10 +8,10 @@ export const NewArrivalsCarousel = ({ vehicles, onViewDetails, onInquire }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
-  // Filter new arrivals or take first 6 vehicles
-  const newArrivals = vehicles.filter(v => v.isNewArrival || v.isFeatured).slice(0, 6);
+  // Filter new arrivals or take top 8 vehicles
+  const newArrivals = vehicles.filter(v => v.isNewArrival || v.isFeatured).slice(0, 8);
 
-  // 2-Second Automatic Sliding Interval with Hover Pause
+  // 2-Second Automatic Sliding Interval for both Desktop and Mobile
   useEffect(() => {
     if (newArrivals.length <= 1 || isPaused) return;
 
@@ -33,18 +33,14 @@ export const NewArrivalsCarousel = ({ vehicles, onViewDetails, onInquire }) => {
   };
 
   return (
-    <section 
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
-      style={{
-        padding: '36px 16px',
-        background: 'linear-gradient(180deg, var(--bg-obsidian) 0%, rgba(255,87,34,0.04) 50%, var(--bg-obsidian) 100%)',
-        borderTop: '1px solid var(--border-dark)',
-        borderBottom: '1px solid var(--border-dark)',
-        width: '100%',
-        overflowX: 'hidden'
-      }}
-    >
+    <section style={{
+      padding: '36px 16px',
+      background: 'linear-gradient(180deg, var(--bg-obsidian) 0%, rgba(255,87,34,0.04) 50%, var(--bg-obsidian) 100%)',
+      borderTop: '1px solid var(--border-dark)',
+      borderBottom: '1px solid var(--border-dark)',
+      width: '100%',
+      overflowX: 'hidden'
+    }}>
       <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
         
         {/* Section Header */}
@@ -63,7 +59,7 @@ export const NewArrivalsCarousel = ({ vehicles, onViewDetails, onInquire }) => {
                 NEW ARRIVALS — JAPAN EXPORT YARD
               </span>
               <span style={{ fontSize: '0.7rem', color: 'var(--primary-orange)', fontWeight: 800 }}>
-                ● Auto-Sliding (2s)
+                ● Live 2s Auto-Slide
               </span>
             </div>
             <h2 style={{
@@ -77,7 +73,7 @@ export const NewArrivalsCarousel = ({ vehicles, onViewDetails, onInquire }) => {
             </h2>
           </div>
 
-          {/* Navigation Controls (Arrows) */}
+          {/* Arrow Navigation Controls */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <div style={{ display: 'flex', gap: '6px' }}>
               <button
@@ -101,37 +97,31 @@ export const NewArrivalsCarousel = ({ vehicles, onViewDetails, onInquire }) => {
           </div>
         </div>
 
-        {/* Carousel Viewport: 1 Car on Mobile, 3 Cars on Desktop */}
-        <div style={{ position: 'relative', overflow: 'hidden', borderRadius: '14px' }}>
-          <div className="carousel-responsive-grid">
-            
-            {/* Card 1: Always Visible */}
-            <div style={{ transition: 'all 0.4s ease' }}>
-              <VehicleCard
-                vehicle={newArrivals[currentIndex]}
-                onViewDetails={onViewDetails}
-                onInquire={onInquire}
-              />
-            </div>
-
-            {/* Card 2: Visible on Desktop, Hidden on Mobile */}
-            <div className="desktop-carousel-card" style={{ transition: 'all 0.4s ease' }}>
-              <VehicleCard
-                vehicle={newArrivals[(currentIndex + 1) % newArrivals.length]}
-                onViewDetails={onViewDetails}
-                onInquire={onInquire}
-              />
-            </div>
-
-            {/* Card 3: Visible on Desktop, Hidden on Mobile */}
-            <div className="desktop-carousel-card" style={{ transition: 'all 0.4s ease' }}>
-              <VehicleCard
-                vehicle={newArrivals[(currentIndex + 2) % newArrivals.length]}
-                onViewDetails={onViewDetails}
-                onInquire={onInquire}
-              />
-            </div>
-
+        {/* Seamless Track Slider (Desktop 3 cards, Mobile 1 card) */}
+        <div 
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          style={{ position: 'relative', overflow: 'hidden', borderRadius: '14px', width: '100%' }}
+        >
+          <div className="carousel-track-wrapper" style={{
+            display: 'flex',
+            gap: '18px',
+            transition: 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)',
+            transform: `translateX(calc(-${currentIndex} * (var(--carousel-card-width) + 18px)))`
+          }}>
+            {newArrivals.map((vehicle, idx) => (
+              <div 
+                key={vehicle.id || idx}
+                className="carousel-card-slide"
+                style={{ flexShrink: 0 }}
+              >
+                <VehicleCard
+                  vehicle={vehicle}
+                  onViewDetails={onViewDetails}
+                  onInquire={onInquire}
+                />
+              </div>
+            ))}
           </div>
         </div>
 
