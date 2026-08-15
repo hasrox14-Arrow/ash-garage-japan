@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { VehicleCard } from './VehicleCard';
 import { ChevronLeft, ChevronRight, Flame } from 'lucide-react';
@@ -34,7 +34,7 @@ export const NewArrivalsCarousel = ({ vehicles, onViewDetails, onInquire }) => {
 
   return (
     <section style={{
-      padding: '36px 16px',
+      padding: '36px 12px',
       background: 'linear-gradient(180deg, var(--bg-obsidian) 0%, rgba(255,87,34,0.04) 50%, var(--bg-obsidian) 100%)',
       borderTop: '1px solid var(--border-dark)',
       borderBottom: '1px solid var(--border-dark)',
@@ -59,7 +59,7 @@ export const NewArrivalsCarousel = ({ vehicles, onViewDetails, onInquire }) => {
                 NEW ARRIVALS — JAPAN EXPORT YARD
               </span>
               <span style={{ fontSize: '0.7rem', color: 'var(--primary-orange)', fontWeight: 800 }}>
-                ● Live 2s Auto-Slide
+                ● 3-Cars Mobile Auto-Slide
               </span>
             </div>
             <h2 style={{
@@ -97,7 +97,7 @@ export const NewArrivalsCarousel = ({ vehicles, onViewDetails, onInquire }) => {
           </div>
         </div>
 
-        {/* Seamless Track Slider (Desktop 3 cards, Mobile 1 card) */}
+        {/* Seamless Track Slider (3 cards per row on both Desktop & Mobile) */}
         <div 
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
@@ -105,9 +105,9 @@ export const NewArrivalsCarousel = ({ vehicles, onViewDetails, onInquire }) => {
         >
           <div className="carousel-track-wrapper" style={{
             display: 'flex',
-            gap: '18px',
+            gap: '8px',
             transition: 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)',
-            transform: `translateX(calc(-${currentIndex} * (var(--carousel-card-width) + 18px)))`
+            transform: `translateX(calc(-${currentIndex} * (var(--carousel-card-width) + 8px)))`
           }}>
             {newArrivals.map((vehicle, idx) => (
               <div 
