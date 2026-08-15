@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { Globe, DollarSign, Menu, X, ShieldCheck, ChevronDown, ShieldAlert, Sparkles } from 'lucide-react';
+import { Globe, DollarSign, Menu, X, ShieldCheck, ChevronDown, ShieldAlert, Sparkles, Flame } from 'lucide-react';
 
 export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
   const { lang, setLang, currency, toggleCurrency, isAdminLoggedIn, t } = useLanguage();
@@ -10,11 +10,7 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
   const handleNavClick = (tab) => {
     setActiveTab(tab);
     setMobileMenuOpen(false);
-    
-    const section = document.getElementById(tab);
-    if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
-    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -29,7 +25,7 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
       width: '100%',
       overflowX: 'hidden'
     }}>
-      {/* Top Banner Notice - Responsive Mobile Layout */}
+      {/* Top Banner Notice */}
       <div style={{
         background: isAdminLoggedIn ? 'rgba(229, 9, 20, 0.2)' : 'rgba(255, 87, 34, 0.12)',
         borderBottom: '1px solid #1E1E28',
@@ -110,8 +106,8 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
           </div>
         </div>
 
-        {/* Desktop Navigation Links */}
-        <nav className="desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: '28px' }}>
+        {/* 3 Main Pages Navigation Links */}
+        <nav className="desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
           <button 
             onClick={() => handleNavClick('home')}
             style={{
@@ -141,17 +137,17 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
           </button>
 
           <button 
-            onClick={() => handleNavClick('process')}
+            onClick={() => handleNavClick('contact')}
             style={{
               background: 'none',
               border: 'none',
-              color: activeTab === 'process' ? 'var(--primary-orange)' : 'var(--text-sub)',
+              color: activeTab === 'contact' ? 'var(--primary-orange)' : 'var(--text-sub)',
               fontWeight: 800,
               cursor: 'pointer',
               fontSize: '0.95rem'
             }}
           >
-            {t('navExportProcess')}
+            Contact Us
           </button>
 
           {isAdminLoggedIn && (
@@ -355,11 +351,11 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
           </button>
 
           <button
-            onClick={() => handleNavClick('process')}
+            onClick={() => handleNavClick('contact')}
             style={{
-              background: activeTab === 'process' ? 'var(--orange-dim)' : 'transparent',
-              border: activeTab === 'process' ? '1px solid var(--border-orange)' : '1px solid transparent',
-              color: activeTab === 'process' ? 'var(--primary-orange)' : '#FFFFFF',
+              background: activeTab === 'contact' ? 'var(--orange-dim)' : 'transparent',
+              border: activeTab === 'contact' ? '1px solid var(--border-orange)' : '1px solid transparent',
+              color: activeTab === 'contact' ? 'var(--primary-orange)' : '#FFFFFF',
               padding: '10px 14px',
               borderRadius: '8px',
               fontWeight: 700,
@@ -367,7 +363,7 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
               cursor: 'pointer'
             }}
           >
-            {t('navExportProcess')}
+            Contact Us
           </button>
         </div>
       )}

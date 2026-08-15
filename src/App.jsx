@@ -8,12 +8,13 @@ import { VehicleDetailModal } from './components/VehicleDetailModal';
 import { InquiryModal } from './components/InquiryModal';
 import { ExportProcess } from './components/ExportProcess';
 import { Footer } from './components/Footer';
+import { ContactPage } from './components/ContactPage';
 import { AdminLoginModal } from './components/AdminLoginModal';
 import { AdminDashboard } from './components/AdminDashboard';
 
 function MainApp() {
-  const { vehicles, isAdminLoggedIn } = useLanguage();
-  const [activeTab, setActiveTab] = useState('home'); // 'home' | 'inventory' | 'process' | 'admin'
+  const { vehicles, isAdminLoggedIn, t } = useLanguage();
+  const [activeTab, setActiveTab] = useState('home'); // 'home' | 'inventory' | 'contact' | 'admin'
   const [searchQuery, setSearchQuery] = useState('');
   const [filters, setFilters] = useState({
     make: '',
@@ -74,46 +75,97 @@ function MainApp() {
         onAdminClick={() => setShowAdminLogin(true)}
       />
 
-      {/* VIEW 1: ADMIN DASHBOARD */}
-      {activeTab === 'admin' && isAdminLoggedIn ? (
-        <AdminDashboard onLogout={() => setActiveTab('home')} />
-      ) : (
-        /* VIEW 2: PUBLIC BUYER PORTAL */
+      {/* PAGE 1: HOMEPAGE */}
+      {activeTab === 'home' && (
         <>
-          {/* Hero Banner */}
+          {/* Hero Banner featuring Logo Emblem */}
           <Hero
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
             onBrowseClick={() => {
-              const invSection = document.getElementById('inventory');
-              if (invSection) invSection.scrollIntoView({ behavior: 'smooth' });
+              setActiveTab('inventory');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
             onInquireClick={() => setInquiryVehicle(vehicles[0])}
           />
 
-          {/* Main Inventory Section */}
-          <main id="inventory" style={{ maxWidth: '1280px', margin: '0 auto', padding: '60px 24px', flex: 1, width: '100%' }}>
+          {/* Featured Preview Inventory Section */}
+          <main style={{ maxWidth: '1280px', margin: '0 auto', padding: '60px 20px', flex: 1, width: '100%' }}>
             
-            {/* Filter Controls */}
-            <VehicleFilter
-              filters={filters}
-              setFilters={setFilters}
-              resetFilters={resetFilters}
-              totalResults={filteredVehicles.length}
-            />
+            <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+              <span className="badge-orange" style={{ marginBottom: '8px', display: 'inline-block' }}>
+                FEATURED STOCK
+              </span>
+              <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(1.8rem, 4vw, 2.5rem)', fontWeight: 900, color: '#FFFFFF' }}>
+                PREMIUM JAPANESE INVENTORY
+              </h2>
+            </div>
 
-            {/* Inventory Cards Grid */}
             <VehicleGrid
-              vehicles={filteredVehicles}
+              vehicles={vehicles.slice(0, 6)}
               onViewDetails={(vehicle) => setSelectedVehicle(vehicle)}
               onInquire={(vehicle) => setInquiryVehicle(vehicle)}
             />
 
+            <div style={{ textAlign: 'center', marginTop: '40px' }}>
+              <button
+                onClick={() => {
+                  setActiveTab('inventory');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className="btn-gradient"
+                style={{ padding: '12px 32px', fontSize: '0.95rem' }}
+              >
+                Browse Full Vehicle Inventory ({vehicles.length} Cars)
+              </button>
+            </div>
+
           </main>
 
-          {/* Export Process Guide */}
+          {/* Export Process Workflow Guide */}
           <ExportProcess />
         </>
+      )}
+
+      {/* PAGE 2: INVENTORY PAGE */}
+      {activeTab === 'inventory' && (
+        <main style={{ maxWidth: '1280px', margin: '0 auto', padding: '50px 20px 80px', flex: 1, width: '100%' }}>
+          
+          <div style={{ textAlign: 'center', marginBottom: '36px' }}>
+            <span className="badge-orange" style={{ marginBottom: '8px', display: 'inline-block' }}>
+              JAPAN EXPORT INVENTORY
+            </span>
+            <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 900, color: '#FFFFFF' }}>
+              ALL AVAILABLE VEHICLES
+            </h1>
+          </div>
+
+          {/* Filter Controls */}
+          <VehicleFilter
+            filters={filters}
+            setFilters={setFilters}
+            resetFilters={resetFilters}
+            totalResults={filteredVehicles.length}
+          />
+
+          {/* Inventory Cards Grid */}
+          <VehicleGrid
+            vehicles={filteredVehicles}
+            onViewDetails={(vehicle) => setSelectedVehicle(vehicle)}
+            onInquire={(vehicle) => setInquiryVehicle(vehicle)}
+          />
+
+        </main>
+      )}
+
+      {/* PAGE 3: CONTACT US PAGE */}
+      {activeTab === 'contact' && (
+        <ContactPage />
+      )}
+
+      {/* ADMIN DASHBOARD WORKSPACE */}
+      {activeTab === 'admin' && isAdminLoggedIn && (
+        <AdminDashboard onLogout={() => setActiveTab('home')} />
       )}
 
       {/* Footer */}
