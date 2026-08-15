@@ -11,7 +11,7 @@ const LanguageContext = createContext();
 
 export const LanguageProvider = ({ children }) => {
   const [lang, setLang] = useState('en');
-  const [currency, setCurrency] = useState('USD');
+  const [currency, setCurrency] = useState('JPY'); // Default currency set to JPY (¥)
   const [showLangModal, setShowLangModal] = useState(false);
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
 
@@ -64,7 +64,6 @@ export const LanguageProvider = ({ children }) => {
       stockNo: vehicleData.stockNo || docId
     };
 
-    // Update local state immediately
     const existingIndex = vehicles.findIndex(v => v.id === docId || v.stockNo === docId);
     let updated;
     if (existingIndex >= 0) {
@@ -76,7 +75,6 @@ export const LanguageProvider = ({ children }) => {
     setVehicles(updated);
     localStorage.setItem('ash_garage_custom_vehicles', JSON.stringify(updated));
 
-    // Push to Cloud Firestore so all live users see the new/edited vehicle immediately
     await saveVehicleToFirestore(fullVehicle);
   };
 
@@ -86,7 +84,6 @@ export const LanguageProvider = ({ children }) => {
     setVehicles(updated);
     localStorage.setItem('ash_garage_custom_vehicles', JSON.stringify(updated));
 
-    // Delete from Cloud Firestore
     await deleteVehicleFromFirestore(vehicleId);
   };
 
@@ -116,7 +113,7 @@ export const LanguageProvider = ({ children }) => {
   };
 
   const toggleCurrency = () => {
-    setCurrency((prev) => (prev === 'USD' ? 'JPY' : 'USD'));
+    setCurrency((prev) => (prev === 'JPY' ? 'USD' : 'JPY'));
   };
 
   const t = (key, params = {}) => {
