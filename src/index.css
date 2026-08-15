@@ -1,28 +1,41 @@
-/* ASH GARAGE JAPAN - Light Modern Aesthetic System */
+/* ASH GARAGE JAPAN - Rich Vibrant Design System with Teal & Crimson Accents */
 :root {
+  /* Crimson Red Accent */
   --primary-red: #E50914;
   --primary-red-hover: #DC2626;
   --red-glow: rgba(229, 9, 20, 0.25);
   --red-dim: rgba(229, 9, 20, 0.08);
 
+  /* Rich Vibrant Teal & Cyan Accent */
+  --primary-teal: #0D9488;
+  --primary-teal-hover: #0F766E;
+  --teal-light: #14B8A6;
+  --teal-cyan: #06B6D4;
+  --teal-dim: rgba(13, 148, 136, 0.1);
+  --teal-glow: rgba(20, 184, 166, 0.35);
+  --bg-teal-subtle: #F0FDFA;
+
+  /* Surfaces & Backgrounds */
   --bg-light: #F8FAFC;
   --bg-card: #FFFFFF;
-  --bg-card-hover: #FFFFFF;
   --bg-surface: #F1F5F9;
   --bg-surface-hover: #E2E8F0;
 
+  /* Borders */
   --border-light: #E2E8F0;
-  --border-subtle: #CBD5E1;
+  --border-teal: rgba(13, 148, 136, 0.35);
   --border-red: rgba(229, 9, 20, 0.35);
 
+  /* Typography */
   --text-dark: #0F172A;
   --text-sub: #334155;
   --text-muted: #64748B;
   --text-white: #FFFFFF;
 
+  /* Elevated Multi-Layer Shadows with Teal/Red Ambient Glow */
   --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
-  --shadow-md: 0 10px 30px -5px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.04);
-  --shadow-hover: 0 20px 40px -10px rgba(229, 9, 20, 0.15), 0 8px 16px -4px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 10px 30px -5px rgba(13, 148, 136, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.04);
+  --shadow-hover: 0 20px 40px -10px rgba(13, 148, 136, 0.2), 0 8px 16px -4px rgba(229, 9, 20, 0.12);
 
   --font-heading: 'Plus Jakarta Sans', 'Outfit', 'Noto Sans JP', sans-serif;
   --font-body: 'Inter', 'Noto Sans JP', sans-serif;
@@ -57,20 +70,28 @@ html, body {
   background: var(--bg-light);
 }
 ::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
+  background: #0D9488;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--primary-red);
 }
 
-/* Light Glassmorphism Cards */
+/* Glassmorphism Panels with Teal Tint */
 .glass-panel {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border-light);
   box-shadow: var(--shadow-md);
+  border-radius: 16px;
+}
+
+.glass-panel-teal {
+  background: rgba(240, 253, 250, 0.95);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-teal);
+  box-shadow: 0 10px 30px rgba(13, 148, 136, 0.12);
   border-radius: 16px;
 }
 
@@ -84,7 +105,7 @@ html, body {
 
 /* Buttons */
 .btn-red {
-  background: var(--primary-red);
+  background: linear-gradient(135deg, #E50914 0%, #DC2626 100%);
   color: #FFFFFF;
   font-family: var(--font-heading);
   font-weight: 700;
@@ -99,15 +120,42 @@ html, body {
   justify-content: center;
   gap: 8px;
   transition: var(--transition-fast);
-  box-shadow: 0 4px 14px rgba(229, 9, 20, 0.3);
+  box-shadow: 0 4px 14px rgba(229, 9, 20, 0.35);
   text-decoration: none;
   touch-action: manipulation;
 }
 
 .btn-red:hover, .btn-red:active {
-  background: var(--primary-red-hover);
+  background: linear-gradient(135deg, #DC2626 0%, #B91C1C 100%);
   transform: translateY(-2px);
   box-shadow: 0 8px 22px rgba(229, 9, 20, 0.45);
+}
+
+.btn-teal {
+  background: linear-gradient(135deg, #0D9488 0%, #0F766E 100%);
+  color: #FFFFFF;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  min-height: 44px;
+  padding: 10px 22px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: var(--transition-fast);
+  box-shadow: 0 4px 14px rgba(13, 148, 136, 0.35);
+  text-decoration: none;
+  touch-action: manipulation;
+}
+
+.btn-teal:hover, .btn-teal:active {
+  background: linear-gradient(135deg, #0F766E 0%, #115E59 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(13, 148, 136, 0.45);
 }
 
 .btn-outline {
@@ -130,15 +178,15 @@ html, body {
 }
 
 .btn-outline:hover, .btn-outline:active {
-  border-color: var(--primary-red);
-  color: var(--primary-red);
-  background: var(--red-dim);
-  box-shadow: 0 4px 12px rgba(229, 9, 20, 0.15);
+  border-color: var(--primary-teal);
+  color: var(--primary-teal);
+  background: var(--teal-dim);
+  box-shadow: 0 4px 12px rgba(13, 148, 136, 0.15);
 }
 
 /* Badges */
 .badge-red {
-  background: var(--primary-red);
+  background: linear-gradient(135deg, #E50914 0%, #DC2626 100%);
   color: #FFFFFF;
   font-size: 0.72rem;
   font-weight: 800;
@@ -146,6 +194,28 @@ html, body {
   padding: 4px 10px;
   border-radius: 6px;
   text-transform: uppercase;
+}
+
+.badge-teal {
+  background: linear-gradient(135deg, #0D9488 0%, #0F766E 100%);
+  color: #FFFFFF;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  text-transform: uppercase;
+}
+
+.badge-gradient {
+  background: linear-gradient(135deg, #0D9488 0%, #E50914 100%);
+  color: #FFFFFF;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(13, 148, 136, 0.25);
 }
 
 .badge-dark {
@@ -187,8 +257,8 @@ html, body {
 
 .modal-content {
   background: #FFFFFF;
-  border: 1px solid var(--border-light);
-  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
+  border: 1px solid var(--border-teal);
+  box-shadow: 0 25px 50px -12px rgba(13, 148, 136, 0.25);
   border-radius: 20px;
   width: 100%;
   max-width: 760px;
@@ -208,20 +278,35 @@ html, body {
   to { transform: scale(1); opacity: 1; }
 }
 
-/* Pulsing Red Dot */
-.pulse-dot {
+/* Pulsing Dots */
+.pulse-dot-red {
   width: 8px;
   height: 8px;
   background: var(--primary-red);
   border-radius: 50%;
   box-shadow: 0 0 10px var(--primary-red);
-  animation: pulse 1.8s infinite;
+  animation: pulseRed 1.8s infinite;
 }
 
-@keyframes pulse {
+.pulse-dot-teal {
+  width: 8px;
+  height: 8px;
+  background: var(--primary-teal);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--primary-teal);
+  animation: pulseTeal 1.8s infinite;
+}
+
+@keyframes pulseRed {
   0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(229, 9, 20, 0.7); }
   70% { transform: scale(1.15); box-shadow: 0 0 0 10px rgba(229, 9, 20, 0); }
   100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(229, 9, 20, 0); }
+}
+
+@keyframes pulseTeal {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(13, 148, 136, 0.7); }
+  70% { transform: scale(1.15); box-shadow: 0 0 0 10px rgba(13, 148, 136, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(13, 148, 136, 0); }
 }
 
 /* Responsive Inventory Grid */

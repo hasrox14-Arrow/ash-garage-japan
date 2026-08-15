@@ -15,7 +15,7 @@ export const VehicleFilter = ({
   };
 
   return (
-    <div className="glass-panel" style={{ padding: '24px', marginBottom: '32px', background: '#FFFFFF' }}>
+    <div className="glass-panel" style={{ padding: '24px', marginBottom: '32px', background: '#FFFFFF', borderColor: 'var(--border-teal)' }}>
       
       {/* Title Header */}
       <div style={{
@@ -29,20 +29,20 @@ export const VehicleFilter = ({
         gap: '12px'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <Filter size={20} color="var(--primary-red)" />
+          <Filter size={20} color="var(--primary-teal)" />
           <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-dark)' }}>
             {t('filterTitle')}
           </h3>
         </div>
         
         <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-          <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600 }}>
+          <span style={{ fontSize: '0.85rem', color: 'var(--primary-teal)', fontWeight: 700, background: 'var(--teal-dim)', padding: '4px 10px', borderRadius: '6px' }}>
             {t('showingResults', { count: totalResults })}
           </span>
           <button
             onClick={resetFilters}
             className="btn-outline"
-            style={{ padding: '6px 12px', fontSize: '0.78rem', gap: '4px', minHeight: '36px' }}
+            style={{ padding: '6px 12px', fontSize: '0.78rem', gap: '4px', minHeight: '36px', borderColor: 'var(--primary-teal)', color: 'var(--primary-teal)' }}
           >
             <RotateCcw size={13} />
             {t('resetFilters')}
@@ -68,8 +68,8 @@ export const VehicleFilter = ({
             style={{
               width: '100%',
               padding: '10px 12px',
-              background: '#F8FAFC',
-              border: '1px solid var(--border-light)',
+              background: '#F0FDFA',
+              border: '1px solid var(--border-teal)',
               borderRadius: '8px',
               color: 'var(--text-dark)',
               fontSize: '0.9rem',
@@ -97,8 +97,8 @@ export const VehicleFilter = ({
             style={{
               width: '100%',
               padding: '10px 12px',
-              background: '#F8FAFC',
-              border: '1px solid var(--border-light)',
+              background: '#F0FDFA',
+              border: '1px solid var(--border-teal)',
               borderRadius: '8px',
               color: 'var(--text-dark)',
               fontSize: '0.9rem',
@@ -125,8 +125,8 @@ export const VehicleFilter = ({
             style={{
               width: '100%',
               padding: '10px 12px',
-              background: '#F8FAFC',
-              border: '1px solid var(--border-light)',
+              background: '#F0FDFA',
+              border: '1px solid var(--border-teal)',
               borderRadius: '8px',
               color: 'var(--text-dark)',
               fontSize: '0.9rem',
@@ -151,8 +151,8 @@ export const VehicleFilter = ({
             style={{
               width: '100%',
               padding: '10px 12px',
-              background: '#F8FAFC',
-              border: '1px solid var(--border-light)',
+              background: '#F0FDFA',
+              border: '1px solid var(--border-teal)',
               borderRadius: '8px',
               color: 'var(--text-dark)',
               fontSize: '0.9rem',

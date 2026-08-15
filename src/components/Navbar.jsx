@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { Globe, DollarSign, Menu, X, ShieldCheck, ChevronDown, ShieldAlert } from 'lucide-react';
+import { Globe, DollarSign, Menu, X, ShieldCheck, ChevronDown, ShieldAlert, Sparkles } from 'lucide-react';
 
 export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
   const { lang, setLang, currency, toggleCurrency, isAdminLoggedIn, t } = useLanguage();
@@ -22,14 +22,14 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
       position: 'sticky',
       top: 0,
       zIndex: 1000,
-      background: 'rgba(255, 255, 255, 0.95)',
-      backdropFilter: 'blur(12px)',
+      background: 'rgba(255, 255, 255, 0.96)',
+      backdropFilter: 'blur(16px)',
       borderBottom: '1px solid var(--border-light)',
       boxShadow: 'var(--shadow-sm)'
     }}>
       {/* Top Banner Notice */}
       <div style={{
-        background: isAdminLoggedIn ? 'rgba(229, 9, 20, 0.1)' : '#F8FAFC',
+        background: isAdminLoggedIn ? 'rgba(229, 9, 20, 0.1)' : 'linear-gradient(90deg, #F0FDFA 0%, #FFFFFF 50%, #FFF5F5 100%)',
         borderBottom: '1px solid #E2E8F0',
         padding: '6px 20px',
         fontSize: '0.75rem',
@@ -39,20 +39,24 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
         color: 'var(--text-muted)'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <ShieldCheck size={14} color="var(--primary-red)" />
-          <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontWeight: 600, color: 'var(--text-sub)' }}>
+          <ShieldCheck size={14} color="var(--primary-teal)" />
+          <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontWeight: 700, color: 'var(--primary-teal)' }}>
             {t('dealerLicense')}
           </span>
         </div>
 
         {isAdminLoggedIn ? (
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--primary-red)', fontWeight: 800 }}>
-            <span className="pulse-dot"></span>
+            <span className="pulse-dot-red"></span>
             <span>ADMIN MODE</span>
           </div>
         ) : (
-          <div style={{ display: 'flex', gap: '12px' }}>
-            <span style={{ color: 'var(--primary-red)', fontWeight: 700 }}>JST 09:00 - 19:00</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <span className="badge-gradient" style={{ fontSize: '0.68rem', padding: '2px 8px' }}>
+              <Sparkles size={11} style={{ display: 'inline', marginRight: '3px' }} />
+              JAPAN EXPORT DESK
+            </span>
+            <span style={{ color: 'var(--primary-red)', fontWeight: 800 }}>JST 09:00 - 19:00</span>
           </div>
         )}
       </div>
@@ -77,7 +81,7 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
             style={{
               height: '48px',
               width: 'auto',
-              filter: 'drop-shadow(0 4px 10px rgba(0,0,0,0.1))'
+              filter: 'drop-shadow(0 4px 10px rgba(13, 148, 136, 0.2))'
             }}
           />
 
@@ -94,7 +98,7 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
             }}>
               ASH <span style={{ color: 'var(--primary-red)' }}>GARAGE</span>
             </div>
-            <div style={{ fontSize: '0.62rem', letterSpacing: '1.5px', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 700 }}>
+            <div style={{ fontSize: '0.62rem', letterSpacing: '1.5px', color: 'var(--primary-teal)', textTransform: 'uppercase', fontWeight: 800 }}>
               JAPAN VEHICLE EXPORTER
             </div>
           </div>
@@ -107,10 +111,11 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
             style={{
               background: 'none',
               border: 'none',
-              color: activeTab === 'home' ? 'var(--primary-red)' : 'var(--text-sub)',
-              fontWeight: 700,
+              color: activeTab === 'home' ? 'var(--primary-teal)' : 'var(--text-sub)',
+              fontWeight: 800,
               cursor: 'pointer',
-              fontSize: '0.95rem'
+              fontSize: '0.95rem',
+              transition: 'var(--transition-fast)'
             }}
           >
             {t('navHome')}
@@ -121,10 +126,11 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
             style={{
               background: 'none',
               border: 'none',
-              color: activeTab === 'inventory' ? 'var(--primary-red)' : 'var(--text-sub)',
-              fontWeight: 700,
+              color: activeTab === 'inventory' ? 'var(--primary-teal)' : 'var(--text-sub)',
+              fontWeight: 800,
               cursor: 'pointer',
-              fontSize: '0.95rem'
+              fontSize: '0.95rem',
+              transition: 'var(--transition-fast)'
             }}
           >
             {t('navInventory')}
@@ -135,10 +141,11 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
             style={{
               background: 'none',
               border: 'none',
-              color: activeTab === 'process' ? 'var(--primary-red)' : 'var(--text-sub)',
-              fontWeight: 700,
+              color: activeTab === 'process' ? 'var(--primary-teal)' : 'var(--text-sub)',
+              fontWeight: 800,
               cursor: 'pointer',
-              fontSize: '0.95rem'
+              fontSize: '0.95rem',
+              transition: 'var(--transition-fast)'
             }}
           >
             {t('navExportProcess')}
@@ -161,7 +168,7 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
           )}
         </nav>
 
-        {/* Right Tools */}
+        {/* Right Controls */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           
           {/* Admin Login Trigger */}
@@ -192,10 +199,10 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
           <button
             onClick={toggleCurrency}
             className="btn-outline"
-            style={{ padding: '6px 12px', fontSize: '0.8rem', gap: '2px', minHeight: '38px' }}
-            title="Toggle USD / JPY"
+            style={{ padding: '6px 12px', fontSize: '0.8rem', gap: '2px', minHeight: '38px', borderColor: 'var(--primary-teal)', color: 'var(--primary-teal)' }}
+            title="Toggle JPY / USD"
           >
-            <DollarSign size={14} color="var(--primary-red)" />
+            <DollarSign size={14} color="var(--primary-teal)" />
             <span style={{ fontWeight: 800 }}>{currency}</span>
           </button>
 
@@ -205,7 +212,7 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
               onClick={() => setLangDropdownOpen(!langDropdownOpen)}
               style={{
                 background: '#FFFFFF',
-                border: '1px solid var(--border-red)',
+                border: '1px solid var(--border-teal)',
                 borderRadius: '8px',
                 padding: '6px 12px',
                 color: 'var(--text-dark)',
@@ -219,7 +226,7 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
                 boxShadow: 'var(--shadow-sm)'
               }}
             >
-              <Globe size={16} color="var(--primary-red)" />
+              <Globe size={16} color="var(--primary-teal)" />
               <span>{lang === 'en' ? 'EN' : '日本語'}</span>
               <ChevronDown size={14} />
             </button>
@@ -230,9 +237,9 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
                 top: '110%',
                 right: 0,
                 background: '#FFFFFF',
-                border: '1px solid var(--border-light)',
+                border: '1px solid var(--border-teal)',
                 borderRadius: '10px',
-                boxShadow: '0 10px 25px rgba(15, 23, 42, 0.12)',
+                boxShadow: '0 10px 25px rgba(13, 148, 136, 0.15)',
                 width: '150px',
                 overflow: 'hidden',
                 zIndex: 1050
@@ -246,9 +253,9 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
                     width: '100%',
                     padding: '10px 14px',
                     textAlign: 'left',
-                    background: lang === 'en' ? 'var(--red-dim)' : 'transparent',
+                    background: lang === 'en' ? 'var(--teal-dim)' : 'transparent',
                     border: 'none',
-                    color: lang === 'en' ? 'var(--primary-red)' : 'var(--text-dark)',
+                    color: lang === 'en' ? 'var(--primary-teal)' : 'var(--text-dark)',
                     fontWeight: 700,
                     cursor: 'pointer',
                     display: 'flex',
@@ -267,9 +274,9 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
                     width: '100%',
                     padding: '10px 14px',
                     textAlign: 'left',
-                    background: lang === 'ja' ? 'var(--red-dim)' : 'transparent',
+                    background: lang === 'ja' ? 'var(--teal-dim)' : 'transparent',
                     border: 'none',
-                    color: lang === 'ja' ? 'var(--primary-red)' : 'var(--text-dark)',
+                    color: lang === 'ja' ? 'var(--primary-teal)' : 'var(--text-dark)',
                     fontWeight: 700,
                     cursor: 'pointer',
                     display: 'flex',
@@ -313,9 +320,9 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
           <button
             onClick={() => handleNavClick('home')}
             style={{
-              background: activeTab === 'home' ? 'var(--red-dim)' : 'transparent',
-              border: activeTab === 'home' ? '1px solid var(--border-red)' : '1px solid transparent',
-              color: activeTab === 'home' ? 'var(--primary-red)' : 'var(--text-dark)',
+              background: activeTab === 'home' ? 'var(--teal-dim)' : 'transparent',
+              border: activeTab === 'home' ? '1px solid var(--border-teal)' : '1px solid transparent',
+              color: activeTab === 'home' ? 'var(--primary-teal)' : 'var(--text-dark)',
               padding: '12px 16px',
               borderRadius: '8px',
               fontWeight: 700,
@@ -329,9 +336,9 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
           <button
             onClick={() => handleNavClick('inventory')}
             style={{
-              background: activeTab === 'inventory' ? 'var(--red-dim)' : 'transparent',
-              border: activeTab === 'inventory' ? '1px solid var(--border-red)' : '1px solid transparent',
-              color: activeTab === 'inventory' ? 'var(--primary-red)' : 'var(--text-dark)',
+              background: activeTab === 'inventory' ? 'var(--teal-dim)' : 'transparent',
+              border: activeTab === 'inventory' ? '1px solid var(--border-teal)' : '1px solid transparent',
+              color: activeTab === 'inventory' ? 'var(--primary-teal)' : 'var(--text-dark)',
               padding: '12px 16px',
               borderRadius: '8px',
               fontWeight: 700,
@@ -345,9 +352,9 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
           <button
             onClick={() => handleNavClick('process')}
             style={{
-              background: activeTab === 'process' ? 'var(--red-dim)' : 'transparent',
-              border: activeTab === 'process' ? '1px solid var(--border-red)' : '1px solid transparent',
-              color: activeTab === 'process' ? 'var(--primary-red)' : 'var(--text-dark)',
+              background: activeTab === 'process' ? 'var(--teal-dim)' : 'transparent',
+              border: activeTab === 'process' ? '1px solid var(--border-teal)' : '1px solid transparent',
+              color: activeTab === 'process' ? 'var(--primary-teal)' : 'var(--text-dark)',
               padding: '12px 16px',
               borderRadius: '8px',
               fontWeight: 700,

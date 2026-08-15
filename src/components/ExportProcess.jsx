@@ -8,25 +8,25 @@ export const ExportProcess = () => {
   const steps = [
     {
       num: '01',
-      icon: <Search size={26} color="var(--primary-red)" />,
+      icon: <Search size={26} color="var(--primary-teal)" />,
       title: t('step1Title'),
       desc: t('step1Desc')
     },
     {
       num: '02',
-      icon: <FileCheck size={26} color="var(--primary-red)" />,
+      icon: <FileCheck size={26} color="var(--primary-teal)" />,
       title: t('step2Title'),
       desc: t('step2Desc')
     },
     {
       num: '03',
-      icon: <ShieldCheck size={26} color="var(--primary-red)" />,
+      icon: <ShieldCheck size={26} color="var(--primary-teal)" />,
       title: t('step3Title'),
       desc: t('step3Desc')
     },
     {
       num: '04',
-      icon: <Anchor size={26} color="var(--primary-red)" />,
+      icon: <Anchor size={26} color="var(--primary-teal)" />,
       title: t('step4Title'),
       desc: t('step4Desc')
     }
@@ -35,7 +35,7 @@ export const ExportProcess = () => {
   return (
     <section id="process" style={{
       padding: '80px 20px',
-      background: '#F8FAFC',
+      background: 'linear-gradient(180deg, #F8FAFC 0%, #F0FDFA 50%, #FFFFFF 100%)',
       borderTop: '1px solid var(--border-light)',
       borderBottom: '1px solid var(--border-light)'
     }}>
@@ -43,7 +43,7 @@ export const ExportProcess = () => {
         
         {/* Section Header */}
         <div style={{ textAlign: 'center', marginBottom: '56px' }}>
-          <span className="badge-red" style={{ marginBottom: '8px', display: 'inline-block' }}>
+          <span className="badge-teal" style={{ marginBottom: '8px', display: 'inline-block' }}>
             {t('processBadge')}
           </span>
           <h2 style={{
@@ -55,7 +55,7 @@ export const ExportProcess = () => {
           }}>
             {t('processHeading')}
           </h2>
-          <p style={{ fontSize: '1rem', color: 'var(--text-sub)', maxWidth: '640px', margin: '12px auto 0' }}>
+          <p style={{ fontSize: '1rem', color: 'var(--text-sub)', maxWidth: '640px', margin: '12px auto 0', fontWeight: 500 }}>
             Direct export from Tokyo HQ & Yokohama Port Yard straight to your destination port.
           </p>
         </div>
@@ -72,14 +72,15 @@ export const ExportProcess = () => {
               position: 'relative',
               background: '#FFFFFF',
               boxShadow: 'var(--shadow-md)',
-              borderRadius: '16px'
+              borderRadius: '16px',
+              borderColor: 'var(--border-teal)'
             }}>
               {/* Step Number Tag */}
               <div style={{
                 fontFamily: 'var(--font-heading)',
                 fontSize: '2.5rem',
                 fontWeight: 900,
-                color: 'rgba(229, 9, 20, 0.15)',
+                color: 'rgba(13, 148, 136, 0.15)',
                 position: 'absolute',
                 top: '16px',
                 right: '20px'
@@ -92,7 +93,7 @@ export const ExportProcess = () => {
                 width: '54px',
                 height: '54px',
                 borderRadius: '12px',
-                background: 'var(--red-dim)',
+                background: 'var(--teal-dim)',
                 display: 'flex',
                 alignItems: 'center',
                 justify: 'center',
@@ -111,7 +112,7 @@ export const ExportProcess = () => {
                 {step.title}
               </h3>
 
-              <p style={{ fontSize: '0.88rem', color: 'var(--text-sub)', lineHeight: 1.6 }}>
+              <p style={{ fontSize: '0.88rem', color: 'var(--text-sub)', lineHeight: 1.6, fontWeight: 500 }}>
                 {step.desc}
               </p>
             </div>

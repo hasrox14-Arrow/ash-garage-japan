@@ -7,8 +7,8 @@ export const Footer = () => {
 
   return (
     <footer style={{
-      background: '#F8FAFC',
-      borderTop: '1px solid var(--border-light)',
+      background: 'linear-gradient(180deg, #FFFFFF 0%, #F0FDFA 100%)',
+      borderTop: '1px solid var(--border-teal)',
       color: 'var(--text-sub)',
       paddingTop: '60px',
       paddingBottom: '30px'
@@ -32,7 +32,7 @@ export const Footer = () => {
             <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: '16px', fontWeight: 500 }}>
               {t('footerDesc')}
             </p>
-            <div style={{ fontSize: '0.8rem', color: 'var(--primary-red)', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <div style={{ fontSize: '0.8rem', color: 'var(--primary-teal)', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '6px' }}>
               <ShieldCheck size={16} />
               <span>{t('dealerLicense')}</span>
             </div>
@@ -44,15 +44,15 @@ export const Footer = () => {
               {t('tokyoOffice')}
             </h4>
             <div style={{ display: 'flex', gap: '10px', fontSize: '0.88rem', marginBottom: '10px', fontWeight: 500 }}>
-              <MapPin size={18} color="var(--primary-red)" style={{ flexShrink: 0, marginTop: '2px' }} />
+              <MapPin size={18} color="var(--primary-teal)" style={{ flexShrink: 0, marginTop: '2px' }} />
               <span>{t('tokyoAddress')}</span>
             </div>
             <div style={{ display: 'flex', gap: '10px', fontSize: '0.88rem', marginBottom: '10px', fontWeight: 500 }}>
-              <Phone size={18} color="var(--primary-red)" style={{ flexShrink: 0 }} />
+              <Phone size={18} color="var(--primary-teal)" style={{ flexShrink: 0 }} />
               <span>{t('phone')}</span>
             </div>
             <div style={{ display: 'flex', gap: '10px', fontSize: '0.88rem', fontWeight: 500 }}>
-              <Mail size={18} color="var(--primary-red)" style={{ flexShrink: 0 }} />
+              <Mail size={18} color="var(--primary-teal)" style={{ flexShrink: 0 }} />
               <span>{t('email')}</span>
             </div>
           </div>
@@ -63,11 +63,11 @@ export const Footer = () => {
               {t('yokohamaYard')}
             </h4>
             <div style={{ display: 'flex', gap: '10px', fontSize: '0.88rem', marginBottom: '12px', fontWeight: 500 }}>
-              <MapPin size={18} color="var(--primary-red)" style={{ flexShrink: 0, marginTop: '2px' }} />
+              <MapPin size={18} color="var(--primary-teal)" style={{ flexShrink: 0, marginTop: '2px' }} />
               <span>{t('yokohamaAddress')}</span>
             </div>
             <div style={{ display: 'flex', gap: '10px', fontSize: '0.88rem', fontWeight: 500 }}>
-              <Clock size={18} color="var(--primary-red)" style={{ flexShrink: 0 }} />
+              <Clock size={18} color="var(--primary-teal)" style={{ flexShrink: 0 }} />
               <span>{t('hours')}</span>
             </div>
           </div>

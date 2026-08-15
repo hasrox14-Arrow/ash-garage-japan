@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { Search, ShieldCheck, Globe2, Award } from 'lucide-react';
+import { Search, ShieldCheck, Globe2, Award, Sparkles } from 'lucide-react';
 
 export const Hero = ({ searchQuery, setSearchQuery, onBrowseClick, onInquireClick }) => {
   const { t } = useLanguage();
@@ -9,7 +9,7 @@ export const Hero = ({ searchQuery, setSearchQuery, onBrowseClick, onInquireClic
     <section style={{
       position: 'relative',
       padding: '70px 20px 90px',
-      background: 'radial-gradient(circle at 50% 20%, rgba(229, 9, 20, 0.06) 0%, transparent 60%), linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%)',
+      background: 'radial-gradient(circle at 50% 20%, rgba(13, 148, 136, 0.1) 0%, rgba(229, 9, 20, 0.05) 50%, transparent 80%), linear-gradient(180deg, #F0FDFA 0%, #FFFFFF 60%, #F8FAFC 100%)',
       borderBottom: '1px solid var(--border-light)'
     }}>
       <div style={{
@@ -23,26 +23,26 @@ export const Hero = ({ searchQuery, setSearchQuery, onBrowseClick, onInquireClic
         <div style={{
           display: 'inline-flex',
           alignItems: 'center',
-          gap: '6px',
-          padding: '6px 16px',
+          gap: '8px',
+          padding: '6px 18px',
           borderRadius: '30px',
-          background: 'var(--red-dim)',
-          border: '1px solid var(--border-red)',
-          color: 'var(--primary-red)',
-          fontSize: '0.78rem',
+          background: 'linear-gradient(90deg, rgba(13, 148, 136, 0.12) 0%, rgba(229, 9, 20, 0.12) 100%)',
+          border: '1px solid var(--border-teal)',
+          color: 'var(--primary-teal)',
+          fontSize: '0.8rem',
           fontWeight: 800,
           letterSpacing: '0.5px',
           marginBottom: '24px',
-          boxShadow: '0 2px 10px rgba(229, 9, 20, 0.1)'
+          boxShadow: '0 4px 14px rgba(13, 148, 136, 0.15)'
         }}>
-          <span className="pulse-dot"></span>
+          <Sparkles size={14} color="var(--primary-teal)" />
           <span>{t('heroBadge')}</span>
         </div>
 
         {/* Hero Title */}
         <h1 style={{
           fontFamily: 'var(--font-heading)',
-          fontSize: 'clamp(2rem, 5.5vw, 4rem)',
+          fontSize: 'clamp(2.1rem, 5.5vw, 4.2rem)',
           fontWeight: 900,
           lineHeight: 1.15,
           marginBottom: '18px',
@@ -52,8 +52,7 @@ export const Hero = ({ searchQuery, setSearchQuery, onBrowseClick, onInquireClic
         }}>
           {t('heroTitleLine1')} <br />
           <span style={{
-            color: 'var(--primary-red)',
-            background: 'linear-gradient(90deg, #E50914 0%, #DC2626 100%)',
+            background: 'linear-gradient(90deg, #0D9488 0%, #06B6D4 40%, #E50914 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent'
           }}>
@@ -63,7 +62,7 @@ export const Hero = ({ searchQuery, setSearchQuery, onBrowseClick, onInquireClic
 
         {/* Subtitle */}
         <p style={{
-          maxWidth: '760px',
+          maxWidth: '780px',
           margin: '0 auto 36px',
           fontSize: 'clamp(0.95rem, 2.5vw, 1.15rem)',
           color: 'var(--text-sub)',
@@ -76,19 +75,19 @@ export const Hero = ({ searchQuery, setSearchQuery, onBrowseClick, onInquireClic
         {/* Central Elevated Search Bar */}
         <div style={{
           maxWidth: '680px',
-          margin: '0 auto 44px',
+          margin: '0 auto 48px',
           position: 'relative'
         }}>
-          <div className="glass-panel-red hero-search-box" style={{
+          <div className="glass-panel-teal hero-search-box" style={{
             display: 'flex',
             alignItems: 'center',
             padding: '8px 12px 8px 20px',
             borderRadius: '50px',
             gap: '10px',
             background: '#FFFFFF',
-            boxShadow: '0 12px 35px -5px rgba(15, 23, 42, 0.12), 0 4px 12px rgba(229, 9, 20, 0.1)'
+            boxShadow: '0 14px 38px -5px rgba(13, 148, 136, 0.18), 0 4px 14px rgba(229, 9, 20, 0.1)'
           }}>
-            <Search size={22} color="var(--primary-red)" style={{ flexShrink: 0 }} />
+            <Search size={22} color="var(--primary-teal)" style={{ flexShrink: 0 }} />
             <input
               type="text"
               value={searchQuery}
@@ -107,7 +106,7 @@ export const Hero = ({ searchQuery, setSearchQuery, onBrowseClick, onInquireClic
             />
             <button 
               onClick={onBrowseClick}
-              className="btn-red"
+              className="btn-teal"
               style={{ borderRadius: '30px', padding: '10px 24px', flexShrink: 0, fontSize: '0.9rem' }}
             >
               {t('viewInventoryBtn')}
@@ -123,22 +122,22 @@ export const Hero = ({ searchQuery, setSearchQuery, onBrowseClick, onInquireClic
           maxWidth: '960px',
           margin: '0 auto'
         }}>
-          <div className="glass-panel" style={{ padding: '20px', textAlign: 'center', background: '#FFFFFF' }}>
-            <Globe2 size={26} color="var(--primary-red)" style={{ marginBottom: '8px' }} />
+          <div className="glass-panel" style={{ padding: '20px', textAlign: 'center', background: '#FFFFFF', borderColor: 'var(--border-teal)' }}>
+            <Globe2 size={28} color="var(--primary-teal)" style={{ marginBottom: '8px' }} />
             <div style={{ fontSize: '1.6rem', fontWeight: 900, color: 'var(--text-dark)', fontFamily: 'var(--font-heading)' }}>85+</div>
-            <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 600 }}>{t('quickStatsCountries')}</div>
+            <div style={{ fontSize: '0.82rem', color: 'var(--primary-teal)', fontWeight: 700 }}>{t('quickStatsCountries')}</div>
           </div>
 
-          <div className="glass-panel" style={{ padding: '20px', textAlign: 'center', background: '#FFFFFF' }}>
-            <Award size={26} color="var(--primary-red)" style={{ marginBottom: '8px' }} />
+          <div className="glass-panel" style={{ padding: '20px', textAlign: 'center', background: '#FFFFFF', borderColor: 'var(--border-teal)' }}>
+            <Award size={28} color="var(--primary-teal)" style={{ marginBottom: '8px' }} />
             <div style={{ fontSize: '1.6rem', fontWeight: 900, color: 'var(--text-dark)', fontFamily: 'var(--font-heading)' }}>100%</div>
-            <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 600 }}>{t('quickStatsRating')}</div>
+            <div style={{ fontSize: '0.82rem', color: 'var(--primary-teal)', fontWeight: 700 }}>{t('quickStatsRating')}</div>
           </div>
 
-          <div className="glass-panel" style={{ padding: '20px', textAlign: 'center', background: '#FFFFFF' }}>
-            <ShieldCheck size={26} color="var(--primary-red)" style={{ marginBottom: '8px' }} />
+          <div className="glass-panel" style={{ padding: '20px', textAlign: 'center', background: '#FFFFFF', borderColor: 'var(--border-teal)' }}>
+            <ShieldCheck size={28} color="var(--primary-red)" style={{ marginBottom: '8px' }} />
             <div style={{ fontSize: '1.6rem', fontWeight: 900, color: 'var(--text-dark)', fontFamily: 'var(--font-heading)' }}>FOB / CIF</div>
-            <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 600 }}>{t('quickStatsCars')}</div>
+            <div style={{ fontSize: '0.82rem', color: 'var(--primary-red)', fontWeight: 700 }}>{t('quickStatsCars')}</div>
           </div>
         </div>
 
