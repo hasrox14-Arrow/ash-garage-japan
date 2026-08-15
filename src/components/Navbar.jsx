@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { Globe, DollarSign, Menu, X, ShieldCheck, ChevronDown, ShieldAlert, Sparkles, Flame } from 'lucide-react';
+import { Globe, DollarSign, Menu, X, ShieldCheck, ChevronDown, ShieldAlert, Sparkles } from 'lucide-react';
 
 export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
   const { lang, setLang, currency, toggleCurrency, isAdminLoggedIn, t } = useLanguage();
@@ -22,64 +22,69 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
       position: 'sticky',
       top: 0,
       zIndex: 1000,
-      background: 'rgba(10, 10, 12, 0.95)',
+      background: 'rgba(10, 10, 12, 0.96)',
       backdropFilter: 'blur(16px)',
       borderBottom: '1px solid var(--border-dark)',
-      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.5)'
+      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.5)',
+      width: '100%',
+      overflowX: 'hidden'
     }}>
-      {/* Top Banner Notice */}
+      {/* Top Banner Notice - Responsive Mobile Layout */}
       <div style={{
-        background: isAdminLoggedIn ? 'rgba(229, 9, 20, 0.2)' : 'rgba(255, 87, 34, 0.1)',
+        background: isAdminLoggedIn ? 'rgba(229, 9, 20, 0.2)' : 'rgba(255, 87, 34, 0.12)',
         borderBottom: '1px solid #1E1E28',
-        padding: '6px 20px',
-        fontSize: '0.75rem',
+        padding: '5px 12px',
+        fontSize: '0.72rem',
         display: 'flex',
         justify: 'space-between',
         alignItems: 'center',
-        color: 'var(--text-muted)'
+        color: 'var(--text-muted)',
+        width: '100%'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <ShieldCheck size={14} color="var(--primary-orange)" />
-          <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontWeight: 700, color: 'var(--primary-orange)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
+          <ShieldCheck size={13} color="var(--primary-orange)" style={{ flexShrink: 0 }} />
+          <span style={{ fontWeight: 700, color: 'var(--primary-orange)', overflow: 'hidden', textOverflow: 'ellipsis' }}>
             {t('dealerLicense')}
           </span>
         </div>
 
         {isAdminLoggedIn ? (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--primary-red)', fontWeight: 800 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--primary-red)', fontWeight: 800, flexShrink: 0 }}>
             <span className="pulse-dot-orange"></span>
             <span>ADMIN MODE</span>
           </div>
         ) : (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <span className="badge-orange" style={{ fontSize: '0.68rem', padding: '2px 8px' }}>
-              <Flame size={11} style={{ display: 'inline', marginRight: '3px' }} />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
+            <span className="desktop-only-badge badge-orange" style={{ fontSize: '0.65rem', padding: '2px 6px' }}>
               JAPAN EXPORT DESK
             </span>
-            <span style={{ color: 'var(--primary-red)', fontWeight: 800 }}>JST 09:00 - 19:00</span>
+            <span style={{ color: 'var(--primary-red)', fontWeight: 800, whiteSpace: 'nowrap' }}>JST 09:00-19:00</span>
           </div>
         )}
       </div>
 
-      {/* Main Navbar */}
+      {/* Main Navbar Header */}
       <div style={{
         maxWidth: '1280px',
         margin: '0 auto',
-        padding: '12px 20px',
+        padding: '8px 12px',
         display: 'flex',
         alignItems: 'center',
-        justify: 'space-between'
+        justify: 'space-between',
+        gap: '8px',
+        width: '100%'
       }}>
-        {/* Brand Logo */}
+        {/* Brand Logo & Title */}
         <div 
           onClick={() => handleNavClick('home')}
-          style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer' }}
+          style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', flexShrink: 0 }}
         >
           <img
             src="/ash-garage-logo.png"
             alt="Ash Garage Logo"
+            className="navbar-brand-logo"
             style={{
-              height: '48px',
+              height: '40px',
               width: 'auto',
               filter: 'drop-shadow(0 0 10px rgba(255, 87, 34, 0.4))'
             }}
@@ -88,24 +93,25 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
           <div>
             <div style={{
               fontFamily: 'var(--font-heading)',
-              fontSize: '1.35rem',
+              fontSize: 'clamp(1rem, 4vw, 1.35rem)',
               fontWeight: 900,
-              letterSpacing: '1px',
+              letterSpacing: '0.5px',
               color: '#FFFFFF',
               display: 'flex',
               alignItems: 'center',
-              gap: '4px'
+              gap: '3px',
+              lineHeight: 1.1
             }}>
               ASH <span style={{ color: 'var(--primary-orange)' }}>GARAGE</span>
             </div>
-            <div style={{ fontSize: '0.62rem', letterSpacing: '1.5px', color: 'var(--primary-red)', textTransform: 'uppercase', fontWeight: 800 }}>
+            <div style={{ fontSize: '0.55rem', letterSpacing: '1px', color: 'var(--primary-red)', textTransform: 'uppercase', fontWeight: 800 }}>
               JAPAN VEHICLE EXPORTER
             </div>
           </div>
         </div>
 
         {/* Desktop Navigation Links */}
-        <nav className="desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
+        <nav className="desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: '28px' }}>
           <button 
             onClick={() => handleNavClick('home')}
             style={{
@@ -165,8 +171,8 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
           )}
         </nav>
 
-        {/* Right Controls */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        {/* Right Action Controls Group */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '5px', flexShrink: 0 }}>
           
           {/* Admin Login Trigger */}
           {!isAdminLoggedIn && (
@@ -176,18 +182,19 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
                 background: 'var(--red-dim)',
                 border: '1px solid var(--border-red)',
                 color: 'var(--primary-red)',
-                padding: '6px 12px',
-                borderRadius: '8px',
-                fontSize: '0.78rem',
+                padding: '4px 8px',
+                borderRadius: '6px',
+                fontSize: '0.72rem',
                 fontWeight: 800,
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '4px'
+                gap: '3px',
+                minHeight: '34px'
               }}
               title="Admin Security Portal"
             >
-              <ShieldAlert size={14} />
+              <ShieldAlert size={12} />
               <span>Admin</span>
             </button>
           )}
@@ -196,10 +203,10 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
           <button
             onClick={toggleCurrency}
             className="btn-outline"
-            style={{ padding: '6px 12px', fontSize: '0.8rem', gap: '2px', minHeight: '38px', borderColor: 'var(--primary-orange)', color: 'var(--primary-orange)' }}
+            style={{ padding: '4px 8px', fontSize: '0.75rem', gap: '2px', minHeight: '34px', borderColor: 'var(--primary-orange)', color: 'var(--primary-orange)' }}
             title="Toggle JPY / USD"
           >
-            <DollarSign size={14} color="var(--primary-orange)" />
+            <DollarSign size={12} color="var(--primary-orange)" />
             <span style={{ fontWeight: 800 }}>{currency}</span>
           </button>
 
@@ -210,21 +217,21 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
               style={{
                 background: 'var(--bg-card)',
                 border: '1px solid var(--border-orange)',
-                borderRadius: '8px',
-                padding: '6px 12px',
+                borderRadius: '6px',
+                padding: '4px 8px',
                 color: '#FFFFFF',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '6px',
-                fontSize: '0.82rem',
+                gap: '3px',
+                fontSize: '0.75rem',
                 fontWeight: 800,
-                minHeight: '38px'
+                minHeight: '34px'
               }}
             >
-              <Globe size={16} color="var(--primary-orange)" />
-              <span>{lang === 'en' ? 'EN' : '日本語'}</span>
-              <ChevronDown size={14} />
+              <Globe size={13} color="var(--primary-orange)" />
+              <span>{lang === 'en' ? 'EN' : 'JA'}</span>
+              <ChevronDown size={12} />
             </button>
 
             {langDropdownOpen && (
@@ -234,9 +241,9 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
                 right: 0,
                 background: 'var(--bg-card)',
                 border: '1px solid var(--border-orange)',
-                borderRadius: '10px',
+                borderRadius: '8px',
                 boxShadow: '0 10px 30px rgba(0, 0, 0, 0.8)',
-                width: '150px',
+                width: '140px',
                 overflow: 'hidden',
                 zIndex: 1050
               }}>
@@ -247,7 +254,7 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
                   }}
                   style={{
                     width: '100%',
-                    padding: '10px 14px',
+                    padding: '8px 12px',
                     textAlign: 'left',
                     background: lang === 'en' ? 'var(--orange-dim)' : 'transparent',
                     border: 'none',
@@ -256,7 +263,8 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
                     cursor: 'pointer',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '8px'
+                    gap: '6px',
+                    fontSize: '0.8rem'
                   }}
                 >
                   <span>🇬🇧</span> English
@@ -268,7 +276,7 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
                   }}
                   style={{
                     width: '100%',
-                    padding: '10px 14px',
+                    padding: '8px 12px',
                     textAlign: 'left',
                     background: lang === 'ja' ? 'var(--orange-dim)' : 'transparent',
                     border: 'none',
@@ -277,7 +285,8 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
                     cursor: 'pointer',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '8px'
+                    gap: '6px',
+                    fontSize: '0.8rem'
                   }}
                 >
                   <span>🇯🇵</span> 日本語
@@ -295,10 +304,10 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
               border: 'none',
               color: '#FFFFFF',
               cursor: 'pointer',
-              padding: '6px'
+              padding: '4px'
             }}
           >
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
       </div>
@@ -308,10 +317,10 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
         <div className="mobile-nav-menu" style={{
           background: 'var(--bg-card)',
           borderTop: '1px solid var(--border-dark)',
-          padding: '16px 20px',
+          padding: '14px 16px',
           display: 'flex',
           flexDirection: 'column',
-          gap: '10px'
+          gap: '8px'
         }}>
           <button
             onClick={() => handleNavClick('home')}
@@ -319,7 +328,7 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
               background: activeTab === 'home' ? 'var(--orange-dim)' : 'transparent',
               border: activeTab === 'home' ? '1px solid var(--border-orange)' : '1px solid transparent',
               color: activeTab === 'home' ? 'var(--primary-orange)' : '#FFFFFF',
-              padding: '12px 16px',
+              padding: '10px 14px',
               borderRadius: '8px',
               fontWeight: 700,
               textAlign: 'left',
@@ -335,7 +344,7 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
               background: activeTab === 'inventory' ? 'var(--orange-dim)' : 'transparent',
               border: activeTab === 'inventory' ? '1px solid var(--border-orange)' : '1px solid transparent',
               color: activeTab === 'inventory' ? 'var(--primary-orange)' : '#FFFFFF',
-              padding: '12px 16px',
+              padding: '10px 14px',
               borderRadius: '8px',
               fontWeight: 700,
               textAlign: 'left',
@@ -351,7 +360,7 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
               background: activeTab === 'process' ? 'var(--orange-dim)' : 'transparent',
               border: activeTab === 'process' ? '1px solid var(--border-orange)' : '1px solid transparent',
               color: activeTab === 'process' ? 'var(--primary-orange)' : '#FFFFFF',
-              padding: '12px 16px',
+              padding: '10px 14px',
               borderRadius: '8px',
               fontWeight: 700,
               textAlign: 'left',
