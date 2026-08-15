@@ -15,7 +15,7 @@ export const VehicleFilter = ({
   };
 
   return (
-    <div className="glass-panel" style={{ padding: '24px', marginBottom: '32px', background: '#FFFFFF', borderColor: 'var(--border-teal)' }}>
+    <div className="glass-panel" style={{ padding: '24px', marginBottom: '32px', borderColor: 'var(--border-orange)' }}>
       
       {/* Title Header */}
       <div style={{
@@ -24,25 +24,25 @@ export const VehicleFilter = ({
         justify: 'space-between',
         marginBottom: '18px',
         paddingBottom: '12px',
-        borderBottom: '1px solid var(--border-light)',
+        borderBottom: '1px solid var(--border-dark)',
         flexWrap: 'wrap',
         gap: '12px'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <Filter size={20} color="var(--primary-teal)" />
-          <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-dark)' }}>
+          <Filter size={20} color="var(--primary-orange)" />
+          <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.1rem', fontWeight: 800, color: '#FFFFFF' }}>
             {t('filterTitle')}
           </h3>
         </div>
         
         <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-          <span style={{ fontSize: '0.85rem', color: 'var(--primary-teal)', fontWeight: 700, background: 'var(--teal-dim)', padding: '4px 10px', borderRadius: '6px' }}>
+          <span style={{ fontSize: '0.85rem', color: 'var(--primary-orange)', fontWeight: 700, background: 'var(--orange-dim)', padding: '4px 10px', borderRadius: '6px' }}>
             {t('showingResults', { count: totalResults })}
           </span>
           <button
             onClick={resetFilters}
             className="btn-outline"
-            style={{ padding: '6px 12px', fontSize: '0.78rem', gap: '4px', minHeight: '36px', borderColor: 'var(--primary-teal)', color: 'var(--primary-teal)' }}
+            style={{ padding: '6px 12px', fontSize: '0.78rem', gap: '4px', minHeight: '36px', borderColor: 'var(--primary-orange)', color: 'var(--primary-orange)' }}
           >
             <RotateCcw size={13} />
             {t('resetFilters')}
@@ -68,10 +68,10 @@ export const VehicleFilter = ({
             style={{
               width: '100%',
               padding: '10px 12px',
-              background: '#F0FDFA',
-              border: '1px solid var(--border-teal)',
+              background: 'var(--bg-surface)',
+              border: '1px solid var(--border-dark)',
               borderRadius: '8px',
-              color: 'var(--text-dark)',
+              color: '#FFFFFF',
               fontSize: '0.9rem',
               fontWeight: 600,
               outline: 'none'
@@ -97,10 +97,10 @@ export const VehicleFilter = ({
             style={{
               width: '100%',
               padding: '10px 12px',
-              background: '#F0FDFA',
-              border: '1px solid var(--border-teal)',
+              background: 'var(--bg-surface)',
+              border: '1px solid var(--border-dark)',
               borderRadius: '8px',
-              color: 'var(--text-dark)',
+              color: '#FFFFFF',
               fontSize: '0.9rem',
               fontWeight: 600,
               outline: 'none'
@@ -125,10 +125,10 @@ export const VehicleFilter = ({
             style={{
               width: '100%',
               padding: '10px 12px',
-              background: '#F0FDFA',
-              border: '1px solid var(--border-teal)',
+              background: 'var(--bg-surface)',
+              border: '1px solid var(--border-dark)',
               borderRadius: '8px',
-              color: 'var(--text-dark)',
+              color: '#FFFFFF',
               fontSize: '0.9rem',
               fontWeight: 600,
               outline: 'none'
@@ -151,10 +151,10 @@ export const VehicleFilter = ({
             style={{
               width: '100%',
               padding: '10px 12px',
-              background: '#F0FDFA',
-              border: '1px solid var(--border-teal)',
+              background: 'var(--bg-surface)',
+              border: '1px solid var(--border-dark)',
               borderRadius: '8px',
-              color: 'var(--text-dark)',
+              color: '#FFFFFF',
               fontSize: '0.9rem',
               fontWeight: 600,
               outline: 'none'

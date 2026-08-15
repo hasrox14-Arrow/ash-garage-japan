@@ -8,25 +8,25 @@ export const ExportProcess = () => {
   const steps = [
     {
       num: '01',
-      icon: <Search size={26} color="var(--primary-teal)" />,
+      icon: <Search size={26} color="var(--primary-orange)" />,
       title: t('step1Title'),
       desc: t('step1Desc')
     },
     {
       num: '02',
-      icon: <FileCheck size={26} color="var(--primary-teal)" />,
+      icon: <FileCheck size={26} color="var(--primary-orange)" />,
       title: t('step2Title'),
       desc: t('step2Desc')
     },
     {
       num: '03',
-      icon: <ShieldCheck size={26} color="var(--primary-teal)" />,
+      icon: <ShieldCheck size={26} color="var(--primary-orange)" />,
       title: t('step3Title'),
       desc: t('step3Desc')
     },
     {
       num: '04',
-      icon: <Anchor size={26} color="var(--primary-teal)" />,
+      icon: <Anchor size={26} color="var(--primary-orange)" />,
       title: t('step4Title'),
       desc: t('step4Desc')
     }
@@ -35,23 +35,23 @@ export const ExportProcess = () => {
   return (
     <section id="process" style={{
       padding: '80px 20px',
-      background: 'linear-gradient(180deg, #F8FAFC 0%, #F0FDFA 50%, #FFFFFF 100%)',
-      borderTop: '1px solid var(--border-light)',
-      borderBottom: '1px solid var(--border-light)'
+      background: 'var(--bg-obsidian)',
+      borderTop: '1px solid var(--border-dark)',
+      borderBottom: '1px solid var(--border-dark)'
     }}>
       <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
         
         {/* Section Header */}
         <div style={{ textAlign: 'center', marginBottom: '56px' }}>
-          <span className="badge-teal" style={{ marginBottom: '8px', display: 'inline-block' }}>
+          <span className="badge-orange" style={{ marginBottom: '8px', display: 'inline-block' }}>
             {t('processBadge')}
           </span>
           <h2 style={{
             fontFamily: 'var(--font-heading)',
             fontSize: 'clamp(1.8rem, 4vw, 2.8rem)',
             fontWeight: 900,
-            color: 'var(--text-dark)',
-            letterSpacing: '-0.5px'
+            color: '#FFFFFF',
+            letterSpacing: '0.5px'
           }}>
             {t('processHeading')}
           </h2>
@@ -70,17 +70,17 @@ export const ExportProcess = () => {
             <div key={idx} className="glass-panel" style={{
               padding: '28px',
               position: 'relative',
-              background: '#FFFFFF',
+              background: 'var(--bg-card)',
               boxShadow: 'var(--shadow-md)',
               borderRadius: '16px',
-              borderColor: 'var(--border-teal)'
+              borderColor: 'var(--border-dark)'
             }}>
               {/* Step Number Tag */}
               <div style={{
                 fontFamily: 'var(--font-heading)',
                 fontSize: '2.5rem',
                 fontWeight: 900,
-                color: 'rgba(13, 148, 136, 0.15)',
+                color: 'rgba(255, 87, 34, 0.2)',
                 position: 'absolute',
                 top: '16px',
                 right: '20px'
@@ -93,7 +93,7 @@ export const ExportProcess = () => {
                 width: '54px',
                 height: '54px',
                 borderRadius: '12px',
-                background: 'var(--teal-dim)',
+                background: 'var(--orange-dim)',
                 display: 'flex',
                 alignItems: 'center',
                 justify: 'center',
@@ -106,7 +106,7 @@ export const ExportProcess = () => {
                 fontFamily: 'var(--font-heading)',
                 fontSize: '1.15rem',
                 fontWeight: 800,
-                color: 'var(--text-dark)',
+                color: '#FFFFFF',
                 marginBottom: '10px'
               }}>
                 {step.title}

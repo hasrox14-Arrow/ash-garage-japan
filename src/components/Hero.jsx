@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { Search, ShieldCheck, Globe2, Award, Sparkles } from 'lucide-react';
+import { Search, ShieldCheck, Globe2, Award, Flame, Sparkles } from 'lucide-react';
 
 export const Hero = ({ searchQuery, setSearchQuery, onBrowseClick, onInquireClick }) => {
   const { t } = useLanguage();
@@ -8,9 +8,11 @@ export const Hero = ({ searchQuery, setSearchQuery, onBrowseClick, onInquireClic
   return (
     <section style={{
       position: 'relative',
-      padding: '70px 20px 90px',
-      background: 'radial-gradient(circle at 50% 20%, rgba(13, 148, 136, 0.1) 0%, rgba(229, 9, 20, 0.05) 50%, transparent 80%), linear-gradient(180deg, #F0FDFA 0%, #FFFFFF 60%, #F8FAFC 100%)',
-      borderBottom: '1px solid var(--border-light)'
+      padding: '60px 20px 80px',
+      background: 'radial-gradient(circle at 50% 25%, rgba(255, 87, 34, 0.18) 0%, rgba(229, 9, 20, 0.12) 40%, rgba(10, 10, 12, 0.95) 80%), url("https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=2000&q=80")',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      borderBottom: '1px solid var(--border-orange)'
     }}>
       <div style={{
         maxWidth: '1280px',
@@ -19,6 +21,27 @@ export const Hero = ({ searchQuery, setSearchQuery, onBrowseClick, onInquireClic
         position: 'relative',
         zIndex: 2
       }}>
+        
+        {/* PROMINENT CENTRAL HERO LOGO EMBLEM WITH GLOWING HALO */}
+        <div style={{
+          marginBottom: '20px',
+          display: 'inline-block',
+          position: 'relative'
+        }}>
+          <img
+            src="/ash-garage-logo.png"
+            alt="Ash Garage Japan Logo"
+            style={{
+              height: '140px',
+              width: 'auto',
+              filter: 'drop-shadow(0 0 35px rgba(255, 87, 34, 0.55)) drop-shadow(0 0 15px rgba(229, 9, 20, 0.4))',
+              transition: 'transform 0.4s ease'
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.06)'}
+            onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+          />
+        </div>
+
         {/* Top Tagline Badge */}
         <div style={{
           display: 'inline-flex',
@@ -26,35 +49,36 @@ export const Hero = ({ searchQuery, setSearchQuery, onBrowseClick, onInquireClic
           gap: '8px',
           padding: '6px 18px',
           borderRadius: '30px',
-          background: 'linear-gradient(90deg, rgba(13, 148, 136, 0.12) 0%, rgba(229, 9, 20, 0.12) 100%)',
-          border: '1px solid var(--border-teal)',
-          color: 'var(--primary-teal)',
+          background: 'rgba(18, 18, 22, 0.85)',
+          border: '1px solid var(--border-orange)',
+          color: 'var(--primary-orange)',
           fontSize: '0.8rem',
           fontWeight: 800,
           letterSpacing: '0.5px',
-          marginBottom: '24px',
-          boxShadow: '0 4px 14px rgba(13, 148, 136, 0.15)'
+          marginBottom: '20px',
+          boxShadow: '0 4px 18px rgba(255, 87, 34, 0.25)'
         }}>
-          <Sparkles size={14} color="var(--primary-teal)" />
+          <span className="pulse-dot-orange"></span>
           <span>{t('heroBadge')}</span>
         </div>
 
         {/* Hero Title */}
         <h1 style={{
           fontFamily: 'var(--font-heading)',
-          fontSize: 'clamp(2.1rem, 5.5vw, 4.2rem)',
+          fontSize: 'clamp(2.1rem, 5.5vw, 4rem)',
           fontWeight: 900,
           lineHeight: 1.15,
-          marginBottom: '18px',
+          marginBottom: '16px',
           textTransform: 'uppercase',
-          letterSpacing: '-0.5px',
-          color: 'var(--text-dark)'
+          letterSpacing: '1px',
+          color: '#FFFFFF'
         }}>
           {t('heroTitleLine1')} <br />
           <span style={{
-            background: 'linear-gradient(90deg, #0D9488 0%, #06B6D4 40%, #E50914 100%)',
+            background: 'var(--gradient-red-orange)',
             WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent'
+            WebkitTextFillColor: 'transparent',
+            filter: 'drop-shadow(0 0 20px rgba(255, 87, 34, 0.3))'
           }}>
             {t('heroTitleLine2')}
           </span>
@@ -72,22 +96,22 @@ export const Hero = ({ searchQuery, setSearchQuery, onBrowseClick, onInquireClic
           {t('heroSubtitle')}
         </p>
 
-        {/* Central Elevated Search Bar */}
+        {/* Central Red/Orange Glass Search Bar */}
         <div style={{
           maxWidth: '680px',
           margin: '0 auto 48px',
           position: 'relative'
         }}>
-          <div className="glass-panel-teal hero-search-box" style={{
+          <div className="glass-panel-orange hero-search-box" style={{
             display: 'flex',
             alignItems: 'center',
             padding: '8px 12px 8px 20px',
             borderRadius: '50px',
             gap: '10px',
-            background: '#FFFFFF',
-            boxShadow: '0 14px 38px -5px rgba(13, 148, 136, 0.18), 0 4px 14px rgba(229, 9, 20, 0.1)'
+            background: 'rgba(18, 18, 24, 0.92)',
+            boxShadow: '0 14px 40px -5px rgba(255, 87, 34, 0.25)'
           }}>
-            <Search size={22} color="var(--primary-teal)" style={{ flexShrink: 0 }} />
+            <Search size={22} color="var(--primary-orange)" style={{ flexShrink: 0 }} />
             <input
               type="text"
               value={searchQuery}
@@ -98,7 +122,7 @@ export const Hero = ({ searchQuery, setSearchQuery, onBrowseClick, onInquireClic
                 background: 'transparent',
                 border: 'none',
                 outline: 'none',
-                color: 'var(--text-dark)',
+                color: '#FFFFFF',
                 fontSize: '1rem',
                 fontFamily: 'var(--font-body)',
                 fontWeight: 600
@@ -106,7 +130,7 @@ export const Hero = ({ searchQuery, setSearchQuery, onBrowseClick, onInquireClic
             />
             <button 
               onClick={onBrowseClick}
-              className="btn-teal"
+              className="btn-gradient"
               style={{ borderRadius: '30px', padding: '10px 24px', flexShrink: 0, fontSize: '0.9rem' }}
             >
               {t('viewInventoryBtn')}
@@ -122,21 +146,21 @@ export const Hero = ({ searchQuery, setSearchQuery, onBrowseClick, onInquireClic
           maxWidth: '960px',
           margin: '0 auto'
         }}>
-          <div className="glass-panel" style={{ padding: '20px', textAlign: 'center', background: '#FFFFFF', borderColor: 'var(--border-teal)' }}>
-            <Globe2 size={28} color="var(--primary-teal)" style={{ marginBottom: '8px' }} />
-            <div style={{ fontSize: '1.6rem', fontWeight: 900, color: 'var(--text-dark)', fontFamily: 'var(--font-heading)' }}>85+</div>
-            <div style={{ fontSize: '0.82rem', color: 'var(--primary-teal)', fontWeight: 700 }}>{t('quickStatsCountries')}</div>
+          <div className="glass-panel" style={{ padding: '20px', textAlign: 'center', borderColor: 'var(--border-orange)' }}>
+            <Globe2 size={28} color="var(--primary-orange)" style={{ marginBottom: '8px' }} />
+            <div style={{ fontSize: '1.6rem', fontWeight: 900, color: '#FFFFFF', fontFamily: 'var(--font-heading)' }}>85+</div>
+            <div style={{ fontSize: '0.82rem', color: 'var(--primary-orange)', fontWeight: 700 }}>{t('quickStatsCountries')}</div>
           </div>
 
-          <div className="glass-panel" style={{ padding: '20px', textAlign: 'center', background: '#FFFFFF', borderColor: 'var(--border-teal)' }}>
-            <Award size={28} color="var(--primary-teal)" style={{ marginBottom: '8px' }} />
-            <div style={{ fontSize: '1.6rem', fontWeight: 900, color: 'var(--text-dark)', fontFamily: 'var(--font-heading)' }}>100%</div>
-            <div style={{ fontSize: '0.82rem', color: 'var(--primary-teal)', fontWeight: 700 }}>{t('quickStatsRating')}</div>
+          <div className="glass-panel" style={{ padding: '20px', textAlign: 'center', borderColor: 'var(--border-orange)' }}>
+            <Award size={28} color="var(--primary-orange)" style={{ marginBottom: '8px' }} />
+            <div style={{ fontSize: '1.6rem', fontWeight: 900, color: '#FFFFFF', fontFamily: 'var(--font-heading)' }}>100%</div>
+            <div style={{ fontSize: '0.82rem', color: 'var(--primary-orange)', fontWeight: 700 }}>{t('quickStatsRating')}</div>
           </div>
 
-          <div className="glass-panel" style={{ padding: '20px', textAlign: 'center', background: '#FFFFFF', borderColor: 'var(--border-teal)' }}>
+          <div className="glass-panel" style={{ padding: '20px', textAlign: 'center', borderColor: 'var(--border-red)' }}>
             <ShieldCheck size={28} color="var(--primary-red)" style={{ marginBottom: '8px' }} />
-            <div style={{ fontSize: '1.6rem', fontWeight: 900, color: 'var(--text-dark)', fontFamily: 'var(--font-heading)' }}>FOB / CIF</div>
+            <div style={{ fontSize: '1.6rem', fontWeight: 900, color: '#FFFFFF', fontFamily: 'var(--font-heading)' }}>FOB / CIF</div>
             <div style={{ fontSize: '0.82rem', color: 'var(--primary-red)', fontWeight: 700 }}>{t('quickStatsCars')}</div>
           </div>
         </div>

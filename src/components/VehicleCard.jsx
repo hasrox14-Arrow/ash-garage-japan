@@ -16,18 +16,18 @@ export const VehicleCard = ({ vehicle, onViewDetails, onInquire }) => {
       flexDirection: 'column',
       transition: 'var(--transition-smooth)',
       position: 'relative',
-      background: '#FFFFFF',
+      background: 'var(--bg-card)',
       borderRadius: '16px',
       boxShadow: 'var(--shadow-md)',
-      border: '1px solid var(--border-light)'
+      border: '1px solid var(--border-dark)'
     }}
     onMouseEnter={(e) => {
       e.currentTarget.style.boxShadow = 'var(--shadow-hover)';
-      e.currentTarget.style.borderColor = 'var(--border-teal)';
+      e.currentTarget.style.borderColor = 'var(--border-orange)';
     }}
     onMouseLeave={(e) => {
       e.currentTarget.style.boxShadow = 'var(--shadow-md)';
-      e.currentTarget.style.borderColor = 'var(--border-light)';
+      e.currentTarget.style.borderColor = 'var(--border-dark)';
     }}
     >
       {/* Top Image Container */}
@@ -53,7 +53,7 @@ export const VehicleCard = ({ vehicle, onViewDetails, onInquire }) => {
           display: 'flex',
           gap: '8px'
         }}>
-          <span className="badge-teal">{vehicle.stockNo}</span>
+          <span className="badge-orange">{vehicle.stockNo}</span>
           {vehicle.isFeatured && (
             <span className="badge-red">FEATURED</span>
           )}
@@ -64,9 +64,9 @@ export const VehicleCard = ({ vehicle, onViewDetails, onInquire }) => {
           position: 'absolute',
           top: '12px',
           right: '12px',
-          background: 'rgba(255,255,255,0.95)',
+          background: 'rgba(10,10,12,0.9)',
           backdropFilter: 'blur(8px)',
-          border: '1px solid #059669',
+          border: '1px solid #10B981',
           borderRadius: '8px',
           padding: '4px 10px',
           display: 'flex',
@@ -74,8 +74,8 @@ export const VehicleCard = ({ vehicle, onViewDetails, onInquire }) => {
           gap: '4px',
           fontSize: '0.75rem',
           fontWeight: 800,
-          color: '#059669',
-          boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+          color: '#10B981',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.5)'
         }}>
           <Award size={14} />
           <span>GRADE {vehicle.auctionGrade}</span>
@@ -87,13 +87,13 @@ export const VehicleCard = ({ vehicle, onViewDetails, onInquire }) => {
           bottom: 0,
           left: 0,
           right: 0,
-          background: 'linear-gradient(0deg, rgba(15,23,42,0.92) 0%, rgba(15,23,42,0) 100%)',
+          background: 'linear-gradient(0deg, rgba(10,10,12,0.95) 0%, rgba(10,10,12,0) 100%)',
           padding: '24px 16px 10px',
           display: 'flex',
           justify: 'space-between',
           alignItems: 'flex-end'
         }}>
-          <span style={{ fontSize: '0.75rem', color: '#06B6D4', textTransform: 'uppercase', fontWeight: 800, letterSpacing: '0.5px' }}>
+          <span style={{ fontSize: '0.75rem', color: 'var(--primary-orange)', textTransform: 'uppercase', fontWeight: 800, letterSpacing: '0.5px' }}>
             {t('fobPrice')}
           </span>
           <span style={{
@@ -112,13 +112,13 @@ export const VehicleCard = ({ vehicle, onViewDetails, onInquire }) => {
         
         {/* Make & Model Title */}
         <div style={{ marginBottom: '16px' }}>
-          <div style={{ fontSize: '0.75rem', color: 'var(--primary-teal)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.8px' }}>
+          <div style={{ fontSize: '0.75rem', color: 'var(--primary-orange)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.8px' }}>
             {vehicle.make}
           </div>
           <h3 style={{
             fontSize: '1.15rem',
             fontWeight: 800,
-            color: 'var(--text-dark)',
+            color: '#FFFFFF',
             lineHeight: 1.3,
             marginTop: '2px',
             fontFamily: 'var(--font-heading)'
@@ -127,37 +127,37 @@ export const VehicleCard = ({ vehicle, onViewDetails, onInquire }) => {
           </h3>
         </div>
 
-        {/* Spec Chips Matrix with Soft Mint Background */}
+        {/* Spec Chips Matrix */}
         <div style={{
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',
           gap: '10px',
           marginBottom: '20px',
           padding: '12px',
-          background: '#F0FDFA',
-          border: '1px solid var(--border-teal)',
+          background: 'var(--bg-surface)',
+          border: '1px solid var(--border-dark)',
           borderRadius: '10px',
           fontSize: '0.82rem',
           color: 'var(--text-sub)',
           fontWeight: 700
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <Calendar size={14} color="var(--primary-teal)" />
+            <Calendar size={14} color="var(--primary-orange)" />
             <span>{vehicle.year}</span>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <Gauge size={14} color="var(--primary-teal)" />
+            <Gauge size={14} color="var(--primary-orange)" />
             <span>{vehicle.mileage}</span>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <Cog size={14} color="var(--primary-teal)" />
+            <Cog size={14} color="var(--primary-orange)" />
             <span>{vehicle.transmission}</span>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <Shield size={14} color="var(--primary-teal)" />
+            <Shield size={14} color="var(--primary-orange)" />
             <span>{vehicle.drive}</span>
           </div>
         </div>
@@ -167,14 +167,14 @@ export const VehicleCard = ({ vehicle, onViewDetails, onInquire }) => {
           <button
             onClick={() => onViewDetails(vehicle)}
             className="btn-outline"
-            style={{ width: '100%', justifyContent: 'center', padding: '10px', fontSize: '0.85rem', borderColor: 'var(--border-teal)', color: 'var(--primary-teal)' }}
+            style={{ width: '100%', justifyContent: 'center', padding: '10px', fontSize: '0.85rem' }}
           >
             {t('viewDetails')}
           </button>
 
           <button
             onClick={() => onInquire(vehicle)}
-            className="btn-red"
+            className="btn-gradient"
             style={{ width: '100%', justifyContent: 'center', padding: '10px', fontSize: '0.85rem' }}
           >
             <span>{t('quickInquire')}</span>

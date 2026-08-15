@@ -10,12 +10,7 @@ import {
   Settings,
   ShieldCheck,
   Search,
-  CheckCircle,
-  Clock,
-  Mail,
-  Phone,
-  Globe,
-  Tag
+  Flame
 } from 'lucide-react';
 import { VehicleFormModal } from './VehicleFormModal';
 
@@ -29,12 +24,11 @@ export const AdminDashboard = ({ onLogout }) => {
     t
   } = useLanguage();
 
-  const [activeTab, setActiveTab] = useState('vehicles'); // 'vehicles' | 'inquiries' | 'settings'
+  const [activeTab, setActiveTab] = useState('vehicles');
   const [showVehicleModal, setShowVehicleModal] = useState(false);
   const [editingVehicle, setEditingVehicle] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Filtered Inventory List
   const filteredVehicles = vehicles.filter(v => 
     v.model.toLowerCase().includes(searchTerm.toLowerCase()) ||
     v.stockNo.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -57,7 +51,7 @@ export const AdminDashboard = ({ onLogout }) => {
   };
 
   return (
-    <section style={{ padding: '40px 20px 80px', minHeight: '80vh', background: '#F8FAFC' }}>
+    <section style={{ padding: '40px 20px 80px', minHeight: '80vh', background: 'var(--bg-obsidian)' }}>
       <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
         
         {/* Admin Header Banner */}
@@ -69,17 +63,18 @@ export const AdminDashboard = ({ onLogout }) => {
           alignItems: 'center',
           flexWrap: 'wrap',
           gap: '16px',
-          background: '#FFFFFF'
+          background: 'var(--bg-card)',
+          borderColor: 'var(--border-orange)'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-            <div style={{ padding: '10px', borderRadius: '12px', background: 'var(--red-dim)', color: 'var(--primary-red)' }}>
+            <div style={{ padding: '10px', borderRadius: '12px', background: 'var(--orange-dim)', color: 'var(--primary-orange)' }}>
               <ShieldCheck size={28} />
             </div>
             <div>
-              <div style={{ fontSize: '0.8rem', color: 'var(--primary-red)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '1px' }}>
+              <div style={{ fontSize: '0.8rem', color: 'var(--primary-orange)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '1px' }}>
                 ADMINISTRATION PORTAL
               </div>
-              <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', fontWeight: 900, color: 'var(--text-dark)' }}>
+              <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', fontWeight: 900, color: '#FFFFFF' }}>
                 {t('adminDashboardTitle')}
               </h1>
             </div>
@@ -99,25 +94,25 @@ export const AdminDashboard = ({ onLogout }) => {
           marginBottom: '32px'
         }}>
           
-          <div className="glass-panel" style={{ padding: '20px', background: '#FFFFFF' }}>
+          <div className="glass-panel" style={{ padding: '20px', background: 'var(--bg-card)', borderColor: 'var(--border-orange)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-muted)', marginBottom: '8px' }}>
               <span style={{ fontSize: '0.85rem', fontWeight: 700 }}>Total Vehicles</span>
-              <Car size={20} color="var(--primary-red)" />
+              <Car size={20} color="var(--primary-orange)" />
             </div>
-            <div style={{ fontSize: '1.8rem', fontWeight: 900, color: 'var(--text-dark)', fontFamily: 'var(--font-heading)' }}>
+            <div style={{ fontSize: '1.8rem', fontWeight: 900, color: '#FFFFFF', fontFamily: 'var(--font-heading)' }}>
               {vehicles.length}
             </div>
-            <div style={{ fontSize: '0.75rem', color: '#059669', fontWeight: 700, marginTop: '4px' }}>
+            <div style={{ fontSize: '0.75rem', color: '#10B981', fontWeight: 700, marginTop: '4px' }}>
               ● Live Cloud Firestore Sync Active
             </div>
           </div>
 
-          <div className="glass-panel" style={{ padding: '20px', background: '#FFFFFF' }}>
+          <div className="glass-panel" style={{ padding: '20px', background: 'var(--bg-card)', borderColor: 'var(--border-red)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-muted)', marginBottom: '8px' }}>
               <span style={{ fontSize: '0.85rem', fontWeight: 700 }}>Customer Inquiries</span>
               <Users size={20} color="var(--primary-red)" />
             </div>
-            <div style={{ fontSize: '1.8rem', fontWeight: 900, color: 'var(--text-dark)', fontFamily: 'var(--font-heading)' }}>
+            <div style={{ fontSize: '1.8rem', fontWeight: 900, color: '#FFFFFF', fontFamily: 'var(--font-heading)' }}>
               {inquiries.length}
             </div>
             <div style={{ fontSize: '0.75rem', color: 'var(--primary-red)', fontWeight: 700, marginTop: '4px' }}>
@@ -132,7 +127,7 @@ export const AdminDashboard = ({ onLogout }) => {
           display: 'flex',
           gap: '12px',
           marginBottom: '24px',
-          borderBottom: '1px solid var(--border-light)',
+          borderBottom: '1px solid var(--border-dark)',
           paddingBottom: '12px'
         }}>
           <button
@@ -141,14 +136,14 @@ export const AdminDashboard = ({ onLogout }) => {
               padding: '10px 20px',
               borderRadius: '8px',
               border: 'none',
-              background: activeTab === 'vehicles' ? 'var(--primary-red)' : '#FFFFFF',
-              color: activeTab === 'vehicles' ? '#FFFFFF' : 'var(--text-dark)',
+              background: activeTab === 'vehicles' ? 'var(--gradient-red-orange)' : 'var(--bg-card)',
+              color: '#FFFFFF',
               fontWeight: 800,
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
               gap: '8px',
-              boxShadow: activeTab === 'vehicles' ? '0 4px 14px rgba(229,9,20,0.3)' : 'var(--shadow-sm)'
+              boxShadow: activeTab === 'vehicles' ? '0 4px 14px var(--orange-glow)' : 'var(--shadow-sm)'
             }}
           >
             <Car size={18} />
@@ -161,14 +156,14 @@ export const AdminDashboard = ({ onLogout }) => {
               padding: '10px 20px',
               borderRadius: '8px',
               border: 'none',
-              background: activeTab === 'inquiries' ? 'var(--primary-red)' : '#FFFFFF',
-              color: activeTab === 'inquiries' ? '#FFFFFF' : 'var(--text-dark)',
+              background: activeTab === 'inquiries' ? 'var(--gradient-red-orange)' : 'var(--bg-card)',
+              color: '#FFFFFF',
               fontWeight: 800,
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
               gap: '8px',
-              boxShadow: activeTab === 'inquiries' ? '0 4px 14px rgba(229,9,20,0.3)' : 'var(--shadow-sm)'
+              boxShadow: activeTab === 'inquiries' ? '0 4px 14px var(--orange-glow)' : 'var(--shadow-sm)'
             }}
           >
             <Users size={18} />
@@ -187,7 +182,6 @@ export const AdminDashboard = ({ onLogout }) => {
               flexWrap: 'wrap',
               gap: '16px'
             }}>
-              {/* Search Bar */}
               <div style={{ position: 'relative', width: '320px', maxWidth: '100%' }}>
                 <Search size={18} color="var(--text-muted)" style={{ position: 'absolute', left: '12px', top: '12px' }} />
                 <input
@@ -198,28 +192,27 @@ export const AdminDashboard = ({ onLogout }) => {
                   style={{
                     width: '100%',
                     padding: '10px 12px 10px 38px',
-                    background: '#FFFFFF',
-                    border: '1px solid var(--border-light)',
+                    background: 'var(--bg-surface)',
+                    border: '1px solid var(--border-dark)',
                     borderRadius: '8px',
-                    color: 'var(--text-dark)',
+                    color: '#FFFFFF',
                     fontSize: '0.9rem',
                     fontWeight: 600
                   }}
                 />
               </div>
 
-              {/* Add Vehicle CTA */}
-              <button onClick={handleOpenAddModal} className="btn-red">
+              <button onClick={handleOpenAddModal} className="btn-gradient">
                 <Plus size={18} />
                 <span>{t('addVehicleBtn')}</span>
               </button>
             </div>
 
             {/* Inventory Table */}
-            <div className="glass-panel" style={{ overflowX: 'auto', background: '#FFFFFF' }}>
+            <div className="glass-panel" style={{ overflowX: 'auto', background: 'var(--bg-card)' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: '750px' }}>
                 <thead>
-                  <tr style={{ background: '#F8FAFC', borderBottom: '1px solid var(--border-light)', color: 'var(--text-dark)' }}>
+                  <tr style={{ background: 'var(--bg-surface)', borderBottom: '1px solid var(--border-dark)', color: 'var(--text-sub)' }}>
                     <th style={{ padding: '14px 18px', fontSize: '0.8rem', fontWeight: 800 }}>Vehicle</th>
                     <th style={{ padding: '14px 18px', fontSize: '0.8rem', fontWeight: 800 }}>Stock #</th>
                     <th style={{ padding: '14px 18px', fontSize: '0.8rem', fontWeight: 800 }}>Year & Mileage</th>
@@ -231,9 +224,8 @@ export const AdminDashboard = ({ onLogout }) => {
                 </thead>
                 <tbody>
                   {filteredVehicles.map((v) => (
-                    <tr key={v.id} style={{ borderBottom: '1px solid #F1F5F9' }}>
+                    <tr key={v.id} style={{ borderBottom: '1px solid #1E1E28' }}>
                       
-                      {/* Vehicle Model & Image */}
                       <td style={{ padding: '14px 18px' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                           <img
@@ -242,13 +234,13 @@ export const AdminDashboard = ({ onLogout }) => {
                             style={{ width: '60px', height: '42px', objectFit: 'cover', borderRadius: '6px' }}
                           />
                           <div>
-                            <div style={{ fontWeight: 800, color: 'var(--text-dark)', fontSize: '0.92rem' }}>{v.model}</div>
-                            <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 600 }}>{v.make}</div>
+                            <div style={{ fontWeight: 800, color: '#FFFFFF', fontSize: '0.92rem' }}>{v.model}</div>
+                            <div style={{ fontSize: '0.78rem', color: 'var(--primary-orange)', fontWeight: 600 }}>{v.make}</div>
                           </div>
                         </div>
                       </td>
 
-                      <td style={{ padding: '14px 18px', fontWeight: 700, color: 'var(--primary-red)', fontSize: '0.85rem' }}>
+                      <td style={{ padding: '14px 18px', fontWeight: 700, color: 'var(--primary-orange)', fontSize: '0.85rem' }}>
                         {v.stockNo}
                       </td>
 
@@ -257,7 +249,7 @@ export const AdminDashboard = ({ onLogout }) => {
                       </td>
 
                       <td style={{ padding: '14px 18px' }}>
-                        <div style={{ fontWeight: 800, color: 'var(--text-dark)', fontSize: '0.9rem' }}>${v.priceUsd.toLocaleString()} USD</div>
+                        <div style={{ fontWeight: 800, color: '#FFFFFF', fontSize: '0.9rem' }}>${v.priceUsd.toLocaleString()} USD</div>
                         <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 600 }}>¥{v.priceJpy.toLocaleString()} JPY</div>
                       </td>
 
@@ -299,9 +291,9 @@ export const AdminDashboard = ({ onLogout }) => {
                           <button
                             onClick={() => handleDeleteVehicle(v.id)}
                             style={{
-                              background: '#FEE2E2',
-                              border: '1px solid #FCA5A5',
-                              color: '#DC2626',
+                              background: 'rgba(239, 68, 68, 0.2)',
+                              border: '1px solid #EF4444',
+                              color: '#EF4444',
                               padding: '6px 10px',
                               borderRadius: '6px',
                               cursor: 'pointer'
@@ -323,10 +315,10 @@ export const AdminDashboard = ({ onLogout }) => {
 
         {/* TAB 2: INQUIRY LEADS MANAGER */}
         {activeTab === 'inquiries' && (
-          <div className="glass-panel" style={{ overflowX: 'auto', background: '#FFFFFF' }}>
+          <div className="glass-panel" style={{ overflowX: 'auto', background: 'var(--bg-card)' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: '750px' }}>
               <thead>
-                <tr style={{ background: '#F8FAFC', borderBottom: '1px solid var(--border-light)', color: 'var(--text-dark)' }}>
+                <tr style={{ background: 'var(--bg-surface)', borderBottom: '1px solid var(--border-dark)', color: 'var(--text-sub)' }}>
                   <th style={{ padding: '14px 18px', fontSize: '0.8rem', fontWeight: 800 }}>Buyer Name</th>
                   <th style={{ padding: '14px 18px', fontSize: '0.8rem', fontWeight: 800 }}>Contact Info</th>
                   <th style={{ padding: '14px 18px', fontSize: '0.8rem', fontWeight: 800 }}>Target Vehicle</th>
@@ -336,9 +328,9 @@ export const AdminDashboard = ({ onLogout }) => {
               </thead>
               <tbody>
                 {inquiries.map((inq, idx) => (
-                  <tr key={idx} style={{ borderBottom: '1px solid #F1F5F9' }}>
+                  <tr key={idx} style={{ borderBottom: '1px solid #1E1E28' }}>
                     
-                    <td style={{ padding: '14px 18px', fontWeight: 800, color: 'var(--text-dark)', fontSize: '0.9rem' }}>
+                    <td style={{ padding: '14px 18px', fontWeight: 800, color: '#FFFFFF', fontSize: '0.9rem' }}>
                       {inq.customerName || inq.name}
                     </td>
 
@@ -348,8 +340,8 @@ export const AdminDashboard = ({ onLogout }) => {
                     </td>
 
                     <td style={{ padding: '14px 18px' }}>
-                      <span className="badge-red" style={{ marginRight: '6px' }}>{inq.stockNo}</span>
-                      <span style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-dark)' }}>{inq.model}</span>
+                      <span className="badge-orange" style={{ marginRight: '6px' }}>{inq.stockNo}</span>
+                      <span style={{ fontWeight: 700, fontSize: '0.85rem', color: '#FFFFFF' }}>{inq.model}</span>
                     </td>
 
                     <td style={{ padding: '14px 18px', fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-sub)' }}>
@@ -369,7 +361,6 @@ export const AdminDashboard = ({ onLogout }) => {
 
       </div>
 
-      {/* Vehicle Add / Edit Modal */}
       {showVehicleModal && (
         <VehicleFormModal
           vehicleToEdit={editingVehicle}

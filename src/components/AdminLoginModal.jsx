@@ -20,22 +20,22 @@ export const AdminLoginModal = ({ onClose, onLoginSuccess }) => {
 
   return (
     <div className="modal-overlay">
-      <div className="modal-content glass-panel" style={{ maxWidth: '440px', padding: 0, background: '#FFFFFF' }}>
+      <div className="modal-content glass-panel" style={{ maxWidth: '440px', padding: 0, background: 'var(--bg-card)', borderColor: 'var(--border-orange)' }}>
         
         {/* Header */}
         <div style={{
           padding: '20px 24px',
-          background: '#F8FAFC',
-          borderBottom: '1px solid var(--border-light)',
+          background: 'var(--bg-surface)',
+          borderBottom: '1px solid var(--border-dark)',
           display: 'flex',
           justify: 'space-between',
           alignItems: 'center'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <div style={{ padding: '8px', borderRadius: '8px', background: 'var(--red-dim)', color: 'var(--primary-red)' }}>
+            <div style={{ padding: '8px', borderRadius: '8px', background: 'var(--orange-dim)', color: 'var(--primary-orange)' }}>
               <Lock size={20} />
             </div>
-            <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.2rem', fontWeight: 800, color: 'var(--text-dark)' }}>
+            <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.2rem', fontWeight: 800, color: '#FFFFFF' }}>
               {t('adminAuthModalTitle')}
             </h2>
           </div>
@@ -55,10 +55,10 @@ export const AdminLoginModal = ({ onClose, onLoginSuccess }) => {
           {error && (
             <div style={{
               padding: '10px 14px',
-              background: '#FEE2E2',
-              border: '1px solid #FCA5A5',
+              background: 'rgba(239, 68, 68, 0.2)',
+              border: '1px solid #EF4444',
               borderRadius: '8px',
-              color: '#DC2626',
+              color: '#EF4444',
               fontSize: '0.82rem',
               fontWeight: 700,
               display: 'flex',
@@ -71,7 +71,7 @@ export const AdminLoginModal = ({ onClose, onLoginSuccess }) => {
           )}
 
           <div>
-            <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-dark)', marginBottom: '6px', fontWeight: 700 }}>
+            <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-sub)', marginBottom: '6px', fontWeight: 700 }}>
               {t('adminPasscodeLabel')} *
             </label>
             <div style={{ position: 'relative' }}>
@@ -89,10 +89,10 @@ export const AdminLoginModal = ({ onClose, onLoginSuccess }) => {
                 style={{
                   width: '100%',
                   padding: '10px 12px 10px 40px',
-                  background: '#F8FAFC',
-                  border: '1px solid var(--border-light)',
+                  background: 'var(--bg-surface)',
+                  border: '1px solid var(--border-dark)',
                   borderRadius: '8px',
-                  color: 'var(--text-dark)',
+                  color: '#FFFFFF',
                   fontSize: '0.9rem',
                   fontWeight: 600
                 }}
@@ -100,7 +100,7 @@ export const AdminLoginModal = ({ onClose, onLoginSuccess }) => {
             </div>
           </div>
 
-          <button type="submit" className="btn-red" style={{ padding: '12px', justifyContent: 'center', marginTop: '6px' }}>
+          <button type="submit" className="btn-gradient" style={{ padding: '12px', justifyContent: 'center', marginTop: '6px' }}>
             <span>{t('adminLoginBtn')}</span>
           </button>
 

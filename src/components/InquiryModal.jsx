@@ -39,12 +39,8 @@ export const InquiryModal = ({ vehicle, onClose }) => {
     };
 
     try {
-      // 1. Write to Cloud Firebase Firestore
       await saveInquiry(inquiryPayload);
-      
-      // 2. Record lead in global context
       addInquiryLead(inquiryPayload);
-
       setIsSubmitting(false);
       setIsSuccess(true);
     } catch (err) {
@@ -57,20 +53,20 @@ export const InquiryModal = ({ vehicle, onClose }) => {
 
   return (
     <div className="modal-overlay">
-      <div className="modal-content glass-panel" style={{ maxWidth: '620px', padding: 0, background: '#FFFFFF' }}>
+      <div className="modal-content glass-panel" style={{ maxWidth: '620px', padding: 0, background: 'var(--bg-card)', borderColor: 'var(--border-orange)' }}>
         
         {/* Header */}
         <div style={{
           padding: '20px 24px',
-          background: '#F8FAFC',
-          borderBottom: '1px solid var(--border-light)',
+          background: 'var(--bg-surface)',
+          borderBottom: '1px solid var(--border-dark)',
           display: 'flex',
           justify: 'space-between',
           alignItems: 'center'
         }}>
           <div>
-            <span className="badge-red" style={{ marginBottom: '4px', display: 'inline-block' }}>{t('proformaInvoice')}</span>
-            <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.25rem', fontWeight: 900, color: 'var(--text-dark)' }}>
+            <span className="badge-orange" style={{ marginBottom: '4px', display: 'inline-block' }}>{t('proformaInvoice')}</span>
+            <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.25rem', fontWeight: 900, color: '#FFFFFF' }}>
               {t('inquireHeading', { stockNo: vehicle.stockNo })}
             </h2>
           </div>
@@ -80,24 +76,24 @@ export const InquiryModal = ({ vehicle, onClose }) => {
           </button>
         </div>
 
-        {/* Success Confirmation View */}
+        {/* Success View */}
         {isSuccess ? (
           <div style={{ padding: '40px 28px', textAlign: 'center' }}>
             <div style={{
               width: '64px',
               height: '64px',
               borderRadius: '50%',
-              background: 'var(--red-dim)',
-              color: 'var(--primary-red)',
+              background: 'var(--orange-dim)',
+              color: 'var(--primary-orange)',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center',
+              justify: 'center',
               margin: '0 auto 20px'
             }}>
               <CheckCircle2 size={36} />
             </div>
 
-            <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.4rem', fontWeight: 800, color: 'var(--text-dark)', marginBottom: '8px' }}>
+            <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.4rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '8px' }}>
               {t('quoteSubmittedSuccess')}
             </h3>
 
@@ -105,11 +101,11 @@ export const InquiryModal = ({ vehicle, onClose }) => {
               {t('quoteSubmittedDesc')}
             </p>
 
-            <div style={{ padding: '16px', background: '#F8FAFC', borderRadius: '10px', fontSize: '0.85rem', color: 'var(--text-dark)', fontWeight: 700, marginBottom: '24px', border: '1px solid #E2E8F0' }}>
+            <div style={{ padding: '16px', background: 'var(--bg-surface)', borderRadius: '10px', fontSize: '0.85rem', color: '#FFFFFF', fontWeight: 700, marginBottom: '24px', border: '1px solid var(--border-dark)' }}>
               Vehicle: {vehicle.make} {vehicle.model} ({vehicle.stockNo}) — {formattedPrice}
             </div>
 
-            <button onClick={onClose} className="btn-red" style={{ padding: '12px 32px' }}>
+            <button onClick={onClose} className="btn-gradient" style={{ padding: '12px 32px' }}>
               {t('closeBtn')}
             </button>
           </div>
@@ -117,15 +113,14 @@ export const InquiryModal = ({ vehicle, onClose }) => {
           /* Inquiry Form */
           <form onSubmit={handleSubmit} style={{ padding: '24px', display: 'grid', gap: '16px' }}>
             
-            {/* Vehicle Summary Card */}
             <div style={{
               display: 'flex',
               gap: '16px',
               alignItems: 'center',
               padding: '12px 16px',
-              background: '#F8FAFC',
+              background: 'var(--bg-surface)',
               borderRadius: '10px',
-              border: '1px solid #E2E8F0'
+              border: '1px solid var(--border-dark)'
             }}>
               <img
                 src={vehicle.image}
@@ -133,17 +128,17 @@ export const InquiryModal = ({ vehicle, onClose }) => {
                 style={{ width: '80px', height: '54px', objectFit: 'cover', borderRadius: '6px' }}
               />
               <div style={{ flex: 1 }}>
-                <div style={{ fontSize: '0.95rem', fontWeight: 800, color: 'var(--text-dark)' }}>{vehicle.model}</div>
+                <div style={{ fontSize: '0.95rem', fontWeight: 800, color: '#FFFFFF' }}>{vehicle.model}</div>
                 <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 600 }}>Stock #{vehicle.stockNo} • {vehicle.year}</div>
               </div>
-              <div style={{ fontFamily: 'var(--font-heading)', fontSize: '1.1rem', fontWeight: 900, color: 'var(--primary-red)' }}>
+              <div style={{ fontFamily: 'var(--font-heading)', fontSize: '1.1rem', fontWeight: 900, color: 'var(--primary-orange)' }}>
                 {formattedPrice}
               </div>
             </div>
 
             {/* Name */}
             <div>
-              <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-dark)', marginBottom: '6px', fontWeight: 700 }}>
+              <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-sub)', marginBottom: '6px', fontWeight: 700 }}>
                 {t('fullNameLabel')} *
               </label>
               <div style={{ position: 'relative' }}>
@@ -157,10 +152,10 @@ export const InquiryModal = ({ vehicle, onClose }) => {
                   style={{
                     width: '100%',
                     padding: '10px 12px 10px 40px',
-                    background: '#F8FAFC',
-                    border: '1px solid var(--border-light)',
+                    background: 'var(--bg-surface)',
+                    border: '1px solid var(--border-dark)',
                     borderRadius: '8px',
-                    color: 'var(--text-dark)',
+                    color: '#FFFFFF',
                     fontSize: '0.9rem',
                     fontWeight: 600
                   }}
@@ -171,7 +166,7 @@ export const InquiryModal = ({ vehicle, onClose }) => {
             {/* Email & Phone */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-dark)', marginBottom: '6px', fontWeight: 700 }}>
+                <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-sub)', marginBottom: '6px', fontWeight: 700 }}>
                   {t('emailLabel')} *
                 </label>
                 <div style={{ position: 'relative' }}>
@@ -185,10 +180,10 @@ export const InquiryModal = ({ vehicle, onClose }) => {
                     style={{
                       width: '100%',
                       padding: '10px 12px 10px 40px',
-                      background: '#F8FAFC',
-                      border: '1px solid var(--border-light)',
+                      background: 'var(--bg-surface)',
+                      border: '1px solid var(--border-dark)',
                       borderRadius: '8px',
-                      color: 'var(--text-dark)',
+                      color: '#FFFFFF',
                       fontSize: '0.9rem',
                       fontWeight: 600
                     }}
@@ -197,7 +192,7 @@ export const InquiryModal = ({ vehicle, onClose }) => {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-dark)', marginBottom: '6px', fontWeight: 700 }}>
+                <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-sub)', marginBottom: '6px', fontWeight: 700 }}>
                   {t('phoneLabel')} *
                 </label>
                 <div style={{ position: 'relative' }}>
@@ -211,10 +206,10 @@ export const InquiryModal = ({ vehicle, onClose }) => {
                     style={{
                       width: '100%',
                       padding: '10px 12px 10px 40px',
-                      background: '#F8FAFC',
-                      border: '1px solid var(--border-light)',
+                      background: 'var(--bg-surface)',
+                      border: '1px solid var(--border-dark)',
                       borderRadius: '8px',
-                      color: 'var(--text-dark)',
+                      color: '#FFFFFF',
                       fontSize: '0.9rem',
                       fontWeight: 600
                     }}
@@ -225,7 +220,7 @@ export const InquiryModal = ({ vehicle, onClose }) => {
 
             {/* Country */}
             <div>
-              <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-dark)', marginBottom: '6px', fontWeight: 700 }}>
+              <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-sub)', marginBottom: '6px', fontWeight: 700 }}>
                 {t('destinationCountry')} *
               </label>
               <div style={{ position: 'relative' }}>
@@ -239,10 +234,10 @@ export const InquiryModal = ({ vehicle, onClose }) => {
                   style={{
                     width: '100%',
                     padding: '10px 12px 10px 40px',
-                    background: '#F8FAFC',
-                    border: '1px solid var(--border-light)',
+                    background: 'var(--bg-surface)',
+                    border: '1px solid var(--border-dark)',
                     borderRadius: '8px',
-                    color: 'var(--text-dark)',
+                    color: '#FFFFFF',
                     fontSize: '0.9rem',
                     fontWeight: 600
                   }}
@@ -250,9 +245,9 @@ export const InquiryModal = ({ vehicle, onClose }) => {
               </div>
             </div>
 
-            {/* Special Instructions Message */}
+            {/* Message */}
             <div>
-              <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-dark)', marginBottom: '6px', fontWeight: 700 }}>
+              <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-sub)', marginBottom: '6px', fontWeight: 700 }}>
                 {t('commentsLabel')}
               </label>
               <textarea
@@ -263,21 +258,20 @@ export const InquiryModal = ({ vehicle, onClose }) => {
                 style={{
                   width: '100%',
                   padding: '10px 12px',
-                  background: '#F8FAFC',
-                  border: '1px solid var(--border-light)',
+                  background: 'var(--bg-surface)',
+                  border: '1px solid var(--border-dark)',
                   borderRadius: '8px',
-                  color: 'var(--text-dark)',
+                  color: '#FFFFFF',
                   fontSize: '0.9rem',
                   fontWeight: 600
                 }}
               />
             </div>
 
-            {/* Submit Button */}
             <button
               type="submit"
               disabled={isSubmitting}
-              className="btn-red"
+              className="btn-gradient"
               style={{ padding: '14px', justifyContent: 'center', marginTop: '6px', fontSize: '0.95rem' }}
             >
               {isSubmitting ? (

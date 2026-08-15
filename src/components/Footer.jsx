@@ -7,8 +7,8 @@ export const Footer = () => {
 
   return (
     <footer style={{
-      background: 'linear-gradient(180deg, #FFFFFF 0%, #F0FDFA 100%)',
-      borderTop: '1px solid var(--border-teal)',
+      background: '#050507',
+      borderTop: '1px solid var(--border-dark)',
       color: 'var(--text-sub)',
       paddingTop: '60px',
       paddingBottom: '30px'
@@ -25,14 +25,14 @@ export const Footer = () => {
                 alt="Ash Garage Logo"
                 style={{ height: '48px', width: 'auto' }}
               />
-              <span style={{ fontFamily: 'var(--font-heading)', fontSize: '1.3rem', fontWeight: 900, color: 'var(--text-dark)' }}>
-                ASH <span style={{ color: 'var(--primary-red)' }}>GARAGE</span>
+              <span style={{ fontFamily: 'var(--font-heading)', fontSize: '1.3rem', fontWeight: 900, color: '#FFFFFF' }}>
+                ASH <span style={{ color: 'var(--primary-orange)' }}>GARAGE</span>
               </span>
             </div>
             <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: '16px', fontWeight: 500 }}>
               {t('footerDesc')}
             </p>
-            <div style={{ fontSize: '0.8rem', color: 'var(--primary-teal)', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <div style={{ fontSize: '0.8rem', color: 'var(--primary-orange)', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '6px' }}>
               <ShieldCheck size={16} />
               <span>{t('dealerLicense')}</span>
             </div>
@@ -40,34 +40,34 @@ export const Footer = () => {
 
           {/* Tokyo HQ Office */}
           <div>
-            <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: '1rem', fontWeight: 800, color: 'var(--text-dark)', marginBottom: '16px' }}>
+            <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: '1rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '16px' }}>
               {t('tokyoOffice')}
             </h4>
             <div style={{ display: 'flex', gap: '10px', fontSize: '0.88rem', marginBottom: '10px', fontWeight: 500 }}>
-              <MapPin size={18} color="var(--primary-teal)" style={{ flexShrink: 0, marginTop: '2px' }} />
+              <MapPin size={18} color="var(--primary-orange)" style={{ flexShrink: 0, marginTop: '2px' }} />
               <span>{t('tokyoAddress')}</span>
             </div>
             <div style={{ display: 'flex', gap: '10px', fontSize: '0.88rem', marginBottom: '10px', fontWeight: 500 }}>
-              <Phone size={18} color="var(--primary-teal)" style={{ flexShrink: 0 }} />
+              <Phone size={18} color="var(--primary-orange)" style={{ flexShrink: 0 }} />
               <span>{t('phone')}</span>
             </div>
             <div style={{ display: 'flex', gap: '10px', fontSize: '0.88rem', fontWeight: 500 }}>
-              <Mail size={18} color="var(--primary-teal)" style={{ flexShrink: 0 }} />
+              <Mail size={18} color="var(--primary-orange)" style={{ flexShrink: 0 }} />
               <span>{t('email')}</span>
             </div>
           </div>
 
           {/* Yokohama Port Yard & Hours */}
           <div>
-            <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: '1rem', fontWeight: 800, color: 'var(--text-dark)', marginBottom: '16px' }}>
+            <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: '1rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '16px' }}>
               {t('yokohamaYard')}
             </h4>
             <div style={{ display: 'flex', gap: '10px', fontSize: '0.88rem', marginBottom: '12px', fontWeight: 500 }}>
-              <MapPin size={18} color="var(--primary-teal)" style={{ flexShrink: 0, marginTop: '2px' }} />
+              <MapPin size={18} color="var(--primary-orange)" style={{ flexShrink: 0, marginTop: '2px' }} />
               <span>{t('yokohamaAddress')}</span>
             </div>
             <div style={{ display: 'flex', gap: '10px', fontSize: '0.88rem', fontWeight: 500 }}>
-              <Clock size={18} color="var(--primary-teal)" style={{ flexShrink: 0 }} />
+              <Clock size={18} color="var(--primary-red)" style={{ flexShrink: 0 }} />
               <span>{t('hours')}</span>
             </div>
           </div>
@@ -76,7 +76,7 @@ export const Footer = () => {
 
         {/* Bottom Copyright */}
         <div style={{
-          borderTop: '1px solid var(--border-light)',
+          borderTop: '1px solid var(--border-dark)',
           paddingTop: '24px',
           textAlign: 'center',
           fontSize: '0.8rem',
