@@ -1,4 +1,4 @@
-/* ASH GARAGE JAPAN - Red, Black, and White Styling System */
+/* ASH GARAGE JAPAN - 100% Mobile Compatible Styling System */
 :root {
   --primary-red: #E50914;
   --primary-red-hover: #FF1E27;
@@ -28,20 +28,23 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  -webkit-tap-highlight-color: transparent;
 }
 
-body {
+html, body {
+  width: 100%;
+  overflow-x: hidden;
   background-color: var(--bg-obsidian);
   color: var(--text-white);
   font-family: var(--font-body);
   line-height: 1.6;
-  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Scrollbar */
+/* Custom Touch-Friendly Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: var(--bg-obsidian);
@@ -54,7 +57,7 @@ body {
   background: var(--primary-red);
 }
 
-/* Glassmorphism Panel */
+/* Glassmorphism Panels */
 .glass-panel {
   background: rgba(18, 18, 22, 0.85);
   backdrop-filter: blur(12px);
@@ -71,28 +74,31 @@ body {
   border-radius: 12px;
 }
 
-/* Buttons */
+/* Buttons with 48px+ Mobile Touch Target Heights */
 .btn-red {
   background: var(--primary-red);
   color: #FFFFFF;
   font-family: var(--font-heading);
   font-weight: 700;
   letter-spacing: 0.5px;
-  padding: 12px 24px;
+  min-height: 44px;
+  padding: 10px 20px;
   border-radius: 6px;
   border: none;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   transition: var(--transition-fast);
   box-shadow: 0 4px 15px var(--red-glow);
   text-decoration: none;
+  touch-action: manipulation;
 }
 
-.btn-red:hover {
+.btn-red:hover, .btn-red:active {
   background: var(--primary-red-hover);
-  transform: translateY(-2px);
+  transform: translateY(-1px);
   box-shadow: 0 6px 20px rgba(229, 9, 20, 0.6);
 }
 
@@ -102,29 +108,32 @@ body {
   border: 1px solid var(--border-dark);
   font-family: var(--font-heading);
   font-weight: 600;
-  padding: 11px 22px;
+  min-height: 44px;
+  padding: 10px 18px;
   border-radius: 6px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   transition: var(--transition-fast);
+  touch-action: manipulation;
 }
 
-.btn-outline:hover {
+.btn-outline:hover, .btn-outline:active {
   border-color: var(--primary-red);
   color: var(--primary-red);
   background: var(--red-dim);
 }
 
-/* Badge Styles */
+/* Badges */
 .badge-red {
   background: var(--primary-red);
   color: #FFFFFF;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.8px;
-  padding: 4px 10px;
+  padding: 4px 8px;
   border-radius: 4px;
   text-transform: uppercase;
 }
@@ -133,36 +142,37 @@ body {
   background: var(--bg-surface);
   color: var(--text-sub);
   border: 1px solid var(--border-dark);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 600;
-  padding: 4px 10px;
+  padding: 4px 8px;
   border-radius: 4px;
 }
 
 .badge-grade {
   background: #10B981;
   color: #FFFFFF;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 800;
-  padding: 4px 10px;
+  padding: 4px 8px;
   border-radius: 4px;
 }
 
-/* Modal Overlay Animation */
+/* Modals */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.88);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   z-index: 9999;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
-  animation: fadeIn 0.3s ease;
+  padding: 16px;
+  animation: fadeIn 0.25s ease;
 }
 
 .modal-content {
@@ -172,9 +182,9 @@ body {
   border-radius: 16px;
   width: 100%;
   max-width: 720px;
-  max-height: 90vh;
+  max-height: 92vh;
   overflow-y: auto;
-  animation: scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: scaleUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
 }
 
@@ -184,11 +194,11 @@ body {
 }
 
 @keyframes scaleUp {
-  from { transform: scale(0.92); opacity: 0; }
+  from { transform: scale(0.95); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
 }
 
-/* Pulsing Red Indicator */
+/* Pulsing Red Dot */
 .pulse-dot {
   width: 8px;
   height: 8px;
@@ -204,15 +214,85 @@ body {
   100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(229, 9, 20, 0); }
 }
 
-/* Custom Grid Responsiveness */
+/* Responsive Inventory Grid */
 .grid-vehicles {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 24px;
 }
 
+/* ----------------------------------------------------
+   100% MOBILE & TABLET MEDIA QUERIES (320px - 768px)
+---------------------------------------------------- */
 @media (max-width: 768px) {
+  /* Navigation */
+  .desktop-nav {
+    display: none !important;
+  }
+
+  .mobile-menu-btn {
+    display: flex !important;
+    align-items: center;
+    justify: center;
+    padding: 8px;
+  }
+
+  .mobile-nav-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px 24px;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border-dark);
+  }
+
+  /* Grid Responsiveness */
   .grid-vehicles {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
+    gap: 20px;
+  }
+
+  /* Modals on Mobile */
+  .modal-overlay {
+    padding: 10px !important;
+    align-items: flex-end; /* Sheet style on mobile */
+  }
+
+  .modal-content {
+    border-radius: 16px 16px 0 0 !important;
+    max-height: 94vh !important;
+  }
+
+  /* Hero Section */
+  .hero-search-box {
+    flex-direction: column !important;
+    border-radius: 16px !important;
+    padding: 12px !important;
+    gap: 10px !important;
+  }
+
+  .hero-search-box input {
+    font-size: 0.95rem !important;
+  }
+
+  .hero-search-box button {
+    width: 100% !important;
+    border-radius: 8px !important;
+  }
+
+  /* Filter Section */
+  .filter-controls-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .filter-controls-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Responsive Form Inputs */
+  input, select, textarea {
+    font-size: 16px !important; /* Prevents iOS auto-zoom */
   }
 }

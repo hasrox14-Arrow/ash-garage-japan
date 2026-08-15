@@ -15,49 +15,51 @@ export const VehicleFilter = ({
   };
 
   return (
-    <div className="glass-panel" style={{ padding: '24px', marginBottom: '32px' }}>
+    <div className="glass-panel" style={{ padding: '20px', marginBottom: '24px' }}>
       
       {/* Title Header */}
       <div style={{
         display: 'flex',
         alignItems: 'center',
         justify: 'space-between',
-        marginBottom: '20px',
-        paddingBottom: '12px',
-        borderBottom: '1px solid var(--border-dark)'
+        marginBottom: '16px',
+        paddingBottom: '10px',
+        borderBottom: '1px solid var(--border-dark)',
+        flexWrap: 'wrap',
+        gap: '10px'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <Filter size={20} color="var(--primary-red)" />
-          <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.1rem', fontWeight: 800, color: '#FFF' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <Filter size={18} color="var(--primary-red)" />
+          <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1rem', fontWeight: 800, color: '#FFF' }}>
             {t('filterTitle')}
           </h3>
         </div>
         
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
             {t('showingResults', { count: totalResults })}
           </span>
           <button
             onClick={resetFilters}
             className="btn-outline"
-            style={{ padding: '6px 12px', fontSize: '0.75rem', gap: '4px' }}
+            style={{ padding: '4px 10px', fontSize: '0.72rem', gap: '4px', minHeight: '34px' }}
           >
-            <RotateCcw size={12} />
+            <RotateCcw size={11} />
             {t('resetFilters')}
           </button>
         </div>
       </div>
 
       {/* Filter Controls Grid */}
-      <div style={{
+      <div className="filter-controls-grid" style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
-        gap: '16px'
+        gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
+        gap: '12px'
       }}>
         
         {/* Make Filter */}
         <div>
-          <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '6px', fontWeight: 600 }}>
+          <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '4px', fontWeight: 600 }}>
             {t('makeLabel')}
           </label>
           <select
@@ -65,12 +67,12 @@ export const VehicleFilter = ({
             onChange={(e) => handleFilterChange('make', e.target.value)}
             style={{
               width: '100%',
-              padding: '10px 12px',
+              padding: '8px 10px',
               background: 'var(--bg-surface)',
               border: '1px solid var(--border-dark)',
               borderRadius: '6px',
               color: '#FFF',
-              fontSize: '0.9rem',
+              fontSize: '0.85rem',
               outline: 'none'
             }}
           >
@@ -85,7 +87,7 @@ export const VehicleFilter = ({
 
         {/* Body Type Filter */}
         <div>
-          <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '6px', fontWeight: 600 }}>
+          <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '4px', fontWeight: 600 }}>
             {t('bodyLabel')}
           </label>
           <select
@@ -93,12 +95,12 @@ export const VehicleFilter = ({
             onChange={(e) => handleFilterChange('bodyType', e.target.value)}
             style={{
               width: '100%',
-              padding: '10px 12px',
+              padding: '8px 10px',
               background: 'var(--bg-surface)',
               border: '1px solid var(--border-dark)',
               borderRadius: '6px',
               color: '#FFF',
-              fontSize: '0.9rem',
+              fontSize: '0.85rem',
               outline: 'none'
             }}
           >
@@ -112,7 +114,7 @@ export const VehicleFilter = ({
 
         {/* Transmission Filter */}
         <div>
-          <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '6px', fontWeight: 600 }}>
+          <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '4px', fontWeight: 600 }}>
             {t('transLabel')}
           </label>
           <select
@@ -120,12 +122,12 @@ export const VehicleFilter = ({
             onChange={(e) => handleFilterChange('transmission', e.target.value)}
             style={{
               width: '100%',
-              padding: '10px 12px',
+              padding: '8px 10px',
               background: 'var(--bg-surface)',
               border: '1px solid var(--border-dark)',
               borderRadius: '6px',
               color: '#FFF',
-              fontSize: '0.9rem',
+              fontSize: '0.85rem',
               outline: 'none'
             }}
           >
@@ -137,7 +139,7 @@ export const VehicleFilter = ({
 
         {/* Max Price Filter */}
         <div>
-          <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '6px', fontWeight: 600 }}>
+          <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '4px', fontWeight: 600 }}>
             {t('priceLabel')}
           </label>
           <select
@@ -145,12 +147,12 @@ export const VehicleFilter = ({
             onChange={(e) => handleFilterChange('maxPrice', e.target.value)}
             style={{
               width: '100%',
-              padding: '10px 12px',
+              padding: '8px 10px',
               background: 'var(--bg-surface)',
               border: '1px solid var(--border-dark)',
               borderRadius: '6px',
               color: '#FFF',
-              fontSize: '0.9rem',
+              fontSize: '0.85rem',
               outline: 'none'
             }}
           >

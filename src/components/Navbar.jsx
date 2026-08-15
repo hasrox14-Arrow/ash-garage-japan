@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { Globe, DollarSign, Menu, X, ShieldCheck, ChevronDown, ShieldAlert } from 'lucide-react';
+import { Globe, DollarSign, Menu, X, ShieldCheck, ChevronDown, ShieldAlert, Home, Car, Settings } from 'lucide-react';
 
 export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
   const { lang, setLang, currency, toggleCurrency, isAdminLoggedIn, t } = useLanguage();
@@ -30,7 +30,7 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
       <div style={{
         background: isAdminLoggedIn ? 'rgba(229, 9, 20, 0.2)' : 'var(--bg-surface)',
         borderBottom: '1px solid #1F1F28',
-        padding: '6px 24px',
+        padding: '6px 16px',
         fontSize: '0.75rem',
         display: 'flex',
         justify: 'space-between',
@@ -39,17 +39,16 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
           <ShieldCheck size={14} color="var(--primary-red)" />
-          <span>{t('dealerLicense')}</span>
+          <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{t('dealerLicense')}</span>
         </div>
 
         {isAdminLoggedIn ? (
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--primary-red)', fontWeight: 800 }}>
             <span className="pulse-dot"></span>
-            <span>ADMINISTRATOR MODE ACTIVE</span>
+            <span>ADMIN MODE</span>
           </div>
         ) : (
-          <div style={{ display: 'flex', gap: '16px' }}>
-            <span>Tokyo & Yokohama Port Loading</span>
+          <div style={{ display: 'flex', gap: '12px' }}>
             <span style={{ color: 'var(--primary-red)', fontWeight: 600 }}>JST 09:00 - 19:00</span>
           </div>
         )}
@@ -59,7 +58,7 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
       <div style={{
         maxWidth: '1280px',
         margin: '0 auto',
-        padding: '12px 24px',
+        padding: '10px 16px',
         display: 'flex',
         alignItems: 'center',
         justify: 'space-between'
@@ -67,50 +66,39 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
         {/* Brand Logo */}
         <div 
           onClick={() => handleNavClick('home')}
-          style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer' }}
+          style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}
         >
-          {/* New Custom Transparent Logo */}
-          <div style={{
-            position: 'relative',
-            display: 'flex',
-            alignItems: 'center',
-            justify: 'center'
-          }}>
-            <img
-              src="/ash-garage-logo.png"
-              alt="Ash Garage Logo"
-              style={{
-                height: '52px',
-                width: 'auto',
-                filter: 'drop-shadow(0 0 10px rgba(229, 9, 20, 0.3))',
-                transition: 'transform 0.3s ease'
-              }}
-              onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.06)'}
-              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-            />
-          </div>
+          <img
+            src="/ash-garage-logo.png"
+            alt="Ash Garage Logo"
+            style={{
+              height: '46px',
+              width: 'auto',
+              filter: 'drop-shadow(0 0 10px rgba(229, 9, 20, 0.3))'
+            }}
+          />
 
           <div>
             <div style={{
               fontFamily: 'var(--font-heading)',
-              fontSize: '1.4rem',
+              fontSize: '1.25rem',
               fontWeight: 900,
               letterSpacing: '1px',
               color: '#FFF',
               display: 'flex',
               alignItems: 'center',
-              gap: '6px'
+              gap: '4px'
             }}>
               ASH <span style={{ color: 'var(--primary-red)' }}>GARAGE</span>
             </div>
-            <div style={{ fontSize: '0.65rem', letterSpacing: '2px', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
-              JAPAN VEHICLE EXPORTER
+            <div style={{ fontSize: '0.6rem', letterSpacing: '1.5px', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
+              JAPAN EXPORTER
             </div>
           </div>
         </div>
 
         {/* Desktop Navigation Links */}
-        <nav className="desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
+        <nav className="desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: '28px' }}>
           <button 
             onClick={() => handleNavClick('home')}
             style={{
@@ -170,8 +158,8 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
           )}
         </nav>
 
-        {/* Right Tools: Admin Trigger + Currency Switcher + Header Language Selector */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+        {/* Right Controls: Currency Switcher + Language + Admin + Mobile Hamburger */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           
           {/* Admin Login Trigger */}
           {!isAdminLoggedIn && (
@@ -181,18 +169,18 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
                 background: 'var(--red-dim)',
                 border: '1px solid var(--border-red)',
                 color: 'var(--primary-red)',
-                padding: '6px 12px',
+                padding: '6px 10px',
                 borderRadius: '6px',
-                fontSize: '0.8rem',
+                fontSize: '0.75rem',
                 fontWeight: 700,
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '6px'
+                gap: '4px'
               }}
               title="Admin Security Portal"
             >
-              <ShieldAlert size={14} />
+              <ShieldAlert size={13} />
               <span>Admin</span>
             </button>
           )}
@@ -201,10 +189,10 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
           <button
             onClick={toggleCurrency}
             className="btn-outline"
-            style={{ padding: '6px 12px', fontSize: '0.8rem', gap: '4px' }}
+            style={{ padding: '6px 10px', fontSize: '0.75rem', gap: '2px', minHeight: '36px' }}
             title="Toggle USD / JPY"
           >
-            <DollarSign size={14} color="var(--primary-red)" />
+            <DollarSign size={13} color="var(--primary-red)" />
             <span>{currency}</span>
           </button>
 
@@ -216,19 +204,20 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
                 background: 'var(--bg-surface)',
                 border: '1px solid var(--border-red)',
                 borderRadius: '6px',
-                padding: '6px 12px',
+                padding: '6px 10px',
                 color: 'var(--text-white)',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '6px',
-                fontSize: '0.85rem',
-                fontWeight: 700
+                gap: '4px',
+                fontSize: '0.8rem',
+                fontWeight: 700,
+                minHeight: '36px'
               }}
             >
-              <Globe size={16} color="var(--primary-red)" />
-              <span>{lang === 'en' ? 'EN' : '日本語'}</span>
-              <ChevronDown size={14} />
+              <Globe size={15} color="var(--primary-red)" />
+              <span>{lang === 'en' ? 'EN' : 'JA'}</span>
+              <ChevronDown size={12} />
             </button>
 
             {langDropdownOpen && (
@@ -239,8 +228,8 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
                 background: 'var(--bg-card)',
                 border: '1px solid var(--border-dark)',
                 borderRadius: '8px',
-                boxShadow: '0 8px 24px rgba(0,0,0,0.5)',
-                width: '150px',
+                boxShadow: '0 8px 24px rgba(0,0,0,0.6)',
+                width: '140px',
                 overflow: 'hidden',
                 zIndex: 1050
               }}>
@@ -251,7 +240,7 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
                   }}
                   style={{
                     width: '100%',
-                    padding: '10px 14px',
+                    padding: '10px 12px',
                     textAlign: 'left',
                     background: lang === 'en' ? 'var(--red-dim)' : 'transparent',
                     border: 'none',
@@ -272,7 +261,7 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
                   }}
                   style={{
                     width: '100%',
-                    padding: '10px 14px',
+                    padding: '10px 12px',
                     textAlign: 'left',
                     background: lang === 'ja' ? 'var(--red-dim)' : 'transparent',
                     border: 'none',
@@ -295,17 +284,107 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="mobile-menu-btn"
             style={{
-              display: 'none',
               background: 'none',
               border: 'none',
               color: '#FFF',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              padding: '6px'
             }}
           >
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>
+
+      {/* Mobile Slide-Down Menu Overlay */}
+      {mobileMenuOpen && (
+        <div className="mobile-nav-menu" style={{
+          background: 'var(--bg-card)',
+          borderTop: '1px solid var(--border-dark)',
+          padding: '16px 20px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '12px'
+        }}>
+          <button
+            onClick={() => handleNavClick('home')}
+            style={{
+              background: activeTab === 'home' ? 'var(--red-dim)' : 'transparent',
+              border: activeTab === 'home' ? '1px solid var(--border-red)' : '1px solid transparent',
+              color: activeTab === 'home' ? 'var(--primary-red)' : '#FFF',
+              padding: '12px 16px',
+              borderRadius: '8px',
+              fontWeight: 700,
+              textAlign: 'left',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px'
+            }}
+          >
+            {t('navHome')}
+          </button>
+
+          <button
+            onClick={() => handleNavClick('inventory')}
+            style={{
+              background: activeTab === 'inventory' ? 'var(--red-dim)' : 'transparent',
+              border: activeTab === 'inventory' ? '1px solid var(--border-red)' : '1px solid transparent',
+              color: activeTab === 'inventory' ? 'var(--primary-red)' : '#FFF',
+              padding: '12px 16px',
+              borderRadius: '8px',
+              fontWeight: 700,
+              textAlign: 'left',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px'
+            }}
+          >
+            {t('navInventory')}
+          </button>
+
+          <button
+            onClick={() => handleNavClick('process')}
+            style={{
+              background: activeTab === 'process' ? 'var(--red-dim)' : 'transparent',
+              border: activeTab === 'process' ? '1px solid var(--border-red)' : '1px solid transparent',
+              color: activeTab === 'process' ? 'var(--primary-red)' : '#FFF',
+              padding: '12px 16px',
+              borderRadius: '8px',
+              fontWeight: 700,
+              textAlign: 'left',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px'
+            }}
+          >
+            {t('navExportProcess')}
+          </button>
+
+          {isAdminLoggedIn && (
+            <button
+              onClick={() => handleNavClick('admin')}
+              style={{
+                background: activeTab === 'admin' ? 'var(--red-dim)' : 'transparent',
+                border: activeTab === 'admin' ? '1px solid var(--border-red)' : '1px solid transparent',
+                color: activeTab === 'admin' ? 'var(--primary-red)' : '#FFF',
+                padding: '12px 16px',
+                borderRadius: '8px',
+                fontWeight: 800,
+                textAlign: 'left',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px'
+              }}
+            >
+              {t('navAdmin')}
+            </button>
+          )}
+        </div>
+      )}
     </header>
   );
 };
