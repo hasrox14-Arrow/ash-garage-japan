@@ -15,36 +15,36 @@ export const VehicleFilter = ({
   };
 
   return (
-    <div className="glass-panel" style={{ padding: '20px', marginBottom: '24px' }}>
+    <div className="glass-panel" style={{ padding: '24px', marginBottom: '32px', background: '#FFFFFF' }}>
       
       {/* Title Header */}
       <div style={{
         display: 'flex',
         alignItems: 'center',
         justify: 'space-between',
-        marginBottom: '16px',
-        paddingBottom: '10px',
-        borderBottom: '1px solid var(--border-dark)',
+        marginBottom: '18px',
+        paddingBottom: '12px',
+        borderBottom: '1px solid var(--border-light)',
         flexWrap: 'wrap',
-        gap: '10px'
+        gap: '12px'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <Filter size={18} color="var(--primary-red)" />
-          <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1rem', fontWeight: 800, color: '#FFF' }}>
+          <Filter size={20} color="var(--primary-red)" />
+          <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-dark)' }}>
             {t('filterTitle')}
           </h3>
         </div>
         
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+          <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600 }}>
             {t('showingResults', { count: totalResults })}
           </span>
           <button
             onClick={resetFilters}
             className="btn-outline"
-            style={{ padding: '4px 10px', fontSize: '0.72rem', gap: '4px', minHeight: '34px' }}
+            style={{ padding: '6px 12px', fontSize: '0.78rem', gap: '4px', minHeight: '36px' }}
           >
-            <RotateCcw size={11} />
+            <RotateCcw size={13} />
             {t('resetFilters')}
           </button>
         </div>
@@ -53,13 +53,13 @@ export const VehicleFilter = ({
       {/* Filter Controls Grid */}
       <div className="filter-controls-grid" style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
-        gap: '12px'
+        gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))',
+        gap: '14px'
       }}>
         
         {/* Make Filter */}
         <div>
-          <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '4px', fontWeight: 600 }}>
+          <label style={{ display: 'block', fontSize: '0.78rem', color: 'var(--text-sub)', marginBottom: '6px', fontWeight: 700 }}>
             {t('makeLabel')}
           </label>
           <select
@@ -67,12 +67,13 @@ export const VehicleFilter = ({
             onChange={(e) => handleFilterChange('make', e.target.value)}
             style={{
               width: '100%',
-              padding: '8px 10px',
-              background: 'var(--bg-surface)',
-              border: '1px solid var(--border-dark)',
-              borderRadius: '6px',
-              color: '#FFF',
-              fontSize: '0.85rem',
+              padding: '10px 12px',
+              background: '#F8FAFC',
+              border: '1px solid var(--border-light)',
+              borderRadius: '8px',
+              color: 'var(--text-dark)',
+              fontSize: '0.9rem',
+              fontWeight: 600,
               outline: 'none'
             }}
           >
@@ -87,7 +88,7 @@ export const VehicleFilter = ({
 
         {/* Body Type Filter */}
         <div>
-          <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '4px', fontWeight: 600 }}>
+          <label style={{ display: 'block', fontSize: '0.78rem', color: 'var(--text-sub)', marginBottom: '6px', fontWeight: 700 }}>
             {t('bodyLabel')}
           </label>
           <select
@@ -95,12 +96,13 @@ export const VehicleFilter = ({
             onChange={(e) => handleFilterChange('bodyType', e.target.value)}
             style={{
               width: '100%',
-              padding: '8px 10px',
-              background: 'var(--bg-surface)',
-              border: '1px solid var(--border-dark)',
-              borderRadius: '6px',
-              color: '#FFF',
-              fontSize: '0.85rem',
+              padding: '10px 12px',
+              background: '#F8FAFC',
+              border: '1px solid var(--border-light)',
+              borderRadius: '8px',
+              color: 'var(--text-dark)',
+              fontSize: '0.9rem',
+              fontWeight: 600,
               outline: 'none'
             }}
           >
@@ -114,7 +116,7 @@ export const VehicleFilter = ({
 
         {/* Transmission Filter */}
         <div>
-          <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '4px', fontWeight: 600 }}>
+          <label style={{ display: 'block', fontSize: '0.78rem', color: 'var(--text-sub)', marginBottom: '6px', fontWeight: 700 }}>
             {t('transLabel')}
           </label>
           <select
@@ -122,12 +124,13 @@ export const VehicleFilter = ({
             onChange={(e) => handleFilterChange('transmission', e.target.value)}
             style={{
               width: '100%',
-              padding: '8px 10px',
-              background: 'var(--bg-surface)',
-              border: '1px solid var(--border-dark)',
-              borderRadius: '6px',
-              color: '#FFF',
-              fontSize: '0.85rem',
+              padding: '10px 12px',
+              background: '#F8FAFC',
+              border: '1px solid var(--border-light)',
+              borderRadius: '8px',
+              color: 'var(--text-dark)',
+              fontSize: '0.9rem',
+              fontWeight: 600,
               outline: 'none'
             }}
           >
@@ -139,7 +142,7 @@ export const VehicleFilter = ({
 
         {/* Max Price Filter */}
         <div>
-          <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '4px', fontWeight: 600 }}>
+          <label style={{ display: 'block', fontSize: '0.78rem', color: 'var(--text-sub)', marginBottom: '6px', fontWeight: 700 }}>
             {t('priceLabel')}
           </label>
           <select
@@ -147,12 +150,13 @@ export const VehicleFilter = ({
             onChange={(e) => handleFilterChange('maxPrice', e.target.value)}
             style={{
               width: '100%',
-              padding: '8px 10px',
-              background: 'var(--bg-surface)',
-              border: '1px solid var(--border-dark)',
-              borderRadius: '6px',
-              color: '#FFF',
-              fontSize: '0.85rem',
+              padding: '10px 12px',
+              background: '#F8FAFC',
+              border: '1px solid var(--border-light)',
+              borderRadius: '8px',
+              color: 'var(--text-dark)',
+              fontSize: '0.9rem',
+              fontWeight: 600,
               outline: 'none'
             }}
           >

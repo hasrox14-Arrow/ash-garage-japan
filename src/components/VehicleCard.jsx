@@ -15,8 +15,14 @@ export const VehicleCard = ({ vehicle, onViewDetails, onInquire }) => {
       display: 'flex',
       flexDirection: 'column',
       transition: 'var(--transition-smooth)',
-      position: 'relative'
-    }}>
+      position: 'relative',
+      background: '#FFFFFF',
+      borderRadius: '16px',
+      boxShadow: 'var(--shadow-md)'
+    }}
+    onMouseEnter={(e) => e.currentTarget.style.boxShadow = 'var(--shadow-hover)'}
+    onMouseLeave={(e) => e.currentTarget.style.boxShadow = 'var(--shadow-md)'}
+    >
       {/* Top Image Container */}
       <div style={{ position: 'relative', height: '220px', overflow: 'hidden' }}>
         <img
@@ -42,7 +48,7 @@ export const VehicleCard = ({ vehicle, onViewDetails, onInquire }) => {
         }}>
           <span className="badge-red">{vehicle.stockNo}</span>
           {vehicle.isFeatured && (
-            <span className="badge-dark" style={{ borderColor: 'var(--primary-red)', color: 'var(--primary-red)' }}>FEATURED</span>
+            <span className="badge-dark">FEATURED</span>
           )}
         </div>
 
@@ -51,17 +57,18 @@ export const VehicleCard = ({ vehicle, onViewDetails, onInquire }) => {
           position: 'absolute',
           top: '12px',
           right: '12px',
-          background: 'rgba(10,10,12,0.85)',
+          background: 'rgba(255,255,255,0.92)',
           backdropFilter: 'blur(8px)',
-          border: '1px solid #10B981',
-          borderRadius: '6px',
-          padding: '4px 8px',
+          border: '1px solid #059669',
+          borderRadius: '8px',
+          padding: '4px 10px',
           display: 'flex',
           alignItems: 'center',
           gap: '4px',
           fontSize: '0.75rem',
           fontWeight: 800,
-          color: '#10B981'
+          color: '#059669',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
         }}>
           <Award size={14} />
           <span>GRADE {vehicle.auctionGrade}</span>
@@ -73,20 +80,20 @@ export const VehicleCard = ({ vehicle, onViewDetails, onInquire }) => {
           bottom: 0,
           left: 0,
           right: 0,
-          background: 'linear-gradient(0deg, rgba(10,10,12,0.95) 0%, rgba(10,10,12,0) 100%)',
-          padding: '16px 16px 8px',
+          background: 'linear-gradient(0deg, rgba(15,23,42,0.9) 0%, rgba(15,23,42,0) 100%)',
+          padding: '20px 16px 10px',
           display: 'flex',
           justify: 'space-between',
           alignItems: 'flex-end'
         }}>
-          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
+          <span style={{ fontSize: '0.75rem', color: '#94A3B8', textTransform: 'uppercase', fontWeight: 700 }}>
             {t('fobPrice')}
           </span>
           <span style={{
             fontFamily: 'var(--font-heading)',
-            fontSize: '1.25rem',
-            fontWeight: 800,
-            color: '#FFF'
+            fontSize: '1.3rem',
+            fontWeight: 900,
+            color: '#FFFFFF'
           }}>
             {formattedPrice}
           </span>
@@ -98,15 +105,16 @@ export const VehicleCard = ({ vehicle, onViewDetails, onInquire }) => {
         
         {/* Make & Model Title */}
         <div style={{ marginBottom: '16px' }}>
-          <div style={{ fontSize: '0.75rem', color: 'var(--primary-red)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '1px' }}>
+          <div style={{ fontSize: '0.75rem', color: 'var(--primary-red)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.8px' }}>
             {vehicle.make}
           </div>
           <h3 style={{
-            fontSize: '1.1rem',
+            fontSize: '1.15rem',
             fontWeight: 800,
-            color: '#FFF',
+            color: 'var(--text-dark)',
             lineHeight: 1.3,
-            marginTop: '2px'
+            marginTop: '2px',
+            fontFamily: 'var(--font-heading)'
           }}>
             {vehicle.model}
           </h3>
@@ -116,13 +124,15 @@ export const VehicleCard = ({ vehicle, onViewDetails, onInquire }) => {
         <div style={{
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',
-          gap: '8px',
+          gap: '10px',
           marginBottom: '20px',
           padding: '12px',
-          background: 'var(--bg-surface)',
-          borderRadius: '8px',
-          fontSize: '0.8rem',
-          color: 'var(--text-sub)'
+          background: '#F8FAFC',
+          border: '1px solid #E2E8F0',
+          borderRadius: '10px',
+          fontSize: '0.82rem',
+          color: 'var(--text-sub)',
+          fontWeight: 600
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
             <Calendar size={14} color="var(--primary-red)" />

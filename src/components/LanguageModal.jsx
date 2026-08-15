@@ -1,92 +1,96 @@
 import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { Globe, Check, Car } from 'lucide-react';
+import { Globe, ArrowRight } from 'lucide-react';
 
 export const LanguageModal = () => {
-  const { lang, setLang, showLangModal, setShowLangModal, t } = useLanguage();
-
-  if (!showLangModal) return null;
+  const { setLang } = useLanguage();
 
   return (
     <div className="modal-overlay">
-      <div className="modal-content glass-panel-red" style={{ padding: '36px', textAlign: 'center' }}>
+      <div className="modal-content glass-panel-red" style={{ maxWidth: '480px', padding: '32px 28px', textAlign: 'center', background: '#FFFFFF' }}>
         
-        {/* Header Icon */}
-        <div style={{ display: 'inline-flex', padding: '16px', borderRadius: '50%', background: 'var(--red-dim)', color: 'var(--primary-red)', marginBottom: '16px' }}>
-          <Globe size={40} />
+        {/* Brand Icon */}
+        <div style={{
+          width: '72px',
+          height: '72px',
+          borderRadius: '50%',
+          background: 'var(--red-dim)',
+          display: 'flex',
+          alignItems: 'center',
+          justify: 'center',
+          margin: '0 auto 20px',
+          boxShadow: '0 8px 24px rgba(229, 9, 20, 0.15)'
+        }}>
+          <Globe size={36} color="var(--primary-red)" />
         </div>
 
-        <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.6rem', fontWeight: 800, marginBottom: '8px', color: 'var(--text-white)' }}>
-          {t('popupTitle')}
+        {/* Title */}
+        <h2 style={{
+          fontFamily: 'var(--font-heading)',
+          fontSize: '1.4rem',
+          fontWeight: 900,
+          marginBottom: '8px',
+          color: 'var(--text-dark)'
+        }}>
+          Select Preferred Language
         </h2>
-        
-        <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginBottom: '28px' }}>
-          {t('popupSub')}
+
+        <p style={{
+          fontSize: '0.9rem',
+          color: 'var(--text-sub)',
+          marginBottom: '28px',
+          lineHeight: 1.5,
+          fontWeight: 500
+        }}>
+          Welcome to Ash Garage Japan. Please select your browsing language / 言語を選択してください。
         </p>
 
-        {/* Language Options */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '28px' }}>
+        {/* Language Options Grid */}
+        <div style={{ display: 'grid', gap: '14px' }}>
           
           <button
             onClick={() => setLang('en')}
+            className="btn-outline"
             style={{
-              padding: '20px',
-              borderRadius: '10px',
-              border: lang === 'en' ? '2px solid var(--primary-red)' : '1px solid var(--border-dark)',
-              background: lang === 'en' ? 'rgba(229, 9, 20, 0.12)' : 'var(--bg-surface)',
-              color: 'var(--text-white)',
-              cursor: 'pointer',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '8px',
-              transition: 'var(--transition-fast)'
+              width: '100%',
+              padding: '16px 20px',
+              justify: 'space-between',
+              borderRadius: '12px',
+              fontSize: '1rem',
+              fontWeight: 800,
+              background: '#F8FAFC',
+              borderColor: '#E2E8F0'
             }}
           >
-            <span style={{ fontSize: '2.5rem' }}>🇬🇧</span>
-            <span style={{ fontWeight: 700, fontSize: '1.1rem' }}>English</span>
-            {lang === 'en' && <Check size={18} color="var(--primary-red)" />}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <span style={{ fontSize: '1.4rem' }}>🇬🇧</span>
+              <span>English (International)</span>
+            </div>
+            <ArrowRight size={18} color="var(--primary-red)" />
           </button>
 
           <button
             onClick={() => setLang('ja')}
+            className="btn-outline"
             style={{
-              padding: '20px',
-              borderRadius: '10px',
-              border: lang === 'ja' ? '2px solid var(--primary-red)' : '1px solid var(--border-dark)',
-              background: lang === 'ja' ? 'rgba(229, 9, 20, 0.12)' : 'var(--bg-surface)',
-              color: 'var(--text-white)',
-              cursor: 'pointer',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '8px',
-              transition: 'var(--transition-fast)'
+              width: '100%',
+              padding: '16px 20px',
+              justify: 'space-between',
+              borderRadius: '12px',
+              fontSize: '1rem',
+              fontWeight: 800,
+              background: '#F8FAFC',
+              borderColor: '#E2E8F0'
             }}
           >
-            <span style={{ fontSize: '2.5rem' }}>🇯🇵</span>
-            <span style={{ fontWeight: 700, fontSize: '1.1rem' }}>日本語</span>
-            {lang === 'ja' && <Check size={18} color="var(--primary-red)" />}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <span style={{ fontSize: '1.4rem' }}>🇯🇵</span>
+              <span>日本語 (Japanese)</span>
+            </div>
+            <ArrowRight size={18} color="var(--primary-red)" />
           </button>
 
         </div>
-
-        {/* Confirm Action Button */}
-        <button
-          onClick={() => {
-            localStorage.setItem('ash_garage_lang_modal_dismissed', 'true');
-            setShowLangModal(false);
-          }}
-          className="btn-red"
-          style={{ width: '100%', justifyContent: 'center', padding: '14px', fontSize: '1rem' }}
-        >
-          <Car size={20} />
-          {t('confirmLang')}
-        </button>
-
-        <p style={{ marginTop: '16px', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-          {t('changeLaterNote')}
-        </p>
 
       </div>
     </div>

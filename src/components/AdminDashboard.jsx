@@ -1,416 +1,382 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { VehicleFormModal } from './VehicleFormModal';
 import {
   Car,
-  DollarSign,
-  Users,
   Plus,
-  Edit,
+  Edit2,
   Trash2,
+  Users,
+  LogOut,
+  Settings,
+  ShieldCheck,
+  Search,
   CheckCircle,
   Clock,
-  ShieldCheck,
-  LogOut,
-  Sliders,
   Mail,
   Phone,
-  Building,
-  Save
+  Globe,
+  Tag
 } from 'lucide-react';
+import { VehicleFormModal } from './VehicleFormModal';
 
-export const AdminDashboard = ({ onExitAdmin }) => {
+export const AdminDashboard = ({ onLogout }) => {
   const {
-    t,
-    currency,
     vehicles,
-    handleSaveVehicle,
     handleDeleteVehicle,
+    handleSaveVehicle,
     handleToggleStatus,
     inquiries,
-    setIsAdminLoggedIn
+    t
   } = useLanguage();
 
-  const [activeTab, setActiveTab] = useState('inventory'); // 'overview' | 'inventory' | 'inquiries' | 'settings'
-  const [vehicleToEdit, setVehicleToEdit] = useState(null);
-  const [showFormModal, setShowFormModal] = useState(false);
-  const [inquirySearch, setInquirySearch] = useState('');
+  const [activeTab, setActiveTab] = useState('vehicles'); // 'vehicles' | 'inquiries' | 'settings'
+  const [showVehicleModal, setShowVehicleModal] = useState(false);
+  const [editingVehicle, setEditingVehicle] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
 
-  // Settings local state
-  const [garageSettings, setGarageSettings] = useState({
-    dealerLicense: 'Japan Authorized Dealer #45192008122',
-    phone: '+81 (0)3 5482 9901',
-    email: 'export@ashgarage-jp.com',
-    announcement: 'DIRECT SHIPMENTS FROM TOKYO & YOKOHAMA PORTS WORLDWIDE'
-  });
+  // Filtered Inventory List
+  const filteredVehicles = vehicles.filter(v => 
+    v.model.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    v.stockNo.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    v.make.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-  const [settingsSaved, setSettingsSaved] = useState(false);
+  const handleOpenAddModal = () => {
+    setEditingVehicle(null);
+    setShowVehicleModal(true);
+  };
 
-  // Metrics Calculations
-  const totalFobUsd = vehicles.reduce((sum, v) => sum + (v.priceUsd || 0), 0);
-  const totalFobJpy = vehicles.reduce((sum, v) => sum + (v.priceJpy || 0), 0);
-  const reservedCount = vehicles.filter(v => v.status === 'Reserved' || v.status === 'Sold').length;
+  const handleOpenEditModal = (vehicle) => {
+    setEditingVehicle(vehicle);
+    setShowVehicleModal(true);
+  };
 
-  const formattedTotalFob = currency === 'USD'
-    ? `$${totalFobUsd.toLocaleString()} USD`
-    : `¥${totalFobJpy.toLocaleString()} JPY`;
-
-  const handleSaveSettings = (e) => {
-    e.preventDefault();
-    setSettingsSaved(true);
-    setTimeout(() => setSettingsSaved(false), 3000);
+  const handleSaveVehicleForm = (vehicleData) => {
+    handleSaveVehicle(vehicleData);
+    setShowVehicleModal(false);
   };
 
   return (
-    <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '40px 24px' }}>
-      
-      {/* Top Admin Header */}
-      <div style={{
-        display: 'flex',
-        justify: 'space-between',
-        alignItems: 'center',
-        marginBottom: '32px',
-        paddingBottom: '20px',
-        borderBottom: '1px solid var(--border-dark)'
-      }}>
-        <div>
-          <div className="badge-red" style={{ marginBottom: '6px', display: 'inline-block' }}>ADMIN CONTROL PANEL</div>
-          <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.8rem', fontWeight: 900, color: '#FFF' }}>
-            {t('adminTitle')}
-          </h1>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginTop: '2px' }}>
-            {t('adminSubtitle')}
-          </p>
-        </div>
-
-        <div style={{ display: 'flex', gap: '12px' }}>
-          <button
-            onClick={() => {
-              setVehicleToEdit(null);
-              setShowFormModal(true);
-            }}
-            className="btn-red"
-          >
-            <Plus size={18} />
-            <span>{t('addVehicleBtn')}</span>
-          </button>
-
-          <button
-            onClick={() => {
-              setIsAdminLoggedIn(false);
-              onExitAdmin();
-            }}
-            className="btn-outline"
-          >
-            <LogOut size={16} />
-            <span>{t('logoutBtn')}</span>
-          </button>
-        </div>
-      </div>
-
-      {/* Executive Overview Metric Cards */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-        gap: '20px',
-        marginBottom: '40px'
-      }}>
+    <section style={{ padding: '40px 20px 80px', minHeight: '80vh', background: '#F8FAFC' }}>
+      <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
         
-        <div className="glass-panel" style={{ padding: '20px' }}>
-          <Car size={24} color="var(--primary-red)" style={{ marginBottom: '8px' }} />
-          <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{t('totalStockCount')}</div>
-          <div style={{ fontSize: '1.6rem', fontWeight: 900, color: '#FFF', fontFamily: 'var(--font-heading)' }}>
-            {vehicles.length} Units
-          </div>
-        </div>
-
-        <div className="glass-panel-red" style={{ padding: '20px' }}>
-          <DollarSign size={24} color="var(--primary-red)" style={{ marginBottom: '8px' }} />
-          <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{t('totalFobValue')}</div>
-          <div style={{ fontSize: '1.4rem', fontWeight: 900, color: '#FFF', fontFamily: 'var(--font-heading)' }}>
-            {formattedTotalFob}
-          </div>
-        </div>
-
-        <div className="glass-panel" style={{ padding: '20px' }}>
-          <Users size={24} color="#10B981" style={{ marginBottom: '8px' }} />
-          <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{t('pendingLeads')}</div>
-          <div style={{ fontSize: '1.6rem', fontWeight: 900, color: '#10B981', fontFamily: 'var(--font-heading)' }}>
-            {inquiries.length} Quotes
-          </div>
-        </div>
-
-        <div className="glass-panel" style={{ padding: '20px' }}>
-          <Clock size={24} color="#F59E0B" style={{ marginBottom: '8px' }} />
-          <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{t('reservedCount')}</div>
-          <div style={{ fontSize: '1.6rem', fontWeight: 900, color: '#F59E0B', fontFamily: 'var(--font-heading)' }}>
-            {reservedCount} Cars
-          </div>
-        </div>
-
-      </div>
-
-      {/* Tab Navigation */}
-      <div style={{ display: 'flex', gap: '12px', marginBottom: '28px', borderBottom: '1px solid var(--border-dark)', paddingBottom: '12px' }}>
-        <button
-          onClick={() => setActiveTab('inventory')}
-          style={{
-            background: activeTab === 'inventory' ? 'var(--primary-red)' : 'transparent',
-            border: 'none',
-            color: '#FFF',
-            padding: '10px 20px',
-            borderRadius: '6px',
-            fontWeight: 700,
-            cursor: 'pointer',
-            fontSize: '0.9rem'
-          }}
-        >
-          {t('tabInventory')} ({vehicles.length})
-        </button>
-
-        <button
-          onClick={() => setActiveTab('inquiries')}
-          style={{
-            background: activeTab === 'inquiries' ? 'var(--primary-red)' : 'transparent',
-            border: 'none',
-            color: '#FFF',
-            padding: '10px 20px',
-            borderRadius: '6px',
-            fontWeight: 700,
-            cursor: 'pointer',
-            fontSize: '0.9rem'
-          }}
-        >
-          {t('tabInquiries')} ({inquiries.length})
-        </button>
-
-        <button
-          onClick={() => setActiveTab('settings')}
-          style={{
-            background: activeTab === 'settings' ? 'var(--primary-red)' : 'transparent',
-            border: 'none',
-            color: '#FFF',
-            padding: '10px 20px',
-            borderRadius: '6px',
-            fontWeight: 700,
-            cursor: 'pointer',
-            fontSize: '0.9rem'
-          }}
-        >
-          {t('tabSettings')}
-        </button>
-      </div>
-
-      {/* TAB 1: INVENTORY CONTROL TABLE (CRUD) */}
-      {activeTab === 'inventory' && (
-        <div className="glass-panel" style={{ overflowX: 'auto', padding: '20px' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.9rem' }}>
-            <thead>
-              <tr style={{ borderBottom: '1px solid var(--border-dark)', color: 'var(--text-muted)', fontSize: '0.8rem', textTransform: 'uppercase' }}>
-                <th style={{ padding: '12px' }}>Photo</th>
-                <th style={{ padding: '12px' }}>Stock #</th>
-                <th style={{ padding: '12px' }}>Make & Model</th>
-                <th style={{ padding: '12px' }}>Year</th>
-                <th style={{ padding: '12px' }}>FOB Price</th>
-                <th style={{ padding: '12px' }}>Grade</th>
-                <th style={{ padding: '12px' }}>Status</th>
-                <th style={{ padding: '12px', textAlign: 'right' }}>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {vehicles.map((v) => {
-                const price = currency === 'USD' ? `$${v.priceUsd.toLocaleString()}` : `¥${v.priceJpy.toLocaleString()}`;
-                return (
-                  <tr key={v.id} style={{ borderBottom: '1px solid #1A1A22' }}>
-                    <td style={{ padding: '12px' }}>
-                      <img src={v.image} alt={v.model} style={{ width: '60px', height: '40px', objectFit: 'cover', borderRadius: '4px' }} />
-                    </td>
-
-                    <td style={{ padding: '12px', fontWeight: 800, color: 'var(--primary-red)' }}>{v.stockNo}</td>
-
-                    <td style={{ padding: '12px', fontWeight: 700, color: '#FFF' }}>
-                      {v.make} {v.model}
-                    </td>
-
-                    <td style={{ padding: '12px', color: 'var(--text-sub)' }}>{v.year}</td>
-
-                    <td style={{ padding: '12px', fontWeight: 800, color: '#FFF' }}>{price}</td>
-
-                    <td style={{ padding: '12px' }}>
-                      <span className="badge-grade">{v.auctionGrade}</span>
-                    </td>
-
-                    <td style={{ padding: '12px' }}>
-                      <select
-                        value={v.status}
-                        onChange={(e) => handleToggleStatus(v.id, e.target.value)}
-                        style={{
-                          background: v.status === 'Available' ? 'rgba(16,185,129,0.15)' : 'rgba(239,68,68,0.15)',
-                          color: v.status === 'Available' ? '#10B981' : '#EF4444',
-                          border: '1px solid var(--border-dark)',
-                          padding: '6px 8px',
-                          borderRadius: '4px',
-                          fontWeight: 700,
-                          fontSize: '0.8rem'
-                        }}
-                      >
-                        <option value="Available">Available</option>
-                        <option value="Reserved">Reserved</option>
-                        <option value="Sold">Sold</option>
-                      </select>
-                    </td>
-
-                    <td style={{ padding: '12px', textAlign: 'right' }}>
-                      <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
-                        <button
-                          onClick={() => {
-                            setVehicleToEdit(v);
-                            setShowFormModal(true);
-                          }}
-                          className="btn-outline"
-                          style={{ padding: '6px 10px', fontSize: '0.75rem' }}
-                        >
-                          <Edit size={14} />
-                        </button>
-
-                        <button
-                          onClick={() => {
-                            if (window.confirm(t('confirmDelete', { stock: v.stockNo }))) {
-                              handleDeleteVehicle(v.id);
-                            }
-                          }}
-                          style={{
-                            background: 'rgba(239,68,68,0.15)',
-                            color: '#EF4444',
-                            border: '1px solid rgba(239,68,68,0.3)',
-                            padding: '6px 10px',
-                            borderRadius: '4px',
-                            cursor: 'pointer'
-                          }}
-                        >
-                          <Trash2 size={14} />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      )}
-
-      {/* TAB 2: CUSTOMER INQUIRIES LEADS TABLE */}
-      {activeTab === 'inquiries' && (
-        <div className="glass-panel" style={{ padding: '20px' }}>
-          {inquiries.length === 0 ? (
-            <div style={{ textAlign: 'center', padding: '40px 0', color: 'var(--text-muted)' }}>
-              <Mail size={40} color="var(--primary-red)" style={{ marginBottom: '12px' }} />
-              <p>No customer quote inquiries submitted yet.</p>
+        {/* Admin Header Banner */}
+        <div className="glass-panel" style={{
+          padding: '24px 28px',
+          marginBottom: '32px',
+          display: 'flex',
+          justify: 'space-between',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: '16px',
+          background: '#FFFFFF'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+            <div style={{ padding: '10px', borderRadius: '12px', background: 'var(--red-dim)', color: 'var(--primary-red)' }}>
+              <ShieldCheck size={28} />
             </div>
-          ) : (
-            <div style={{ overflowX: 'auto' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.88rem' }}>
+            <div>
+              <div style={{ fontSize: '0.8rem', color: 'var(--primary-red)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '1px' }}>
+                ADMINISTRATION PORTAL
+              </div>
+              <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', fontWeight: 900, color: 'var(--text-dark)' }}>
+                {t('adminDashboardTitle')}
+              </h1>
+            </div>
+          </div>
+
+          <button onClick={onLogout} className="btn-outline" style={{ padding: '8px 16px', fontSize: '0.85rem' }}>
+            <LogOut size={16} />
+            <span>{t('adminLogout')}</span>
+          </button>
+        </div>
+
+        {/* Executive Metrics Overview */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+          gap: '20px',
+          marginBottom: '32px'
+        }}>
+          
+          <div className="glass-panel" style={{ padding: '20px', background: '#FFFFFF' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-muted)', marginBottom: '8px' }}>
+              <span style={{ fontSize: '0.85rem', fontWeight: 700 }}>Total Vehicles</span>
+              <Car size={20} color="var(--primary-red)" />
+            </div>
+            <div style={{ fontSize: '1.8rem', fontWeight: 900, color: 'var(--text-dark)', fontFamily: 'var(--font-heading)' }}>
+              {vehicles.length}
+            </div>
+            <div style={{ fontSize: '0.75rem', color: '#059669', fontWeight: 700, marginTop: '4px' }}>
+              ● Live Cloud Firestore Sync Active
+            </div>
+          </div>
+
+          <div className="glass-panel" style={{ padding: '20px', background: '#FFFFFF' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-muted)', marginBottom: '8px' }}>
+              <span style={{ fontSize: '0.85rem', fontWeight: 700 }}>Customer Inquiries</span>
+              <Users size={20} color="var(--primary-red)" />
+            </div>
+            <div style={{ fontSize: '1.8rem', fontWeight: 900, color: 'var(--text-dark)', fontFamily: 'var(--font-heading)' }}>
+              {inquiries.length}
+            </div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--primary-red)', fontWeight: 700, marginTop: '4px' }}>
+              ● Global Buyer Quotes Received
+            </div>
+          </div>
+
+        </div>
+
+        {/* Tab Navigation */}
+        <div style={{
+          display: 'flex',
+          gap: '12px',
+          marginBottom: '24px',
+          borderBottom: '1px solid var(--border-light)',
+          paddingBottom: '12px'
+        }}>
+          <button
+            onClick={() => setActiveTab('vehicles')}
+            style={{
+              padding: '10px 20px',
+              borderRadius: '8px',
+              border: 'none',
+              background: activeTab === 'vehicles' ? 'var(--primary-red)' : '#FFFFFF',
+              color: activeTab === 'vehicles' ? '#FFFFFF' : 'var(--text-dark)',
+              fontWeight: 800,
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              boxShadow: activeTab === 'vehicles' ? '0 4px 14px rgba(229,9,20,0.3)' : 'var(--shadow-sm)'
+            }}
+          >
+            <Car size={18} />
+            <span>{t('tabInventoryManagement')} ({vehicles.length})</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('inquiries')}
+            style={{
+              padding: '10px 20px',
+              borderRadius: '8px',
+              border: 'none',
+              background: activeTab === 'inquiries' ? 'var(--primary-red)' : '#FFFFFF',
+              color: activeTab === 'inquiries' ? '#FFFFFF' : 'var(--text-dark)',
+              fontWeight: 800,
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              boxShadow: activeTab === 'inquiries' ? '0 4px 14px rgba(229,9,20,0.3)' : 'var(--shadow-sm)'
+            }}
+          >
+            <Users size={18} />
+            <span>{t('tabInquiryLeads')} ({inquiries.length})</span>
+          </button>
+        </div>
+
+        {/* TAB 1: VEHICLE INVENTORY MANAGEMENT */}
+        {activeTab === 'vehicles' && (
+          <div>
+            <div style={{
+              display: 'flex',
+              justify: 'space-between',
+              alignItems: 'center',
+              marginBottom: '20px',
+              flexWrap: 'wrap',
+              gap: '16px'
+            }}>
+              {/* Search Bar */}
+              <div style={{ position: 'relative', width: '320px', maxWidth: '100%' }}>
+                <Search size={18} color="var(--text-muted)" style={{ position: 'absolute', left: '12px', top: '12px' }} />
+                <input
+                  type="text"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="Search stock # or model..."
+                  style={{
+                    width: '100%',
+                    padding: '10px 12px 10px 38px',
+                    background: '#FFFFFF',
+                    border: '1px solid var(--border-light)',
+                    borderRadius: '8px',
+                    color: 'var(--text-dark)',
+                    fontSize: '0.9rem',
+                    fontWeight: 600
+                  }}
+                />
+              </div>
+
+              {/* Add Vehicle CTA */}
+              <button onClick={handleOpenAddModal} className="btn-red">
+                <Plus size={18} />
+                <span>{t('addVehicleBtn')}</span>
+              </button>
+            </div>
+
+            {/* Inventory Table */}
+            <div className="glass-panel" style={{ overflowX: 'auto', background: '#FFFFFF' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: '750px' }}>
                 <thead>
-                  <tr style={{ borderBottom: '1px solid var(--border-dark)', color: 'var(--text-muted)', fontSize: '0.8rem', textTransform: 'uppercase' }}>
-                    <th style={{ padding: '12px' }}>{t('buyerName')}</th>
-                    <th style={{ padding: '12px' }}>{t('requestedStock')}</th>
-                    <th style={{ padding: '12px' }}>Email & Phone</th>
-                    <th style={{ padding: '12px' }}>{t('countryLabel')}</th>
-                    <th style={{ padding: '12px' }}>{t('dateSubmitted')}</th>
-                    <th style={{ padding: '12px' }}>Message</th>
+                  <tr style={{ background: '#F8FAFC', borderBottom: '1px solid var(--border-light)', color: 'var(--text-dark)' }}>
+                    <th style={{ padding: '14px 18px', fontSize: '0.8rem', fontWeight: 800 }}>Vehicle</th>
+                    <th style={{ padding: '14px 18px', fontSize: '0.8rem', fontWeight: 800 }}>Stock #</th>
+                    <th style={{ padding: '14px 18px', fontSize: '0.8rem', fontWeight: 800 }}>Year & Mileage</th>
+                    <th style={{ padding: '14px 18px', fontSize: '0.8rem', fontWeight: 800 }}>FOB Price (USD / JPY)</th>
+                    <th style={{ padding: '14px 18px', fontSize: '0.8rem', fontWeight: 800 }}>Grade</th>
+                    <th style={{ padding: '14px 18px', fontSize: '0.8rem', fontWeight: 800 }}>Status</th>
+                    <th style={{ padding: '14px 18px', fontSize: '0.8rem', fontWeight: 800, textAlign: 'right' }}>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {inquiries.map((inq, idx) => (
-                    <tr key={idx} style={{ borderBottom: '1px solid #1A1A22' }}>
-                      <td style={{ padding: '12px', fontWeight: 800, color: '#FFF' }}>{inq.customerName}</td>
-                      <td style={{ padding: '12px' }}>
-                        <span className="badge-red">{inq.stockNo}</span>
-                        <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '2px' }}>{inq.model}</div>
+                  {filteredVehicles.map((v) => (
+                    <tr key={v.id} style={{ borderBottom: '1px solid #F1F5F9' }}>
+                      
+                      {/* Vehicle Model & Image */}
+                      <td style={{ padding: '14px 18px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                          <img
+                            src={v.image}
+                            alt={v.model}
+                            style={{ width: '60px', height: '42px', objectFit: 'cover', borderRadius: '6px' }}
+                          />
+                          <div>
+                            <div style={{ fontWeight: 800, color: 'var(--text-dark)', fontSize: '0.92rem' }}>{v.model}</div>
+                            <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 600 }}>{v.make}</div>
+                          </div>
+                        </div>
                       </td>
-                      <td style={{ padding: '12px', color: 'var(--text-sub)' }}>
-                        <div>{inq.email}</div>
-                        <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{inq.phone}</div>
+
+                      <td style={{ padding: '14px 18px', fontWeight: 700, color: 'var(--primary-red)', fontSize: '0.85rem' }}>
+                        {v.stockNo}
                       </td>
-                      <td style={{ padding: '12px', fontWeight: 700, color: 'var(--primary-red)' }}>{inq.country}</td>
-                      <td style={{ padding: '12px', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-                        {new Date(inq.submittedAt).toLocaleDateString()}
+
+                      <td style={{ padding: '14px 18px', fontSize: '0.85rem', color: 'var(--text-sub)', fontWeight: 600 }}>
+                        {v.year} • {v.mileage}
                       </td>
-                      <td style={{ padding: '12px', color: 'var(--text-sub)', maxWidth: '240px' }}>
-                        {inq.message || 'Standard CIF quotation requested.'}
+
+                      <td style={{ padding: '14px 18px' }}>
+                        <div style={{ fontWeight: 800, color: 'var(--text-dark)', fontSize: '0.9rem' }}>${v.priceUsd.toLocaleString()} USD</div>
+                        <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 600 }}>¥{v.priceJpy.toLocaleString()} JPY</div>
                       </td>
+
+                      <td style={{ padding: '14px 18px' }}>
+                        <span className="badge-grade">{v.auctionGrade}</span>
+                      </td>
+
+                      <td style={{ padding: '14px 18px' }}>
+                        <select
+                          value={v.status || 'Available'}
+                          onChange={(e) => handleToggleStatus(v.id, e.target.value)}
+                          style={{
+                            padding: '6px 10px',
+                            borderRadius: '6px',
+                            background: v.status === 'Sold' ? '#EF4444' : v.status === 'Reserved' ? '#F59E0B' : '#10B981',
+                            color: '#FFFFFF',
+                            fontWeight: 800,
+                            fontSize: '0.78rem',
+                            border: 'none',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          <option value="Available">Available</option>
+                          <option value="Reserved">Reserved</option>
+                          <option value="Sold">Sold</option>
+                        </select>
+                      </td>
+
+                      <td style={{ padding: '14px 18px', textAlign: 'right' }}>
+                        <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
+                          <button
+                            onClick={() => handleOpenEditModal(v)}
+                            className="btn-outline"
+                            style={{ padding: '6px 10px', fontSize: '0.78rem', minHeight: '34px' }}
+                            title="Edit Vehicle"
+                          >
+                            <Edit2 size={14} />
+                          </button>
+                          <button
+                            onClick={() => handleDeleteVehicle(v.id)}
+                            style={{
+                              background: '#FEE2E2',
+                              border: '1px solid #FCA5A5',
+                              color: '#DC2626',
+                              padding: '6px 10px',
+                              borderRadius: '6px',
+                              cursor: 'pointer'
+                            }}
+                            title="Delete Vehicle"
+                          >
+                            <Trash2 size={14} />
+                          </button>
+                        </div>
+                      </td>
+
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
-          )}
-        </div>
-      )}
+          </div>
+        )}
 
-      {/* TAB 3: GARAGE SETTINGS & CREDENTIALS */}
-      {activeTab === 'settings' && (
-        <div className="glass-panel" style={{ padding: '32px', maxWidth: '640px' }}>
-          <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.2rem', fontWeight: 800, color: '#FFF', marginBottom: '20px' }}>
-            Garage & Dealer Credentials Setup
-          </h3>
+        {/* TAB 2: INQUIRY LEADS MANAGER */}
+        {activeTab === 'inquiries' && (
+          <div className="glass-panel" style={{ overflowX: 'auto', background: '#FFFFFF' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: '750px' }}>
+              <thead>
+                <tr style={{ background: '#F8FAFC', borderBottom: '1px solid var(--border-light)', color: 'var(--text-dark)' }}>
+                  <th style={{ padding: '14px 18px', fontSize: '0.8rem', fontWeight: 800 }}>Buyer Name</th>
+                  <th style={{ padding: '14px 18px', fontSize: '0.8rem', fontWeight: 800 }}>Contact Info</th>
+                  <th style={{ padding: '14px 18px', fontSize: '0.8rem', fontWeight: 800 }}>Target Vehicle</th>
+                  <th style={{ padding: '14px 18px', fontSize: '0.8rem', fontWeight: 800 }}>Destination Country</th>
+                  <th style={{ padding: '14px 18px', fontSize: '0.8rem', fontWeight: 800 }}>Submitted At</th>
+                </tr>
+              </thead>
+              <tbody>
+                {inquiries.map((inq, idx) => (
+                  <tr key={idx} style={{ borderBottom: '1px solid #F1F5F9' }}>
+                    
+                    <td style={{ padding: '14px 18px', fontWeight: 800, color: 'var(--text-dark)', fontSize: '0.9rem' }}>
+                      {inq.customerName || inq.name}
+                    </td>
 
-          <form onSubmit={handleSaveSettings} style={{ display: 'grid', gap: '16px' }}>
-            <div>
-              <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '6px' }}>Japan Dealer License Number</label>
-              <input
-                type="text"
-                value={garageSettings.dealerLicense}
-                onChange={(e) => setGarageSettings({ ...garageSettings, dealerLicense: e.target.value })}
-                style={{ width: '100%', padding: '12px', background: 'var(--bg-surface)', border: '1px solid var(--border-dark)', borderRadius: '6px', color: '#FFF' }}
-              />
-            </div>
+                    <td style={{ padding: '14px 18px', fontSize: '0.82rem', color: 'var(--text-sub)' }}>
+                      <div style={{ fontWeight: 600 }}>{inq.email}</div>
+                      <div style={{ color: 'var(--text-muted)' }}>{inq.phone}</div>
+                    </td>
 
-            <div>
-              <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '6px' }}>Tokyo HQ Contact Phone</label>
-              <input
-                type="text"
-                value={garageSettings.phone}
-                onChange={(e) => setGarageSettings({ ...garageSettings, phone: e.target.value })}
-                style={{ width: '100%', padding: '12px', background: 'var(--bg-surface)', border: '1px solid var(--border-dark)', borderRadius: '6px', color: '#FFF' }}
-              />
-            </div>
+                    <td style={{ padding: '14px 18px' }}>
+                      <span className="badge-red" style={{ marginRight: '6px' }}>{inq.stockNo}</span>
+                      <span style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-dark)' }}>{inq.model}</span>
+                    </td>
 
-            <div>
-              <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '6px' }}>Export Desk Email</label>
-              <input
-                type="email"
-                value={garageSettings.email}
-                onChange={(e) => setGarageSettings({ ...garageSettings, email: e.target.value })}
-                style={{ width: '100%', padding: '12px', background: 'var(--bg-surface)', border: '1px solid var(--border-dark)', borderRadius: '6px', color: '#FFF' }}
-              />
-            </div>
+                    <td style={{ padding: '14px 18px', fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-sub)' }}>
+                      {inq.country}
+                    </td>
 
-            <button type="submit" className="btn-red" style={{ justifyContent: 'center', padding: '12px', marginTop: '8px' }}>
-              <Save size={18} />
-              <span>{t('saveChanges')}</span>
-            </button>
+                    <td style={{ padding: '14px 18px', fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 600 }}>
+                      {inq.submittedAt ? new Date(inq.submittedAt).toLocaleDateString() : 'Recent'}
+                    </td>
 
-            {settingsSaved && (
-              <div style={{ color: '#10B981', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '6px', justifyContent: 'center', marginTop: '6px' }}>
-                <CheckCircle size={16} />
-                <span>Garage settings saved successfully!</span>
-              </div>
-            )}
-          </form>
-        </div>
-      )}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
 
-      {/* Add / Edit Vehicle Modal */}
-      {showFormModal && (
+      </div>
+
+      {/* Vehicle Add / Edit Modal */}
+      {showVehicleModal && (
         <VehicleFormModal
-          vehicleToEdit={vehicleToEdit}
-          onClose={() => setShowFormModal(false)}
-          onSave={(data) => handleSaveVehicle(data)}
+          vehicleToEdit={editingVehicle}
+          onClose={() => setShowVehicleModal(false)}
+          onSave={handleSaveVehicleForm}
         />
       )}
-
-    </div>
+    </section>
   );
 };

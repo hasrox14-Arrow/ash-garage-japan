@@ -1,21 +1,17 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { ShieldAlert, KeyRound, X, LogIn } from 'lucide-react';
+import { X, Lock, ShieldAlert, KeyRound } from 'lucide-react';
 
-export const AdminLoginModal = ({ isOpen, onClose, onSuccess }) => {
+export const AdminLoginModal = ({ onClose, onLoginSuccess }) => {
   const { setIsAdminLoggedIn, t } = useLanguage();
-  const [password, setPassword] = useState('');
+  const [passcode, setPasscode] = useState('');
   const [error, setError] = useState(false);
-
-  if (!isOpen) return null;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Default passcode is admin123 (configurable in settings)
-    if (password === 'admin123' || password === 'admin') {
+    if (passcode === 'admin123' || passcode === 'admin') {
       setIsAdminLoggedIn(true);
-      setError(false);
-      onSuccess();
+      onLoginSuccess();
       onClose();
     } else {
       setError(true);
@@ -24,59 +20,90 @@ export const AdminLoginModal = ({ isOpen, onClose, onSuccess }) => {
 
   return (
     <div className="modal-overlay">
-      <div className="modal-content glass-panel-red" style={{ maxWidth: '440px', padding: '32px' }}>
+      <div className="modal-content glass-panel" style={{ maxWidth: '440px', padding: 0, background: '#FFFFFF' }}>
         
-        <button
-          onClick={onClose}
-          style={{ position: 'absolute', top: '16px', right: '16px', background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}
-        >
-          <X size={20} />
-        </button>
-
-        <div style={{ textAlign: 'center', marginBottom: '24px' }}>
-          <div style={{ display: 'inline-flex', padding: '16px', borderRadius: '50%', background: 'var(--red-dim)', color: 'var(--primary-red)', marginBottom: '12px' }}>
-            <ShieldAlert size={36} />
+        {/* Header */}
+        <div style={{
+          padding: '20px 24px',
+          background: '#F8FAFC',
+          borderBottom: '1px solid var(--border-light)',
+          display: 'flex',
+          justify: 'space-between',
+          alignItems: 'center'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <div style={{ padding: '8px', borderRadius: '8px', background: 'var(--red-dim)', color: 'var(--primary-red)' }}>
+              <Lock size={20} />
+            </div>
+            <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.2rem', fontWeight: 800, color: 'var(--text-dark)' }}>
+              {t('adminAuthModalTitle')}
+            </h2>
           </div>
-          <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.3rem', fontWeight: 800, color: '#FFF' }}>
-            {t('adminLoginTitle')}
-          </h3>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginTop: '4px' }}>
-            {t('adminLoginSub')}
-          </p>
+
+          <button onClick={onClose} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}>
+            <X size={22} />
+          </button>
         </div>
 
-        <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '16px' }}>
+        {/* Body */}
+        <form onSubmit={handleSubmit} style={{ padding: '24px', display: 'grid', gap: '16px' }}>
+          
+          <p style={{ fontSize: '0.88rem', color: 'var(--text-sub)', lineHeight: 1.5, fontWeight: 500 }}>
+            {t('adminAuthDesc')}
+          </p>
+
+          {error && (
+            <div style={{
+              padding: '10px 14px',
+              background: '#FEE2E2',
+              border: '1px solid #FCA5A5',
+              borderRadius: '8px',
+              color: '#DC2626',
+              fontSize: '0.82rem',
+              fontWeight: 700,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px'
+            }}>
+              <ShieldAlert size={16} />
+              <span>{t('adminAuthError')}</span>
+            </div>
+          )}
+
           <div>
+            <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-dark)', marginBottom: '6px', fontWeight: 700 }}>
+              {t('adminPasscodeLabel')} *
+            </label>
             <div style={{ position: 'relative' }}>
-              <KeyRound size={18} color="var(--primary-red)" style={{ position: 'absolute', left: '14px', top: '14px' }} />
+              <KeyRound size={18} color="var(--text-muted)" style={{ position: 'absolute', left: '12px', top: '12px' }} />
               <input
                 type="password"
                 required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Passcode (Default: admin123)"
+                autoFocus
+                value={passcode}
+                onChange={(e) => {
+                  setPasscode(e.target.value);
+                  setError(false);
+                }}
+                placeholder="Enter passcode (e.g. admin123)"
                 style={{
                   width: '100%',
-                  padding: '12px 12px 12px 42px',
-                  background: 'var(--bg-surface)',
-                  border: error ? '1px solid var(--primary-red)' : '1px solid var(--border-dark)',
-                  borderRadius: '6px',
-                  color: '#FFF',
-                  fontSize: '0.95rem'
+                  padding: '10px 12px 10px 40px',
+                  background: '#F8FAFC',
+                  border: '1px solid var(--border-light)',
+                  borderRadius: '8px',
+                  color: 'var(--text-dark)',
+                  fontSize: '0.9rem',
+                  fontWeight: 600
                 }}
               />
             </div>
-            {error && (
-              <p style={{ color: 'var(--primary-red)', fontSize: '0.8rem', marginTop: '6px' }}>
-                Incorrect passcode. Please enter "admin123".
-              </p>
-            )}
           </div>
 
-          <button type="submit" className="btn-red" style={{ width: '100%', justifyContent: 'center', padding: '12px' }}>
-            <LogIn size={18} />
-            <span>{t('loginBtn')}</span>
+          <button type="submit" className="btn-red" style={{ padding: '12px', justifyContent: 'center', marginTop: '6px' }}>
+            <span>{t('adminLoginBtn')}</span>
           </button>
+
         </form>
 
       </div>

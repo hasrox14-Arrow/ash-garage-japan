@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { X, Award, Ship, Calculator, CheckCircle2, Send, Calendar, Gauge, Shield, Cog, Fuel } from 'lucide-react';
+import { X, Award, Ship, CheckCircle2, Send } from 'lucide-react';
 
 export const VehicleDetailModal = ({ vehicle, onClose, onInquire }) => {
   const { currency, t } = useLanguage();
@@ -9,7 +9,6 @@ export const VehicleDetailModal = ({ vehicle, onClose, onInquire }) => {
 
   if (!vehicle) return null;
 
-  // Freight estimation logic based on destination country
   const freightRates = {
     USA: 2200,
     UK: 1950,
@@ -33,13 +32,13 @@ export const VehicleDetailModal = ({ vehicle, onClose, onInquire }) => {
 
   return (
     <div className="modal-overlay">
-      <div className="modal-content glass-panel" style={{ maxWidth: '900px', padding: 0 }}>
+      <div className="modal-content glass-panel" style={{ maxWidth: '900px', padding: 0, background: '#FFFFFF' }}>
         
         {/* Modal Header */}
         <div style={{
           padding: '20px 28px',
-          background: 'var(--bg-surface)',
-          borderBottom: '1px solid var(--border-dark)',
+          background: '#F8FAFC',
+          borderBottom: '1px solid var(--border-light)',
           display: 'flex',
           justify: 'space-between',
           alignItems: 'center'
@@ -49,7 +48,7 @@ export const VehicleDetailModal = ({ vehicle, onClose, onInquire }) => {
               <span className="badge-red">{vehicle.stockNo}</span>
               <span style={{ fontSize: '0.8rem', color: 'var(--primary-red)', fontWeight: 800 }}>{vehicle.make}</span>
             </div>
-            <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.4rem', fontWeight: 900, color: '#FFF', marginTop: '4px' }}>
+            <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.4rem', fontWeight: 900, color: 'var(--text-dark)', marginTop: '4px' }}>
               {vehicle.model}
             </h2>
           </div>
@@ -71,11 +70,12 @@ export const VehicleDetailModal = ({ vehicle, onClose, onInquire }) => {
             {/* Gallery Image */}
             <div>
               <div style={{
-                borderRadius: '10px',
+                borderRadius: '12px',
                 overflow: 'hidden',
                 height: '280px',
                 marginBottom: '12px',
-                border: '1px solid var(--border-dark)'
+                border: '1px solid var(--border-light)',
+                boxShadow: 'var(--shadow-sm)'
               }}>
                 <img
                   src={selectedImg || vehicle.image}
@@ -97,9 +97,9 @@ export const VehicleDetailModal = ({ vehicle, onClose, onInquire }) => {
                         width: '70px',
                         height: '50px',
                         objectFit: 'cover',
-                        borderRadius: '6px',
+                        borderRadius: '8px',
                         cursor: 'pointer',
-                        border: selectedImg === imgUrl ? '2px solid var(--primary-red)' : '1px solid var(--border-dark)'
+                        border: selectedImg === imgUrl ? '2px solid var(--primary-red)' : '1px solid var(--border-light)'
                       }}
                     />
                   ))}
@@ -108,11 +108,11 @@ export const VehicleDetailModal = ({ vehicle, onClose, onInquire }) => {
             </div>
 
             {/* Price & Inspection Grade Panel */}
-            <div className="glass-panel-red" style={{ padding: '24px', display: 'flex', flexDirection: 'column' }}>
+            <div className="glass-panel-red" style={{ padding: '24px', display: 'flex', flexDirection: 'column', background: '#FFFFFF' }}>
               
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>{t('fobPrice')}</span>
-                <span style={{ fontFamily: 'var(--font-heading)', fontSize: '1.6rem', fontWeight: 900, color: '#FFF' }}>
+                <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600 }}>{t('fobPrice')}</span>
+                <span style={{ fontFamily: 'var(--font-heading)', fontSize: '1.6rem', fontWeight: 900, color: 'var(--text-dark)' }}>
                   {formattedFob}
                 </span>
               </div>
@@ -120,14 +120,14 @@ export const VehicleDetailModal = ({ vehicle, onClose, onInquire }) => {
               {/* Auction Grade Rating */}
               <div style={{
                 padding: '14px',
-                background: 'var(--bg-surface)',
-                borderRadius: '8px',
+                background: '#F8FAFC',
+                borderRadius: '10px',
                 marginBottom: '20px',
-                border: '1px solid var(--border-dark)'
+                border: '1px solid #E2E8F0'
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-                  <Award size={18} color="#10B981" />
-                  <span style={{ fontWeight: 800, color: '#10B981', fontSize: '0.9rem' }}>{t('auctionDetails')}</span>
+                  <Award size={18} color="#059669" />
+                  <span style={{ fontWeight: 800, color: '#059669', fontSize: '0.9rem' }}>{t('auctionDetails')}</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', color: 'var(--text-sub)' }}>
                   <span>{t('grade')}: <strong>{vehicle.auctionGrade}</strong></span>
@@ -137,7 +137,7 @@ export const VehicleDetailModal = ({ vehicle, onClose, onInquire }) => {
               </div>
 
               {/* Verified Inspection Points */}
-              <div style={{ fontSize: '0.85rem', color: 'var(--text-sub)', marginBottom: '24px' }}>
+              <div style={{ fontSize: '0.85rem', color: 'var(--text-sub)', marginBottom: '24px', fontWeight: 600 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
                   <CheckCircle2 size={16} color="var(--primary-red)" />
                   <span>150-Point Certified Mechanic Inspection</span>
@@ -170,7 +170,7 @@ export const VehicleDetailModal = ({ vehicle, onClose, onInquire }) => {
 
           {/* Specifications Grid Matrix */}
           <div>
-            <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.1rem', fontWeight: 800, marginBottom: '16px', color: '#FFF' }}>
+            <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.1rem', fontWeight: 800, marginBottom: '16px', color: 'var(--text-dark)' }}>
               {t('specsOverview')}
             </h3>
 
@@ -180,51 +180,51 @@ export const VehicleDetailModal = ({ vehicle, onClose, onInquire }) => {
               gap: '12px'
             }}>
               
-              <div style={{ padding: '12px', background: 'var(--bg-surface)', borderRadius: '8px', border: '1px solid var(--border-dark)' }}>
-                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{t('year')}</span>
-                <div style={{ fontWeight: 700, color: '#FFF', fontSize: '0.95rem' }}>{vehicle.year}</div>
+              <div style={{ padding: '12px', background: '#F8FAFC', borderRadius: '10px', border: '1px solid #E2E8F0' }}>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600 }}>{t('year')}</span>
+                <div style={{ fontWeight: 800, color: 'var(--text-dark)', fontSize: '0.95rem' }}>{vehicle.year}</div>
               </div>
 
-              <div style={{ padding: '12px', background: 'var(--bg-surface)', borderRadius: '8px', border: '1px solid var(--border-dark)' }}>
-                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{t('mileage')}</span>
-                <div style={{ fontWeight: 700, color: '#FFF', fontSize: '0.95rem' }}>{vehicle.mileage}</div>
+              <div style={{ padding: '12px', background: '#F8FAFC', borderRadius: '10px', border: '1px solid #E2E8F0' }}>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600 }}>{t('mileage')}</span>
+                <div style={{ fontWeight: 800, color: 'var(--text-dark)', fontSize: '0.95rem' }}>{vehicle.mileage}</div>
               </div>
 
-              <div style={{ padding: '12px', background: 'var(--bg-surface)', borderRadius: '8px', border: '1px solid var(--border-dark)' }}>
-                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{t('engine')}</span>
-                <div style={{ fontWeight: 700, color: '#FFF', fontSize: '0.95rem' }}>{vehicle.engine}</div>
+              <div style={{ padding: '12px', background: '#F8FAFC', borderRadius: '10px', border: '1px solid #E2E8F0' }}>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600 }}>{t('engine')}</span>
+                <div style={{ fontWeight: 800, color: 'var(--text-dark)', fontSize: '0.95rem' }}>{vehicle.engine}</div>
               </div>
 
-              <div style={{ padding: '12px', background: 'var(--bg-surface)', borderRadius: '8px', border: '1px solid var(--border-dark)' }}>
-                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{t('transmission')}</span>
-                <div style={{ fontWeight: 700, color: '#FFF', fontSize: '0.95rem' }}>{vehicle.transmission}</div>
+              <div style={{ padding: '12px', background: '#F8FAFC', borderRadius: '10px', border: '1px solid #E2E8F0' }}>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600 }}>{t('transmission')}</span>
+                <div style={{ fontWeight: 800, color: 'var(--text-dark)', fontSize: '0.95rem' }}>{vehicle.transmission}</div>
               </div>
 
-              <div style={{ padding: '12px', background: 'var(--bg-surface)', borderRadius: '8px', border: '1px solid var(--border-dark)' }}>
-                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{t('drive')}</span>
-                <div style={{ fontWeight: 700, color: '#FFF', fontSize: '0.95rem' }}>{vehicle.drive}</div>
+              <div style={{ padding: '12px', background: '#F8FAFC', borderRadius: '10px', border: '1px solid #E2E8F0' }}>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600 }}>{t('drive')}</span>
+                <div style={{ fontWeight: 800, color: 'var(--text-dark)', fontSize: '0.95rem' }}>{vehicle.drive}</div>
               </div>
 
-              <div style={{ padding: '12px', background: 'var(--bg-surface)', borderRadius: '8px', border: '1px solid var(--border-dark)' }}>
-                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{t('steering')}</span>
-                <div style={{ fontWeight: 700, color: '#FFF', fontSize: '0.95rem' }}>{vehicle.steering}</div>
+              <div style={{ padding: '12px', background: '#F8FAFC', borderRadius: '10px', border: '1px solid #E2E8F0' }}>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600 }}>{t('steering')}</span>
+                <div style={{ fontWeight: 800, color: 'var(--text-dark)', fontSize: '0.95rem' }}>{vehicle.steering}</div>
               </div>
 
             </div>
           </div>
 
           {/* Interactive Sea Freight Shipping Calculator */}
-          <div className="glass-panel" style={{ padding: '24px' }}>
+          <div className="glass-panel" style={{ padding: '24px', background: '#F8FAFC' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
               <Ship size={22} color="var(--primary-red)" />
-              <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.1rem', fontWeight: 800, color: '#FFF' }}>
+              <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-dark)' }}>
                 {t('shippingCalculator')}
               </h3>
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px', alignItems: 'center' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '6px' }}>
+                <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-sub)', marginBottom: '6px', fontWeight: 700 }}>
                   {t('destinationCountry')}
                 </label>
                 <select
@@ -233,11 +233,12 @@ export const VehicleDetailModal = ({ vehicle, onClose, onInquire }) => {
                   style={{
                     width: '100%',
                     padding: '10px 12px',
-                    background: 'var(--bg-surface)',
+                    background: '#FFFFFF',
                     border: '1px solid var(--border-red)',
-                    borderRadius: '6px',
-                    color: '#FFF',
-                    fontSize: '0.9rem'
+                    borderRadius: '8px',
+                    color: 'var(--text-dark)',
+                    fontSize: '0.9rem',
+                    fontWeight: 600
                   }}
                 >
                   <option value="USA">United States (Long Beach / Tacoma)</option>
@@ -251,14 +252,14 @@ export const VehicleDetailModal = ({ vehicle, onClose, onInquire }) => {
                 </select>
               </div>
 
-              <div style={{ padding: '12px', background: 'var(--bg-surface)', borderRadius: '8px' }}>
-                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{t('estFreight')}</span>
+              <div style={{ padding: '12px', background: '#FFFFFF', borderRadius: '10px', border: '1px solid #E2E8F0' }}>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600 }}>{t('estFreight')}</span>
                 <div style={{ fontWeight: 800, color: 'var(--primary-red)', fontSize: '1.1rem' }}>{formattedFreight}</div>
               </div>
 
-              <div style={{ padding: '12px', background: 'var(--bg-surface)', borderRadius: '8px', border: '1px solid var(--border-red)' }}>
-                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{t('totalCif')}</span>
-                <div style={{ fontWeight: 900, color: '#FFF', fontSize: '1.25rem', fontFamily: 'var(--font-heading)' }}>{formattedCif}</div>
+              <div style={{ padding: '12px', background: '#FFFFFF', borderRadius: '10px', border: '1px solid var(--border-red)' }}>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600 }}>{t('totalCif')}</span>
+                <div style={{ fontWeight: 900, color: 'var(--text-dark)', fontSize: '1.25rem', fontFamily: 'var(--font-heading)' }}>{formattedCif}</div>
               </div>
             </div>
           </div>
