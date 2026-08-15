@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { VehicleCard } from './VehicleCard';
-import { ChevronLeft, ChevronRight, Flame, Sparkles } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Flame } from 'lucide-react';
 
 export const NewArrivalsCarousel = ({ vehicles, onViewDetails, onInquire }) => {
   const { t } = useLanguage();
@@ -22,8 +22,8 @@ export const NewArrivalsCarousel = ({ vehicles, onViewDetails, onInquire }) => {
 
   return (
     <section style={{
-      padding: '60px 20px',
-      background: 'linear-gradient(180deg, var(--bg-obsidian) 0%, rgba(255,87,34,0.05) 50%, var(--bg-obsidian) 100%)',
+      padding: '40px 16px',
+      background: 'linear-gradient(180deg, var(--bg-obsidian) 0%, rgba(255,87,34,0.04) 50%, var(--bg-obsidian) 100%)',
       borderTop: '1px solid var(--border-dark)',
       borderBottom: '1px solid var(--border-dark)',
       width: '100%',
@@ -35,19 +35,19 @@ export const NewArrivalsCarousel = ({ vehicles, onViewDetails, onInquire }) => {
         <div style={{
           display: 'flex',
           justify: 'space-between',
-          alignItems: 'flex-end',
-          marginBottom: '32px',
+          alignItems: 'center',
+          marginBottom: '24px',
           flexWrap: 'wrap',
-          gap: '16px'
+          gap: '12px'
         }}>
           <div>
-            <span className="badge-orange" style={{ marginBottom: '8px', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+            <span className="badge-orange" style={{ marginBottom: '6px', display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '0.68rem', padding: '3px 8px' }}>
               <Flame size={12} />
               NEW ARRIVALS — JAPAN EXPORT YARD
             </span>
             <h2 style={{
               fontFamily: 'var(--font-heading)',
-              fontSize: 'clamp(1.8rem, 4vw, 2.6rem)',
+              fontSize: 'clamp(1.4rem, 3.5vw, 2.1rem)',
               fontWeight: 900,
               color: '#FFFFFF',
               letterSpacing: '0.5px'
@@ -57,39 +57,36 @@ export const NewArrivalsCarousel = ({ vehicles, onViewDetails, onInquire }) => {
           </div>
 
           {/* Navigation Controls (Arrows + Dot Indicators) */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-            
-            {/* Arrow Controls */}
-            <div style={{ display: 'flex', gap: '8px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div style={{ display: 'flex', gap: '6px' }}>
               <button
                 onClick={handlePrev}
                 className="btn-outline"
-                style={{ padding: '8px', borderRadius: '50%', minHeight: '38px', width: '38px', justifyContent: 'center' }}
+                style={{ padding: '6px', borderRadius: '50%', minHeight: '34px', width: '34px', justifyContent: 'center' }}
                 title="Previous Car"
               >
-                <ChevronLeft size={20} color="var(--primary-orange)" />
+                <ChevronLeft size={18} color="var(--primary-orange)" />
               </button>
 
               <button
                 onClick={handleNext}
                 className="btn-outline"
-                style={{ padding: '8px', borderRadius: '50%', minHeight: '38px', width: '38px', justifyContent: 'center' }}
+                style={{ padding: '6px', borderRadius: '50%', minHeight: '34px', width: '34px', justifyContent: 'center' }}
                 title="Next Car"
               >
-                <ChevronRight size={20} color="var(--primary-orange)" />
+                <ChevronRight size={18} color="var(--primary-orange)" />
               </button>
             </div>
           </div>
         </div>
 
         {/* Carousel Single-Row Viewport */}
-        <div style={{ position: 'relative', overflow: 'hidden', borderRadius: '16px' }}>
+        <div style={{ position: 'relative', overflow: 'hidden', borderRadius: '14px' }}>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-            gap: '24px'
+            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+            gap: '18px'
           }}>
-            {/* Display 3 vehicles at a time for desktop, 1 for mobile based on index */}
             {[
               newArrivals[currentIndex],
               newArrivals[(currentIndex + 1) % newArrivals.length],
@@ -111,17 +108,17 @@ export const NewArrivalsCarousel = ({ vehicles, onViewDetails, onInquire }) => {
           display: 'flex',
           justify: 'center',
           alignItems: 'center',
-          gap: '10px',
-          marginTop: '32px'
+          gap: '8px',
+          marginTop: '20px'
         }}>
           {newArrivals.map((_, idx) => (
             <button
               key={idx}
               onClick={() => setCurrentIndex(idx)}
               style={{
-                width: currentIndex === idx ? '28px' : '10px',
-                height: '10px',
-                borderRadius: '10px',
+                width: currentIndex === idx ? '22px' : '8px',
+                height: '8px',
+                borderRadius: '8px',
                 background: currentIndex === idx ? 'var(--gradient-red-orange)' : 'var(--border-dark)',
                 border: 'none',
                 cursor: 'pointer',

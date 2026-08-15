@@ -93,7 +93,7 @@ html, body {
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border-dark);
   box-shadow: var(--shadow-md);
-  border-radius: 16px;
+  border-radius: 14px;
 }
 
 .glass-panel-orange {
@@ -101,7 +101,7 @@ html, body {
   backdrop-filter: blur(16px);
   border: 1px solid var(--border-orange);
   box-shadow: 0 10px 30px rgba(255, 87, 34, 0.2);
-  border-radius: 16px;
+  border-radius: 14px;
 }
 
 .glass-panel-red {
@@ -109,7 +109,7 @@ html, body {
   backdrop-filter: blur(16px);
   border: 1px solid var(--border-red);
   box-shadow: 0 10px 30px rgba(229, 9, 20, 0.2);
-  border-radius: 16px;
+  border-radius: 14px;
 }
 
 /* Buttons */
@@ -119,8 +119,8 @@ html, body {
   font-family: var(--font-heading);
   font-weight: 700;
   letter-spacing: 0.5px;
-  min-height: 40px;
-  padding: 8px 18px;
+  min-height: 38px;
+  padding: 6px 16px;
   border-radius: 8px;
   border: none;
   cursor: pointer;
@@ -146,8 +146,8 @@ html, body {
   font-family: var(--font-heading);
   font-weight: 700;
   letter-spacing: 0.5px;
-  min-height: 40px;
-  padding: 8px 18px;
+  min-height: 38px;
+  padding: 6px 16px;
   border-radius: 8px;
   border: none;
   cursor: pointer;
@@ -173,8 +173,8 @@ html, body {
   border: 1px solid var(--border-dark);
   font-family: var(--font-heading);
   font-weight: 700;
-  min-height: 40px;
-  padding: 8px 16px;
+  min-height: 38px;
+  padding: 6px 14px;
   border-radius: 8px;
   cursor: pointer;
   display: inline-flex;
@@ -196,22 +196,22 @@ html, body {
 .badge-orange {
   background: var(--gradient-red-orange);
   color: #FFFFFF;
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.8px;
-  padding: 4px 10px;
-  border-radius: 6px;
+  padding: 3px 8px;
+  border-radius: 5px;
   text-transform: uppercase;
 }
 
 .badge-red {
   background: var(--primary-red);
   color: #FFFFFF;
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.8px;
-  padding: 4px 10px;
-  border-radius: 6px;
+  padding: 3px 8px;
+  border-radius: 5px;
   text-transform: uppercase;
 }
 
@@ -219,19 +219,19 @@ html, body {
   background: var(--bg-surface);
   color: var(--text-sub);
   border: 1px solid var(--border-dark);
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 700;
-  padding: 4px 10px;
-  border-radius: 6px;
+  padding: 3px 8px;
+  border-radius: 5px;
 }
 
 .badge-grade {
   background: #10B981;
   color: #FFFFFF;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 800;
-  padding: 4px 10px;
-  border-radius: 6px;
+  padding: 3px 8px;
+  border-radius: 5px;
 }
 
 /* Dark Modals */
@@ -256,7 +256,7 @@ html, body {
   background: var(--bg-card);
   border: 1px solid var(--border-orange);
   box-shadow: 0 0 40px rgba(255, 87, 34, 0.25);
-  border-radius: 20px;
+  border-radius: 18px;
   width: 100%;
   max-width: 760px;
   max-height: 92vh;
@@ -291,11 +291,11 @@ html, body {
   100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 87, 34, 0); }
 }
 
-/* Responsive Inventory Grid */
+/* Compact Responsive Inventory Grid */
 .grid-vehicles {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-  gap: 28px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
 }
 
 /* ----------------------------------------------------
@@ -319,7 +319,7 @@ html, body {
 
   .grid-vehicles {
     grid-template-columns: 1fr !important;
-    gap: 20px;
+    gap: 16px;
   }
 
   .modal-overlay {
@@ -328,7 +328,7 @@ html, body {
   }
 
   .modal-content {
-    border-radius: 20px 20px 0 0 !important;
+    border-radius: 18px 18px 0 0 !important;
     max-height: 94vh !important;
   }
 
