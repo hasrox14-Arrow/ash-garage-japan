@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { VehicleCard } from './VehicleCard';
 import { ChevronLeft, ChevronRight, Flame } from 'lucide-react';
@@ -6,9 +6,21 @@ import { ChevronLeft, ChevronRight, Flame } from 'lucide-react';
 export const NewArrivalsCarousel = ({ vehicles, onViewDetails, onInquire }) => {
   const { t } = useLanguage();
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
 
   // Filter new arrivals or take first 6 vehicles
   const newArrivals = vehicles.filter(v => v.isNewArrival || v.isFeatured).slice(0, 6);
+
+  // 2-Second Automatic Sliding Interval with Hover Pause
+  useEffect(() => {
+    if (newArrivals.length <= 1 || isPaused) return;
+
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % newArrivals.length);
+    }, 2000); // 2 seconds
+
+    return () => clearInterval(interval);
+  }, [newArrivals.length, isPaused]);
 
   if (newArrivals.length === 0) return null;
 
@@ -21,14 +33,18 @@ export const NewArrivalsCarousel = ({ vehicles, onViewDetails, onInquire }) => {
   };
 
   return (
-    <section style={{
-      padding: '40px 16px',
-      background: 'linear-gradient(180deg, var(--bg-obsidian) 0%, rgba(255,87,34,0.04) 50%, var(--bg-obsidian) 100%)',
-      borderTop: '1px solid var(--border-dark)',
-      borderBottom: '1px solid var(--border-dark)',
-      width: '100%',
-      overflowX: 'hidden'
-    }}>
+    <section 
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      style={{
+        padding: '40px 16px',
+        background: 'linear-gradient(180deg, var(--bg-obsidian) 0%, rgba(255,87,34,0.04) 50%, var(--bg-obsidian) 100%)',
+        borderTop: '1px solid var(--border-dark)',
+        borderBottom: '1px solid var(--border-dark)',
+        width: '100%',
+        overflowX: 'hidden'
+      }}
+    >
       <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
         
         {/* Section Header */}
@@ -41,10 +57,15 @@ export const NewArrivalsCarousel = ({ vehicles, onViewDetails, onInquire }) => {
           gap: '12px'
         }}>
           <div>
-            <span className="badge-orange" style={{ marginBottom: '6px', display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '0.68rem', padding: '3px 8px' }}>
-              <Flame size={12} />
-              NEW ARRIVALS — JAPAN EXPORT YARD
-            </span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+              <span className="badge-orange" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '0.68rem', padding: '3px 8px' }}>
+                <Flame size={12} />
+                NEW ARRIVALS — JAPAN EXPORT YARD
+              </span>
+              <span style={{ fontSize: '0.7rem', color: 'var(--primary-orange)', fontWeight: 800 }}>
+                ● Auto-Sliding (2s)
+              </span>
+            </div>
             <h2 style={{
               fontFamily: 'var(--font-heading)',
               fontSize: 'clamp(1.4rem, 3.5vw, 2.1rem)',
@@ -92,7 +113,7 @@ export const NewArrivalsCarousel = ({ vehicles, onViewDetails, onInquire }) => {
               newArrivals[(currentIndex + 1) % newArrivals.length],
               newArrivals[(currentIndex + 2) % newArrivals.length]
             ].map((v, idx) => (
-              <div key={v.id + idx} style={{ transition: 'all 0.4s ease' }}>
+              <div key={v.id + idx} style={{ transition: 'all 0.5s ease' }}>
                 <VehicleCard
                   vehicle={v}
                   onViewDetails={onViewDetails}
@@ -116,7 +137,7 @@ export const NewArrivalsCarousel = ({ vehicles, onViewDetails, onInquire }) => {
               key={idx}
               onClick={() => setCurrentIndex(idx)}
               style={{
-                width: currentIndex === idx ? '22px' : '8px',
+                width: currentIndex === idx ? '24px' : '8px',
                 height: '8px',
                 borderRadius: '8px',
                 background: currentIndex === idx ? 'var(--gradient-red-orange)' : 'var(--border-dark)',
