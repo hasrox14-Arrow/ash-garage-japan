@@ -9,6 +9,7 @@ import { InquiryModal } from './components/InquiryModal';
 import { ExportProcess } from './components/ExportProcess';
 import { Footer } from './components/Footer';
 import { ContactPage } from './components/ContactPage';
+import { NewArrivalsCarousel } from './components/NewArrivalsCarousel';
 import { AdminLoginModal } from './components/AdminLoginModal';
 import { AdminDashboard } from './components/AdminDashboard';
 
@@ -36,6 +37,18 @@ function MainApp() {
       maxPrice: ''
     });
   };
+
+  // Randomly shuffle 6 vehicles for Homepage display on every page load / refresh
+  const homepageShuffledVehicles = useMemo(() => {
+    if (!vehicles || vehicles.length === 0) return [];
+    const list = [...vehicles];
+    // Fisher-Yates Shuffle algorithm
+    for (let i = list.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [list[i], list[j]] = [list[j], list[i]];
+    }
+    return list.slice(0, 6);
+  }, [vehicles]);
 
   // Dynamic search & multi-parameter filter logic
   const filteredVehicles = useMemo(() => {
@@ -78,7 +91,7 @@ function MainApp() {
       {/* PAGE 1: HOMEPAGE */}
       {activeTab === 'home' && (
         <>
-          {/* Hero Banner featuring Logo Emblem */}
+          {/* Hero Banner featuring Center-Aligned Logo Emblem */}
           <Hero
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
@@ -89,20 +102,30 @@ function MainApp() {
             onInquireClick={() => setInquiryVehicle(vehicles[0])}
           />
 
-          {/* Featured Preview Inventory Section */}
+          {/* New Arrivals Single-Row Carousel Section with Dot Navigation */}
+          <NewArrivalsCarousel
+            vehicles={vehicles}
+            onViewDetails={(vehicle) => setSelectedVehicle(vehicle)}
+            onInquire={(vehicle) => setInquiryVehicle(vehicle)}
+          />
+
+          {/* Random Shuffled 6 Vehicles Preview Section */}
           <main style={{ maxWidth: '1280px', margin: '0 auto', padding: '60px 20px', flex: 1, width: '100%' }}>
             
             <div style={{ textAlign: 'center', marginBottom: '40px' }}>
               <span className="badge-orange" style={{ marginBottom: '8px', display: 'inline-block' }}>
-                FEATURED STOCK
+                EXPLORE SHUFFLED SELECTION
               </span>
               <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(1.8rem, 4vw, 2.5rem)', fontWeight: 900, color: '#FFFFFF' }}>
-                PREMIUM JAPANESE INVENTORY
+                FEATURED JAPANESE INVENTORY
               </h2>
+              <p style={{ fontSize: '0.9rem', color: 'var(--text-sub)', marginTop: '4px' }}>
+                Refreshed & shuffled randomly on every visit
+              </p>
             </div>
 
             <VehicleGrid
-              vehicles={vehicles.slice(0, 6)}
+              vehicles={homepageShuffledVehicles}
               onViewDetails={(vehicle) => setSelectedVehicle(vehicle)}
               onInquire={(vehicle) => setInquiryVehicle(vehicle)}
             />
@@ -133,7 +156,7 @@ function MainApp() {
           
           <div style={{ textAlign: 'center', marginBottom: '36px' }}>
             <span className="badge-orange" style={{ marginBottom: '8px', display: 'inline-block' }}>
-              JAPAN EXPORT INVENTORY
+              JAPAN EXPORT INVENTORY ({vehicles.length} VEHICLES)
             </span>
             <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 900, color: '#FFFFFF' }}>
               ALL AVAILABLE VEHICLES

@@ -8,7 +8,7 @@ export const Hero = ({ searchQuery, setSearchQuery, onBrowseClick, onInquireClic
   return (
     <section style={{
       position: 'relative',
-      padding: '40px 16px 70px',
+      padding: '50px 16px 70px',
       background: 'radial-gradient(circle at 50% 25%, rgba(255, 87, 34, 0.18) 0%, rgba(229, 9, 20, 0.12) 40%, rgba(10, 10, 12, 0.95) 80%), url("https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=2000&q=80")',
       backgroundSize: 'cover',
       backgroundPosition: 'center',
@@ -20,16 +20,22 @@ export const Hero = ({ searchQuery, setSearchQuery, onBrowseClick, onInquireClic
         maxWidth: '1280px',
         margin: '0 auto',
         textAlign: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justify: 'center',
         position: 'relative',
         zIndex: 2,
         width: '100%'
       }}>
         
-        {/* PROMINENT CENTRAL HERO LOGO EMBLEM WITH GLOWING HALO */}
+        {/* PROMINENT PERFECTLY CENTERED HERO LOGO EMBLEM */}
         <div style={{
           marginBottom: '16px',
-          display: 'inline-block',
-          position: 'relative'
+          display: 'flex',
+          justify: 'center',
+          alignItems: 'center',
+          width: '100%'
         }}>
           <img
             src="/ash-garage-logo.png"
@@ -39,7 +45,8 @@ export const Hero = ({ searchQuery, setSearchQuery, onBrowseClick, onInquireClic
               height: '130px',
               width: 'auto',
               filter: 'drop-shadow(0 0 35px rgba(255, 87, 34, 0.55)) drop-shadow(0 0 15px rgba(229, 9, 20, 0.4))',
-              transition: 'transform 0.4s ease'
+              transition: 'transform 0.4s ease',
+              margin: '0 auto'
             }}
             onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.06)'}
             onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
@@ -51,7 +58,7 @@ export const Hero = ({ searchQuery, setSearchQuery, onBrowseClick, onInquireClic
           display: 'inline-flex',
           alignItems: 'center',
           gap: '6px',
-          padding: '6px 14px',
+          padding: '6px 16px',
           borderRadius: '30px',
           background: 'rgba(18, 18, 22, 0.85)',
           border: '1px solid var(--border-orange)',
