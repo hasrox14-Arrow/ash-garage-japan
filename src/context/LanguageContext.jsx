@@ -1,6 +1,11 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { translations } from '../translations';
 import { vehiclesData as initialVehicles } from '../data/vehicles';
+import {
+  saveVehicleToFirestore,
+  deleteVehicleFromFirestore,
+  subscribeToVehicles
+} from '../firebase/config';
 
 const LanguageContext = createContext();
 
@@ -10,18 +15,8 @@ export const LanguageProvider = ({ children }) => {
   const [showLangModal, setShowLangModal] = useState(false);
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
 
-  // Dynamic Inventory State (Initial mock merged with localStorage)
-  const [vehicles, setVehicles] = useState(() => {
-    const saved = localStorage.getItem('ash_garage_custom_vehicles');
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch (e) {
-        return initialVehicles;
-      }
-    }
-    return initialVehicles;
-  });
+  // Dynamic Inventory State (Listens to Firestore Real-Time Cloud Updates)
+  const [vehicles, setVehicles] = useState(initialVehicles);
 
   // Dynamic Inquiries State
   const [inquiries, setInquiries] = useState(() => {
@@ -47,47 +42,61 @@ export const LanguageProvider = ({ children }) => {
     if (!modalDismissed) {
       setShowLangModal(true);
     }
+
+    // Subscribe to Real-Time Cloud Vehicle Updates from Firebase Firestore
+    const unsubscribe = subscribeToVehicles((updatedList) => {
+      console.log("Real-time vehicles sync received from Firestore:", updatedList.length, "cars");
+      setVehicles(updatedList);
+      localStorage.setItem('ash_garage_custom_vehicles', JSON.stringify(updatedList));
+    });
+
+    return () => {
+      if (typeof unsubscribe === 'function') unsubscribe();
+    };
   }, []);
 
-  // Save vehicles to local storage on update
-  const saveVehiclesToStore = (updatedVehicles) => {
-    setVehicles(updatedVehicles);
-    localStorage.setItem('ash_garage_custom_vehicles', JSON.stringify(updatedVehicles));
-  };
+  // Add or Edit Vehicle Handler (Writes to Cloud Firestore & Local State)
+  const handleSaveVehicle = async (vehicleData) => {
+    const docId = vehicleData.id || vehicleData.stockNo || `AG-${Math.floor(1000 + Math.random() * 9000)}`;
+    const fullVehicle = {
+      ...vehicleData,
+      id: docId,
+      stockNo: vehicleData.stockNo || docId
+    };
 
-  // Add or Edit Vehicle Handler
-  const handleSaveVehicle = (vehicleData) => {
-    const existingIndex = vehicles.findIndex(v => v.id === vehicleData.id || v.stockNo === vehicleData.stockNo);
+    // Update local state immediately
+    const existingIndex = vehicles.findIndex(v => v.id === docId || v.stockNo === docId);
     let updated;
     if (existingIndex >= 0) {
       updated = [...vehicles];
-      updated[existingIndex] = { ...updated[existingIndex], ...vehicleData };
+      updated[existingIndex] = fullVehicle;
     } else {
-      const newVehicle = {
-        ...vehicleData,
-        id: vehicleData.id || `AG-${Math.floor(1000 + Math.random() * 9000)}`,
-        stockNo: vehicleData.stockNo || `AG-${Math.floor(1000 + Math.random() * 9000)}`
-      };
-      updated = [newVehicle, ...vehicles];
+      updated = [fullVehicle, ...vehicles];
     }
-    saveVehiclesToStore(updated);
+    setVehicles(updated);
+    localStorage.setItem('ash_garage_custom_vehicles', JSON.stringify(updated));
+
+    // Push to Cloud Firestore so all live users see the new/edited vehicle immediately
+    await saveVehicleToFirestore(fullVehicle);
   };
 
-  // Delete Vehicle Handler
-  const handleDeleteVehicle = (vehicleId) => {
+  // Delete Vehicle Handler (Deletes from Cloud Firestore & Local State)
+  const handleDeleteVehicle = async (vehicleId) => {
     const updated = vehicles.filter(v => v.id !== vehicleId && v.stockNo !== vehicleId);
-    saveVehiclesToStore(updated);
+    setVehicles(updated);
+    localStorage.setItem('ash_garage_custom_vehicles', JSON.stringify(updated));
+
+    // Delete from Cloud Firestore
+    await deleteVehicleFromFirestore(vehicleId);
   };
 
   // Toggle Vehicle Status (Available / Reserved / Sold)
-  const handleToggleStatus = (vehicleId, newStatus) => {
-    const updated = vehicles.map(v => {
-      if (v.id === vehicleId || v.stockNo === vehicleId) {
-        return { ...v, status: newStatus };
-      }
-      return v;
-    });
-    saveVehiclesToStore(updated);
+  const handleToggleStatus = async (vehicleId, newStatus) => {
+    const target = vehicles.find(v => v.id === vehicleId || v.stockNo === vehicleId);
+    if (target) {
+      const updatedVehicle = { ...target, status: newStatus };
+      await handleSaveVehicle(updatedVehicle);
+    }
   };
 
   // Record new inquiry lead
