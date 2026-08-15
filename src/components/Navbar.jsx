@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { Car, Globe, DollarSign, Menu, X, ShieldCheck, ChevronDown, ShieldAlert } from 'lucide-react';
+import { Globe, DollarSign, Menu, X, ShieldCheck, ChevronDown, ShieldAlert } from 'lucide-react';
 
 export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
   const { lang, setLang, currency, toggleCurrency, isAdminLoggedIn, t } = useLanguage();
@@ -59,7 +59,7 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
       <div style={{
         maxWidth: '1280px',
         margin: '0 auto',
-        padding: '16px 24px',
+        padding: '12px 24px',
         display: 'flex',
         alignItems: 'center',
         justify: 'space-between'
@@ -69,16 +69,27 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
           onClick={() => handleNavClick('home')}
           style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer' }}
         >
+          {/* New Custom Transparent Logo */}
           <div style={{
-            background: 'var(--primary-red)',
-            padding: '8px',
-            borderRadius: '8px',
+            position: 'relative',
             display: 'flex',
             alignItems: 'center',
-            boxShadow: '0 0 15px var(--red-glow)'
+            justify: 'center'
           }}>
-            <Car size={24} color="#FFF" />
+            <img
+              src="/ash-garage-logo.png"
+              alt="Ash Garage Logo"
+              style={{
+                height: '52px',
+                width: 'auto',
+                filter: 'drop-shadow(0 0 10px rgba(229, 9, 20, 0.3))',
+                transition: 'transform 0.3s ease'
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.06)'}
+              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+            />
           </div>
+
           <div>
             <div style={{
               fontFamily: 'var(--font-heading)',

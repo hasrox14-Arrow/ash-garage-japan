@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { Car, MapPin, Phone, Mail, Clock, ShieldCheck } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, ShieldCheck } from 'lucide-react';
 
 export const Footer = () => {
   const { t } = useLanguage();
@@ -13,10 +13,12 @@ export const Footer = () => {
           
           {/* Brand Info */}
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
-              <div style={{ background: 'var(--primary-red)', padding: '6px', borderRadius: '6px' }}>
-                <Car size={20} color="#FFF" />
-              </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
+              <img
+                src="/ash-garage-logo.png"
+                alt="Ash Garage Logo"
+                style={{ height: '48px', width: 'auto' }}
+              />
               <span style={{ fontFamily: 'var(--font-heading)', fontSize: '1.3rem', fontWeight: 900, color: '#FFF' }}>
                 ASH <span style={{ color: 'var(--primary-red)' }}>GARAGE</span>
               </span>
