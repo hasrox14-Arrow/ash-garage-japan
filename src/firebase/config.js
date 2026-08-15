@@ -2,15 +2,20 @@ import { initializeApp } from "firebase/app";
 import { 
   getFirestore, 
   collection, 
-  getDocs, 
   addDoc, 
   doc, 
   updateDoc, 
   deleteDoc, 
-  onSnapshot,
-  setDoc
+  onSnapshot
 } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+} from "firebase/auth";
 import { vehiclesData } from "../data/vehicles";
 
 const firebaseConfig = {
@@ -25,16 +30,49 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const storage = getStorage(app);
+export const auth = getAuth(app);
 
 // Use full 20-vehicle dataset
 export const INITIAL_VEHICLES = vehiclesData;
+
+// Firebase Auth Admin Login Helper
+export const loginAdminWithFirebase = async (email, password) => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    return userCredential.user;
+  } catch (error) {
+    // If user not found, auto-create default admin user for convenience
+    if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') {
+      try {
+        const newCredential = await createUserWithEmailAndPassword(auth, email, password);
+        return newCredential.user;
+      } catch (createErr) {
+        throw error;
+      }
+    }
+    throw error;
+  }
+};
+
+// Firebase Auth Admin Logout Helper
+export const logoutAdminFromFirebase = async () => {
+  try {
+    await signOut(auth);
+  } catch (error) {
+    console.error("Error signing out from Firebase Auth:", error);
+  }
+};
+
+// Firebase Auth State Observer
+export const subscribeToAuthState = (callback) => {
+  return onAuthStateChanged(auth, callback);
+};
 
 // Real-time Firestore listener for vehicles
 export const subscribeToVehicles = (callback) => {
   const vehiclesRef = collection(db, "vehicles");
   return onSnapshot(vehiclesRef, (snapshot) => {
     if (snapshot.empty) {
-      // Seed default vehicles if collection is empty
       INITIAL_VEHICLES.forEach(async (v) => {
         await addDoc(vehiclesRef, v);
       });

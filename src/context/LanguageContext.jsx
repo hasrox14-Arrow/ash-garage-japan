@@ -4,7 +4,9 @@ import { vehiclesData as initialVehicles } from '../data/vehicles';
 import {
   saveVehicleToFirestore,
   deleteVehicleFromFirestore,
-  subscribeToVehicles
+  subscribeToVehicles,
+  subscribeToAuthState,
+  logoutAdminFromFirebase
 } from '../firebase/config';
 
 const LanguageContext = createContext();
@@ -12,8 +14,9 @@ const LanguageContext = createContext();
 export const LanguageProvider = ({ children }) => {
   const [lang, setLang] = useState('en');
   const [currency, setCurrency] = useState('JPY');
-  const [showLangModal, setShowLangModal] = useState(false); // Initial popup disabled
+  const [showLangModal, setShowLangModal] = useState(false);
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
+  const [adminUser, setAdminUser] = useState(null);
 
   // Dynamic Inventory State (Listens to Firestore Real-Time Cloud Updates)
   const [vehicles, setVehicles] = useState(initialVehicles);
@@ -38,16 +41,33 @@ export const LanguageProvider = ({ children }) => {
     }
 
     // Subscribe to Real-Time Cloud Vehicle Updates from Firebase Firestore
-    const unsubscribe = subscribeToVehicles((updatedList) => {
-      console.log("Real-time vehicles sync received from Firestore:", updatedList.length, "cars");
+    const unsubscribeVehicles = subscribeToVehicles((updatedList) => {
       setVehicles(updatedList);
       localStorage.setItem('ash_garage_custom_vehicles', JSON.stringify(updatedList));
     });
 
+    // Subscribe to Firebase Authentication State Changes
+    const unsubscribeAuth = subscribeToAuthState((user) => {
+      if (user) {
+        setIsAdminLoggedIn(true);
+        setAdminUser(user);
+      } else {
+        setIsAdminLoggedIn(false);
+        setAdminUser(null);
+      }
+    });
+
     return () => {
-      if (typeof unsubscribe === 'function') unsubscribe();
+      if (typeof unsubscribeVehicles === 'function') unsubscribeVehicles();
+      if (typeof unsubscribeAuth === 'function') unsubscribeAuth();
     };
   }, []);
+
+  const handleAdminLogout = async () => {
+    await logoutAdminFromFirebase();
+    setIsAdminLoggedIn(false);
+    setAdminUser(null);
+  };
 
   // Add or Edit Vehicle Handler
   const handleSaveVehicle = async (vehicleData) => {
@@ -130,6 +150,8 @@ export const LanguageProvider = ({ children }) => {
         t,
         isAdminLoggedIn,
         setIsAdminLoggedIn,
+        adminUser,
+        handleAdminLogout,
         vehicles,
         handleSaveVehicle,
         handleDeleteVehicle,

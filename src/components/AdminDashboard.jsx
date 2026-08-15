@@ -10,7 +10,8 @@ import {
   Settings,
   ShieldCheck,
   Search,
-  Flame
+  Flame,
+  UserCheck
 } from 'lucide-react';
 import { VehicleFormModal } from './VehicleFormModal';
 
@@ -21,6 +22,8 @@ export const AdminDashboard = ({ onLogout }) => {
     handleSaveVehicle,
     handleToggleStatus,
     inquiries,
+    adminUser,
+    handleAdminLogout,
     t
   } = useLanguage();
 
@@ -50,6 +53,13 @@ export const AdminDashboard = ({ onLogout }) => {
     setShowVehicleModal(false);
   };
 
+  const handleLogoutClick = async () => {
+    if (typeof handleAdminLogout === 'function') {
+      await handleAdminLogout();
+    }
+    onLogout();
+  };
+
   return (
     <section style={{ padding: '40px 20px 80px', minHeight: '80vh', background: 'var(--bg-obsidian)' }}>
       <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
@@ -71,8 +81,9 @@ export const AdminDashboard = ({ onLogout }) => {
               <ShieldCheck size={28} />
             </div>
             <div>
-              <div style={{ fontSize: '0.8rem', color: 'var(--primary-orange)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '1px' }}>
-                ADMINISTRATION PORTAL
+              <div style={{ fontSize: '0.8rem', color: 'var(--primary-orange)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '1px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <UserCheck size={14} />
+                <span>{adminUser ? adminUser.email : 'FIREBASE AUTHENTICATED ADMIN'}</span>
               </div>
               <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', fontWeight: 900, color: '#FFFFFF' }}>
                 {t('adminDashboardTitle')}
@@ -80,7 +91,7 @@ export const AdminDashboard = ({ onLogout }) => {
             </div>
           </div>
 
-          <button onClick={onLogout} className="btn-outline" style={{ padding: '8px 16px', fontSize: '0.85rem' }}>
+          <button onClick={handleLogoutClick} className="btn-outline" style={{ padding: '8px 16px', fontSize: '0.85rem' }}>
             <LogOut size={16} />
             <span>{t('adminLogout')}</span>
           </button>
