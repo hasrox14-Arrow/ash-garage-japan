@@ -9,28 +9,40 @@ export const VehicleCard = ({ vehicle, onViewDetails, onInquire }) => {
     ? `$${vehicle.priceUsd.toLocaleString()} USD`
     : `¥${vehicle.priceJpy.toLocaleString()} JPY`;
 
+  const handleCardClick = (e) => {
+    // If click target is inside or is the inquire button, don't trigger view details
+    if (e.target.closest('.btn-gradient-inquire')) {
+      return;
+    }
+    onViewDetails(vehicle);
+  };
+
   return (
-    <div className="glass-panel" style={{
-      overflow: 'hidden',
-      display: 'flex',
-      flexDirection: 'column',
-      transition: 'var(--transition-smooth)',
-      position: 'relative',
-      background: 'var(--bg-card)',
-      borderRadius: '14px',
-      boxShadow: 'var(--shadow-md)',
-      border: '1px solid var(--border-dark)'
-    }}
-    onMouseEnter={(e) => {
-      e.currentTarget.style.boxShadow = 'var(--shadow-hover)';
-      e.currentTarget.style.borderColor = 'var(--border-orange)';
-    }}
-    onMouseLeave={(e) => {
-      e.currentTarget.style.boxShadow = 'var(--shadow-md)';
-      e.currentTarget.style.borderColor = 'var(--border-dark)';
-    }}
+    <div 
+      onClick={handleCardClick}
+      className="glass-panel" 
+      style={{
+        overflow: 'hidden',
+        display: 'flex',
+        flexDirection: 'column',
+        transition: 'var(--transition-smooth)',
+        position: 'relative',
+        background: 'var(--bg-card)',
+        borderRadius: '14px',
+        boxShadow: 'var(--shadow-md)',
+        border: '1px solid var(--border-dark)',
+        cursor: 'pointer'
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.boxShadow = 'var(--shadow-hover)';
+        e.currentTarget.style.borderColor = 'var(--border-orange)';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.boxShadow = 'var(--shadow-md)';
+        e.currentTarget.style.borderColor = 'var(--border-dark)';
+      }}
     >
-      {/* Top Image Container - Compact 175px Height */}
+      {/* Top Image Container */}
       <div style={{ position: 'relative', height: '175px', overflow: 'hidden' }}>
         <img
           src={vehicle.image}
@@ -165,7 +177,10 @@ export const VehicleCard = ({ vehicle, onViewDetails, onInquire }) => {
         {/* Action Buttons */}
         <div style={{ marginTop: 'auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
           <button
-            onClick={() => onViewDetails(vehicle)}
+            onClick={(e) => {
+              e.stopPropagation();
+              onViewDetails(vehicle);
+            }}
             className="btn-outline"
             style={{ width: '100%', justifyContent: 'center', padding: '8px', fontSize: '0.8rem', minHeight: '36px' }}
           >
@@ -173,8 +188,11 @@ export const VehicleCard = ({ vehicle, onViewDetails, onInquire }) => {
           </button>
 
           <button
-            onClick={() => onInquire(vehicle)}
-            className="btn-gradient"
+            onClick={(e) => {
+              e.stopPropagation();
+              onInquire(vehicle);
+            }}
+            className="btn-gradient btn-gradient-inquire"
             style={{ width: '100%', justifyContent: 'center', padding: '8px', fontSize: '0.8rem', minHeight: '36px' }}
           >
             <span>{t('quickInquire')}</span>
