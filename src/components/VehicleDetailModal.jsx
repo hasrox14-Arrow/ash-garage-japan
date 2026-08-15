@@ -5,11 +5,12 @@ import { X, Award, Ship, CheckCircle2, Send } from 'lucide-react';
 export const VehicleDetailModal = ({ vehicle, onClose, onInquire }) => {
   const { currency, t } = useLanguage();
   const [selectedImg, setSelectedImg] = useState(vehicle ? vehicle.image : '');
-  const [selectedCountry, setSelectedCountry] = useState('USA');
+  const [selectedCountry, setSelectedCountry] = useState('SriLanka');
 
   if (!vehicle) return null;
 
   const freightRates = {
+    SriLanka: 1850,
     USA: 2200,
     UK: 1950,
     Australia: 1750,
@@ -20,7 +21,7 @@ export const VehicleDetailModal = ({ vehicle, onClose, onInquire }) => {
     NewZealand: 1850
   };
 
-  const currentFreightUsd = freightRates[selectedCountry] || 2000;
+  const currentFreightUsd = freightRates[selectedCountry] || 1850;
   const currentFreightJpy = currentFreightUsd * 155;
 
   const totalCifUsd = vehicle.priceUsd + currentFreightUsd;
@@ -261,14 +262,15 @@ export const VehicleDetailModal = ({ vehicle, onClose, onInquire }) => {
                     fontWeight: 600
                   }}
                 >
-                  <option value="USA">United States (Long Beach / Tacoma)</option>
-                  <option value="UK">United Kingdom (Southampton / Felixstowe)</option>
-                  <option value="Australia">Australia (Sydney / Melbourne)</option>
-                  <option value="Germany">Germany (Bremerhaven)</option>
-                  <option value="UAE">United Arab Emirates (Jebel Ali, Dubai)</option>
-                  <option value="Canada">Canada (Vancouver)</option>
-                  <option value="Kenya">Kenya (Mombasa)</option>
-                  <option value="NewZealand">New Zealand (Auckland)</option>
+                  <option value="SriLanka">🇱🇰 Sri Lanka (Hambantota / Colombo Port)</option>
+                  <option value="USA">🇺🇸 United States (Long Beach / Tacoma)</option>
+                  <option value="UK">🇬🇧 United Kingdom (Southampton / Felixstowe)</option>
+                  <option value="Australia">🇦🇺 Australia (Sydney / Melbourne)</option>
+                  <option value="Germany">🇩🇪 Germany (Bremerhaven)</option>
+                  <option value="UAE">🇦🇪 United Arab Emirates (Jebel Ali, Dubai)</option>
+                  <option value="Canada">🇨🇦 Canada (Vancouver)</option>
+                  <option value="Kenya">🇰🇪 Kenya (Mombasa)</option>
+                  <option value="NewZealand">🇳🇿 New Zealand (Auckland)</option>
                 </select>
               </div>
 
