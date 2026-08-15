@@ -56,14 +56,19 @@ export const InquiryModal = ({ vehicle, onClose }) => {
     <div className="modal-overlay">
       <div className="modal-content glass-panel" style={{ maxWidth: '620px', padding: 0, background: 'var(--bg-card)', borderColor: 'var(--border-orange)' }}>
         
-        {/* Header */}
+        {/* Sticky Header Bar */}
         <div style={{
-          padding: '16px 20px',
-          background: 'var(--bg-surface)',
+          position: 'sticky',
+          top: 0,
+          zIndex: 100,
+          padding: '14px 18px',
+          background: 'rgba(27, 27, 36, 0.98)',
+          backdropFilter: 'blur(12px)',
           borderBottom: '1px solid var(--border-dark)',
           display: 'flex',
           justify: 'space-between',
-          alignItems: 'center'
+          alignItems: 'center',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.4)'
         }}>
           <div>
             <span className="badge-orange" style={{ marginBottom: '2px', display: 'inline-block' }}>{t('proformaInvoice')}</span>
@@ -72,8 +77,25 @@ export const InquiryModal = ({ vehicle, onClose }) => {
             </h2>
           </div>
 
-          <button onClick={onClose} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: '6px' }}>
-            <X size={22} />
+          <button
+            onClick={onClose}
+            style={{
+              background: 'rgba(255, 87, 34, 0.15)',
+              border: '1px solid var(--border-orange)',
+              borderRadius: '50%',
+              color: '#FFFFFF',
+              cursor: 'pointer',
+              padding: '8px',
+              display: 'flex',
+              alignItems: 'center',
+              justify: 'center',
+              width: '36px',
+              height: '36px',
+              flexShrink: 0
+            }}
+            title="Close Inquiry Modal"
+          >
+            <X size={20} color="var(--primary-orange)" />
           </button>
         </div>
 

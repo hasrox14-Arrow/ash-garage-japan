@@ -17,13 +17,13 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
     <header style={{
       position: 'sticky',
       top: 0,
-      zIndex: 1000,
-      background: 'rgba(10, 10, 12, 0.96)',
+      zIndex: 99999,
+      background: 'rgba(10, 10, 12, 0.98)',
       backdropFilter: 'blur(16px)',
       borderBottom: '1px solid var(--border-dark)',
-      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.5)',
+      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.6)',
       width: '100%',
-      overflowX: 'hidden'
+      overflow: 'visible'
     }}>
       {/* Top Banner Notice */}
       <div style={{
@@ -68,7 +68,8 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
         alignItems: 'center',
         justify: 'space-between',
         gap: '8px',
-        width: '100%'
+        width: '100%',
+        position: 'relative'
       }}>
         {/* Brand Logo & Title */}
         <div 
@@ -168,7 +169,7 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
         </nav>
 
         {/* Right Action Controls Group */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '5px', flexShrink: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '5px', flexShrink: 0, position: 'relative' }}>
           
           {/* Admin Login Trigger */}
           {!isAdminLoggedIn && (
@@ -207,7 +208,7 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
           </button>
 
           {/* Header Language Selector Dropdown */}
-          <div style={{ position: 'relative' }}>
+          <div style={{ position: 'relative', zIndex: 100000 }}>
             <button
               onClick={() => setLangDropdownOpen(!langDropdownOpen)}
               style={{
@@ -233,15 +234,15 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
             {langDropdownOpen && (
               <div style={{
                 position: 'absolute',
-                top: '110%',
+                top: '115%',
                 right: 0,
-                background: 'var(--bg-card)',
-                border: '1px solid var(--border-orange)',
+                background: '#121218',
+                border: '1px solid var(--primary-orange)',
                 borderRadius: '8px',
-                boxShadow: '0 10px 30px rgba(0, 0, 0, 0.8)',
+                boxShadow: '0 12px 35px rgba(0, 0, 0, 0.95), 0 0 15px rgba(255, 87, 34, 0.3)',
                 width: '140px',
                 overflow: 'hidden',
-                zIndex: 1050
+                zIndex: 100001
               }}>
                 <button
                   onClick={() => {
@@ -250,7 +251,7 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
                   }}
                   style={{
                     width: '100%',
-                    padding: '8px 12px',
+                    padding: '10px 14px',
                     textAlign: 'left',
                     background: lang === 'en' ? 'var(--orange-dim)' : 'transparent',
                     border: 'none',
@@ -260,7 +261,7 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
                     display: 'flex',
                     alignItems: 'center',
                     gap: '6px',
-                    fontSize: '0.8rem'
+                    fontSize: '0.82rem'
                   }}
                 >
                   <span>🇬🇧</span> English
@@ -272,7 +273,7 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
                   }}
                   style={{
                     width: '100%',
-                    padding: '8px 12px',
+                    padding: '10px 14px',
                     textAlign: 'left',
                     background: lang === 'ja' ? 'var(--orange-dim)' : 'transparent',
                     border: 'none',
@@ -282,7 +283,7 @@ export const Navbar = ({ activeTab, setActiveTab, onAdminClick }) => {
                     display: 'flex',
                     alignItems: 'center',
                     gap: '6px',
-                    fontSize: '0.8rem'
+                    fontSize: '0.82rem'
                   }}
                 >
                   <span>🇯🇵</span> 日本語

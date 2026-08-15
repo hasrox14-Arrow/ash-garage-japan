@@ -34,14 +34,19 @@ export const VehicleDetailModal = ({ vehicle, onClose, onInquire }) => {
     <div className="modal-overlay">
       <div className="modal-content glass-panel" style={{ maxWidth: '900px', padding: 0, borderColor: 'var(--border-orange)' }}>
         
-        {/* Modal Header */}
+        {/* Sticky Modal Header Bar - Always Pinned to Top */}
         <div style={{
-          padding: '16px 20px',
-          background: 'var(--bg-surface)',
+          position: 'sticky',
+          top: 0,
+          zIndex: 100,
+          padding: '14px 18px',
+          background: 'rgba(27, 27, 36, 0.98)',
+          backdropFilter: 'blur(12px)',
           borderBottom: '1px solid var(--border-dark)',
           display: 'flex',
           justify: 'space-between',
-          alignItems: 'center'
+          alignItems: 'center',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.4)'
         }}>
           <div>
             <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
@@ -55,9 +60,23 @@ export const VehicleDetailModal = ({ vehicle, onClose, onInquire }) => {
 
           <button
             onClick={onClose}
-            style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: '6px' }}
+            style={{
+              background: 'rgba(255, 87, 34, 0.15)',
+              border: '1px solid var(--border-orange)',
+              borderRadius: '50%',
+              color: '#FFFFFF',
+              cursor: 'pointer',
+              padding: '8px',
+              display: 'flex',
+              alignItems: 'center',
+              justify: 'center',
+              width: '36px',
+              height: '36px',
+              flexShrink: 0
+            }}
+            title="Close Specs Modal"
           >
-            <X size={24} />
+            <X size={20} color="var(--primary-orange)" />
           </button>
         </div>
 
